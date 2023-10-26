@@ -15,7 +15,10 @@
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@iconify/json": "^2.2.133",
     "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/compiler-sfc": "^3.3.7",
+    "unplugin-icons": "^0.17.1",
     "vite": "^4.4.5"
   }
 }

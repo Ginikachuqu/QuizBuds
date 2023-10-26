@@ -7,15 +7,18 @@
                         Unleash <br> Your Intellectual Capabilities...
                     </h1>
                     <span>Quiz like a pro...</span>
-                    <router-link to="/signup">Sign up</router-link>
+                    <router-link to="/signup">
+                        <span>Sign up</span>
+                        <GameIconsNinjaHeroicStance />
+                    </router-link>
                 </div>
             </div>
             <div class="landing__container-inner-right">
                 <div class="blocks">
                     <div class="block block__1">
                         <div class="header">
-                            <span class="icon"></span>
-                            <h3>Play Regular quizzes</h3>
+                            <GameIconsPlanetConquest />
+                            <span>Play</span>
                         </div>
                         <div class="body">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse doloremque autem mollitia, aliquid dolorum tempora sint incidunt nisi a dolor?
@@ -56,9 +59,15 @@
 </template>
 <script>
 import { RouterLink } from 'vue-router';
+import GameIconsPlanetConquest from '../../assets/icons/GameIconsPlanetConquest.vue'
+import GameIconsNinjaHeroicStance from '../../assets/icons/GameIconsNinjaHeroicStance.vue'
+
 export default {
-    
-    name: 'landing'
+    name: 'landing',
+    components: {
+        GameIconsPlanetConquest,
+        GameIconsNinjaHeroicStance
+    }
 }
 </script>
 <style lang="scss" scoped></style>

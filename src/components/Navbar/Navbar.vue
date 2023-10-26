@@ -8,20 +8,16 @@
         </div>
         <ul>
             <li>
-                <v-icon name="gi-hobbit-door" />
+                <GameIconsBirdHouse />
                 <router-link to="/">
-
                     Home
                 </router-link>
+                
             </li>
             <li>
-                <router-link to="/">
+                <GameIconsNinjaHeroicStance />
+                <router-link to="/signup">
                     Sign up
-                </router-link>
-            </li>
-            <li>
-                <router-link to="/">
-                    FAQs
                 </router-link>
             </li>
             <div class="user__avatar"></div>
@@ -31,11 +27,15 @@
 
 <script>
     import { RouterLink } from 'vue-router';
+    import GameIconsBirdHouse from '../../assets/icons/GameIconsBirdHouse.vue'
+    // import GameIconsPlanetConquest from '../../assets/icons/GameIconsPlanetConquest.vue'
+    import GameIconsNinjaHeroicStance from '../../assets/icons/GameIconsNinjaHeroicStance.vue'
 
     export default {
         name: 'navbar',
         components: {
-            
+            GameIconsBirdHouse,
+            GameIconsNinjaHeroicStance
         }
     }
 </script>

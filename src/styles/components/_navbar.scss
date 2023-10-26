@@ -26,10 +26,18 @@ nav {
         margin: 0;
         padding: 0;
         @include flex(flex, center, center, initial);
-
+        
         li {
+            @include flex(flex, center, center, initial);
+            
             &:not(:last-of-type) {
                 margin-right: 1.25rem;
+            }
+
+            svg {
+                width: 1.5rem;
+                height: 1.5rem;
+                margin-right: .5rem;
             }
 
             a {
