@@ -1,0 +1,90 @@
+.signup__container {
+    height: 100%;
+    padding: 1rem $padding-right 0 $padding-left;
+    .form__container {
+        width: 100%;
+        height: 100%;
+    
+        &-inner {
+            width: 350px;
+            height: 450px;
+            margin: 2rem auto 0;
+            background-color: rgba($color: $black-shade, $alpha: .5);
+            border-radius: .5rem;
+            backdrop-filter: blur(15px);
+            padding: 1.5rem;
+
+            .header {
+                h2 {
+                    text-align: center;
+                    font-size: 1.75rem;
+                }
+            }
+
+            form {
+                margin-top: 1.5rem;
+
+                div {
+                    &:not(:last-of-type) {
+                        margin-bottom: 1rem;
+                    }
+
+                    label {
+                        margin-bottom: .25rem;
+                        font-size: .95rem;
+                    }
+
+                    input {
+                        padding: .55rem;
+                        background: none;
+                        outline: none;
+                        border: none;
+                        color: $white;
+                        border-bottom: 1px solid $white;
+                    }
+
+                    @include flex (flex, initial, initial, column);
+                }
+
+                button {
+                    margin-top: 1.5rem;
+                    width: 100%;
+                    padding: .65rem;
+                    background-color: $green;
+                    border-radius: 10rem;
+                    text-decoration: none;
+                    color: $white;
+                    font-size: 1.15rem;
+                    border: none;
+                    outline: none;
+                    cursor: pointer;
+
+                    // &:hover {
+
+                    // }
+                    // text-align: center;
+                }
+            }
+
+            div {
+                margin-top: .75rem;
+
+                p {
+                    text-align: center;
+                    font-size: .9rem;
+
+                    a {
+                        text-decoration: none;
+                        color: $white;
+                        text-align: center;
+                        transition: color .3s ease-in-out;
+
+                        &:hover {
+                            color: $gray;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
