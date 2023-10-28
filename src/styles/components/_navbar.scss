@@ -1,9 +1,10 @@
 nav {
-    background-color: rgba($color: $black-shade, $alpha: .75);
+    background-color: rgba(42,43,56, .5);
     // width: 100%;
-    border-radius: 10rem;
+    border-radius: 1rem;
+    border: .1rem solid #2a2b37;
     padding: .45rem 1.5rem;
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(104px);
     @include flex (flex, center, space-between, initial);
 
     .logo {

@@ -4,9 +4,9 @@
             <div class="landing__container-inner-left">
                 <div class="title">
                     <h1>
-                        Unleash <br> Your Intellectual Capabilities...
+                        Unleash <br> Your <span class="gradient">Intellectual </span> Capabilities...
                     </h1>
-                    <span>Quiz like a pro...</span>
+                    <span>Explore the world's most specialized <br>quizzes.</span>
                     <router-link to="/signup">
                         <span>Sign up</span>
                         <GameIconsNinjaHeroicStance />
@@ -14,44 +14,21 @@
                 </div>
             </div>
             <div class="landing__container-inner-right">
-                <div class="blocks">
-                    <div class="block block__1">
-                        <div class="header">
-                            <GameIconsPlanetConquest />
-                            <span>Play</span>
-                        </div>
-                        <div class="body">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse doloremque autem mollitia, aliquid dolorum tempora sint incidunt nisi a dolor?
-                        </div>
+                <div class="landing__hero"> 
+                    <div class="landing__images">
+                        <div class="landing__images-pad">
+                        <img src="../../assets/images/game-pad.png" alt="">
                     </div>
-                    <div class="block block__2">
-                        <div class="header">
-                            <span class="icon"></span>
-                            <h3>Difficulty Level</h3>
-                        </div>
-                        <div class="body">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse doloremque autem mollitia, aliquid dolorum tempora sint incidunt nisi a dolor?
-                        </div>
-                    </div>
-                    <div class="block block__3">
-                        <div class="header">
-                            <span class="icon"></span>
-                            <h3>Engender competition</h3>
-                        </div>
-                        <div class="body">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse doloremque autem mollitia, aliquid dolorum tempora sint incidunt nisi a dolor?
-                        </div>
-                    </div>
-                    <div class="block block__4">
-                        <div class="header">
-                            <span class="icon"></span>
-                            <h3>Tailored Quiz</h3>
-                        </div>
-                        <div class="body">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse doloremque autem mollitia, aliquid dolorum tempora sint incidunt nisi a dolor?
-                        </div>
-                    </div>
-                    
+                    <div class="landing__images-engineer">
+                        <img src="../../assets/images/engineer.png" alt="">
+                    </div>  
+                    <div class="landing__images-nature">
+                        <img src="../../assets/images/nature-and-science.png" alt="">
+                    </div>  
+                    <div class="landing__images-literature">
+                        <img src="../../assets/images/literature.png" alt="">
+                    </div>  
+                    </div>       
                 </div>
             </div>
         </div>

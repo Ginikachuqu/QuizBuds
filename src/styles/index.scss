@@ -5,6 +5,9 @@
 @import './mixins/breakpoints';
 @import './mixins/display';
 
+// Abstract
+@import './abstract/animations';
+
 // Components
 @import './components/navbar';
 @import './components/landing';
