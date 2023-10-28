@@ -17,17 +17,17 @@
                 <div class="landing__hero"> 
                     <div class="landing__images">
                         <div class="landing__images-pad">
-                        <img src="../../assets/images/game-pad.png" alt="">
-                    </div>
-                    <div class="landing__images-engineer">
-                        <img src="../../assets/images/engineer.png" alt="">
-                    </div>  
-                    <div class="landing__images-nature">
-                        <img src="../../assets/images/nature-and-science.png" alt="">
-                    </div>  
-                    <div class="landing__images-literature">
-                        <img src="../../assets/images/literature.png" alt="">
-                    </div>  
+                            <!-- <img src="../../assets/images/game-pad.png" alt=""> -->
+                        </div>
+                        <div class="landing__images-engineer">
+                            <!-- <img src="../../assets/images/engineer.png" alt=""> -->
+                        </div>  
+                        <div class="landing__images-nature">
+                            <!-- <img src="../../assets/images/nature-and-science.png" alt=""> -->
+                        </div>  
+                        <div class="landing__images-literature">
+                            <!-- <img src="../../assets/images/literature.png" alt=""> -->
+                        </div>  
                     </div>       
                 </div>
             </div>
