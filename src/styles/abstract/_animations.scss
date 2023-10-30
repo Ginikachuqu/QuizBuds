@@ -1,11 +1,21 @@
 @keyframes gradient {
     0% {
-        background-position: 0;
+        background-position: 0 50%;
     }
-    // 50% {
-    //     background-position: 100% 50%;
-    // }
+    50% {
+        background-position: 100% 50%;
+    }
     100% {
-        background-position: 400%;
+        background-position: 50% 0%;
     }
+}
+
+@keyframes wobble {
+    0% { transform: translateX(0%);}
+    15% { transform: translateX(25%) rotate(-5deg);}
+    0% { transform: translateX(20%) rotate(3deg);}
+    0% { transform: translateX(-15%) rotate(-3deg);}
+    0% { transform: translateX(10%) rotate(2deg);}
+    0% { transform: translateX(-5%) rotate(-1deg);}
+    0% { transform: translateX(0%);}
 }

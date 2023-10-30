@@ -1,34 +1,181 @@
 <template>
     <div class="dashboard__wrapper">
         <div class="dashboard__wrapper-inner">
-            <div class="dashboard__wrapper-inner-top">
-                <div class="db__container">
-                    <div class="left">
-                        <h3>Hello, {{ username }}</h3>
-                        <p>Welcome back! ready for more challenges?</p>
+            <div class="left__pane">
+                <div class="left__pane-inner">
+                    <ul>
+                        <li>
+                            <router-link to="/">
+                                Play random game
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/">
+                                Create Tournament
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/">
+                                FAQs
+                            </router-link>
+                        </li>
+                        <li>
+                            <router-link to="/">
+                                Settings
+                            </router-link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="middle__pane">
+                <div class="middle__pane-welcome">
+                    <div class="middle__pane-welcome-left">
+                        <div class="intro">
+                            <h2>Welcome, Charles</h2>
+                            <span>Ready to begin a new adventure?</span>
+                        </div>
+                        <div class="progress__blocks">
+                            <div class="progress__blocks-block">
+                                <h3>Ranking</h3>
+                                <span class="badge"></span>
+                            </div>
+                            <div class="progress__blocks-block">
+                                <h3>Available Funds</h3>
+                                <span>$1,000,000</span>
+                            </div>
+                            <div class="progress__blocks-block">
+                                <h3>Buds Progress</h3>
+                                <div class="progress__path">
+                                    <div class="progress__path-bar">
+                                        <div class="progress__path-bar-inner"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="right">
-                        <router-link to="/">Logout</router-link>
+                    
+                </div>
+
+                <!-- Previous played quiz -->
+                <div class="picker previous__attempts__block">
+                    <div class="picker__header previous__attempts__block-header">
+                        <h2>Previous Attempts</h2>
+                        <span>Make another attempt</span>
+                    </div>
+                    <!-- Slider -->
+                    <div class="slider">
+                        <swiper-container navigation :slides-per-view="4" :space-between="30" @swiper="onSwiper" @slideChange="onSlideChange">
+                            <swiper-slide v-for="item in gameTypes" :key="item">
+                                <gameItem :item="item"/>
+                            </swiper-slide>
+                        </swiper-container>
+                    </div>
+                </div>                
+                
+                <!-- Choose new quiz -->
+                <div class="picker choose__quiz__block">
+                    <div class="picker__header choose__quiz__block-header">
+                        <h2>Choose Category</h2>
+                        <span>Prove your mettle!</span>
+                    </div>
+                    <!-- Slider -->
+                    <div class="slider">
+                        <swiper-container navigation :slides-per-view="4" :space-between="30" @swiper="onSwiper" @slideChange="onSlideChange">
+                            <swiper-slide v-for="item in gameTypes" :key="item">
+                                <gameItem :item="item"/>
+                            </swiper-slide>
+                        </swiper-container>
                     </div>
                 </div>
             </div>
-            <div class="dashboard__wrapper-inner-bottom">
-                <div class="dashboard__wrapper-inner-bottom-left">
-                    <div class="play__block">
-                        <button class="play__button">
-                            <GameIconsPlanetConquest />
-                            <span>Play new game</span>
-                        </button>
-                    </div>
-                    <div class="play__block">
-                        <button class="play__button">
-                            <GameIconsGauntlet />
-                            <span>Create tournament</span>
-                        </button>
+            <div class="right__pane">
+                <div class="right__pane-top">
+                    <div class="right__pane-top-inner">
+                        <div class="user__info">
+                            <div class="user__info-avatar"></div>
+                            <div class="user__info-details">
+                                <h4>Charles Grandison</h4>
+                                <router-link to="/">Edit Profile</router-link>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="dashboard__wrapper-inner-bottom-right">
-                    <gameItem v-for="item in gameTypes" :item="item" />
+                <div class="right__pane-bottom">
+                    <div class="achievements">
+                        <ul>
+                            <li>
+                                <span>
+                                    10th
+                                </span>
+                                <span>
+                                    Musicals
+                                </span>
+                                <span>
+                                    13/30
+                                </span>
+                                <span class="user__image">
+                                    <!-- Image -->
+                                </span>
+                            </li>
+                            <li>
+                                <span>
+                                    1st
+                                </span>
+                                <span>
+                                    Movies
+                                </span>
+                                <span>
+                                    29/30
+                                </span>
+                                <span class="user__image">
+                                    <!-- Image -->
+                                </span>
+                            </li>
+                            <li>
+                                <span>
+                                    2nd
+                                </span>
+                                <span>
+                                    Politics
+                                </span>
+                                <span>
+                                    28/30
+                                </span>
+                                <span class="user__image">
+                                    <!-- Image -->
+                                </span>
+                            </li>
+                            <li>
+                                <span>
+                                    1st
+                                </span>
+                                <span>
+                                    Architecture
+                                </span>
+                                <span>
+                                    28/30
+                                </span>
+                                <span class="user__image">
+                                    <!-- Image -->
+                                </span>
+                            </li>
+                            <li>
+                                <span>
+                                    5th
+                                </span>
+                                <span>
+                                    Sports
+                                </span>
+                                <span>
+                                    20/30
+                                </span>
+                                <span class="user__image">
+                                    <!-- Image -->
+                                </span>
+                            </li>
+                            
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -36,12 +183,12 @@
 </template>
 <script>
     import { RouterLink } from 'vue-router'
-    import GameIconsGauntlet from '../../assets/icons/GameIconsGauntlet.vue'
-    import GameIconsPlanetConquest from '../../assets/icons/GameIconsPlanetConquest.vue'
-    // import GameIconsChampions from '../../assets/icons/GameIconsChampions.vue'
+    import { register } from 'swiper/element/bundle'
+    import { Swiper, SwiperSlide} from 'swiper/vue'
 
     import gameItem from '../../components/GameItem/GameItem.vue'
     
+    register()
 
     export default {
         name: 'Dashboard',
@@ -70,10 +217,9 @@
             }
         },
         components: {
-            GameIconsPlanetConquest,
-            GameIconsGauntlet,
             gameItem,
-            // GameIconsChampions,
+            Swiper,
+            SwiperSlide
         }
     }
 </script>

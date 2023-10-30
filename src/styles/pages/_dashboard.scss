@@ -1,118 +1,246 @@
 .dashboard__wrapper {
-    margin-top: 3.5rem;
+    margin-top: 1.85rem;
     padding: 0 $padding-left;
 
     &-inner {
+        @include flex (flex, initial, initial, initial);
+        gap: 1.5rem;
 
-        &-top {
-            width: 90%;
-            margin: 0 auto;
-            background: #fff;
-            background-color: rgba(42,43,56, .5);
-            border-radius: 1rem;
-            border: .1rem solid #2a2b37;
-            padding: 1.5rem 1.5rem;
-            backdrop-filter: blur(104px);
-            @include flex (flex, center, space-between, initial);
-            
-            .db__container {
-                width: 100%;
-                @include flex (flex, center, space-between, initial);
+        .left__pane {
+            position: sticky;
+            padding: 1.5rem .75rem;
+            width: 14rem;
+            max-width: 270px;
+            max-height: 430px;
+            background-color: rgba($color: $black-shade, $alpha: .5);
+            border-radius: .2rem;
+            backdrop-filter: blur(15px);
 
-                .left {
-                    h3 {
-                        font-family: $secondary-font;
-                        font-size: 1.75rem;
-                        margin-bottom: .25rem;
-                    }
+            &-inner {
+                ul {
+                    list-style: none;
 
-                    p {
-                        font-size: 1rem;
-                    }
-                }
-                
-                .right {
-                    a {
-                        display: inline-block;
-                        padding: .75rem;
-                        width: 200px;
-                        background: linear-gradient(198deg, rgb(15,213,172) 0%, rgb(34,182,198) 100.2%);
-                        border-radius: 10rem;
-                        text-decoration: none;
-                        color: $white;
-                        font-size: 1.15rem;
-                        text-align: center;
-                        // font-weight: bolder;
-                        @include flex(inline-flex, center, center, row);
-                        gap: .25rem;
-    
-                        svg {
-                            font-size: 1.5rem;
+                    li {
+                        padding: .65rem .75rem;
+                        background: $black-shade;
+                        border-radius: .45rem;
+
+                        a {
+                            text-decoration: none;
+                            color: $white;
+                            transition: .3s ease-in-out;
+
+                            &:hover {
+                                color: $gray;
+                            }
                         }
-                        span {
-                            padding: 0;
+
+                        &:not(:last-of-type) {
+                            margin-bottom: .45rem;
                         }
                     }
                 }
             }
         }
 
-        &-bottom {
-            width: 100%;
-            @include flex (flex, initial, initial, initial);
-            gap: 2rem;
-            margin-top: 1.5rem;
+        .middle__pane {
+            // padding: 1.5rem .75rem;
+            width: 49rem;
+            // max-width: px;
             
-            &-left {
-                width: 25rem;
-                min-height: 15rem;
-                background-color: rgba(42,43,56, .5);
-                border-radius: 1rem;
-                border: .1rem solid #2a2b37;
-                padding: 1.5rem 1.25rem;
-                backdrop-filter: blur(104px);
+            &-welcome {
+                display: flex;
+                gap: .5rem;
+                width: 100%;
+                // max-width: 270px;
+                background-color: rgba($color: $black-shade, $alpha: .5);
+                border-radius: .2rem;
+                backdrop-filter: blur(15px);
+                overflow: hidden;
 
-                .play__block {
-                    width: 100%;
+                &-left {
+                    padding: 1.5rem 2.5rem;
 
-                    .play__button {
-                        padding: .5rem;
-                        width: 100%;
-                        @include flex(flex, center, center, initial);
-                        margin-bottom: .75rem;
-                        border-radius: .5rem;
-                        outline: none;
-                        border: none;
-                        backdrop-filter: blur(18px);
-                        box-shadow: inset 0 2px 10px rgb(0 0 0 / 10%), 0 10px 15px rgb(0 0 0 / 20%);
-                        background-image: linear-gradient(45deg, rgba(66,60,90,0.6), rgba(66,60,90,0.6));
-                        mix-blend-mode: overlay;
-                        color: $white;
-                        cursor: pointer;
-                        transition: .3s ease-in-out;
+                    .intro {
+                        margin-bottom: 2rem;
 
-                        &:hover {
-                            transform: scale(1.05);
-                        }
-
-                        svg {
-                            font-size: 2rem;
-                            margin-right: .1rem;
+                        h2 {
+                            font-family: $secondary-font;
+                            font-size: 2.15rem;
                         }
 
                         span {
-                            font-size: .95rem;
+                            color: $gray;
                         }
                     }
 
-                        
+                    .progress__blocks {
+                        @include flex (flex, initial, initial, initial);
+                        gap: 1rem;
+
+                        &-block {
+                            width: 10rem;
+                            max-width: 250px;
+                            background: linear-gradient(120deg, #3e187a 0%, #994ecc 74%);
+                            backdrop-filter: blur(104px);
+                            padding: .65rem .75rem;
+                            border-radius: .45rem;
+                            box-shadow: rgba($color: #000000, $alpha: 0.1) 0px 4px 12px;
+
+                            h3 {
+                                font-size: .85rem;
+                                font-family: $secondary-font;
+                            }
+
+                            span {
+                                font-size: .75rem;
+                            }
+
+                            &:nth-child(1) {
+                                display: flex;
+                                justify-content: space-between;
+
+                                span.badge {
+                                    display: inline-block;
+                                    width: 2.25rem;
+                                    height: 2.25rem;
+                                    background-image: url('../../../public/badge.png');
+                                    background-position: 50% 20%;
+                                    background-size: 3rem;
+                                    background-repeat: no-repeat;
+
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &::after {
+                    display: inline-block;
+                    content: '';
+                    position: absolute;
+                    height: 100%;
+                    width: 50%;
+                    top: 1rem;
+                    right: -3rem;
+                    background-image: url('../../../public/planet.png');
+                    background-position: 100% 10%;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    box-shadow: rgba($color: #000000, $alpha: 0.1) 0px 4px 12px;
+                    z-index: -1;
+                    animation: wobble 3s ease infinite;
                 }
             }
 
-            &-right {
-                @include flex (flex, initial, initial, initial);
-                flex-wrap: wrap;
-                gap: 1.25rem;
+            .picker {
+                margin: 2rem 0;
+
+                &__header {
+                    margin-bottom: 1rem;
+
+                    h2 {
+                        font-family: $secondary-font;
+                    }
+
+                    span {
+                        font-family: $secondary-font;
+                        color: $gray;
+                        // font-size: 1rem;
+                    }
+                }
+            }
+        }
+
+        .right__pane {
+            width: 14rem;
+            max-width: 270px;
+            max-height: 430px;
+            // background-color: rgba($color: $black-shade, $alpha: .5);
+            // border-radius: .2rem;
+            
+            &-top {
+                width: 100%;
+                padding: .65rem .75rem;
+                background-color: rgba($color: $black-shade, $alpha: .5);
+                border-radius: .35rem;
+
+                &-inner {
+                    .user__info {
+                        @include flex(flex, center, initial, initial);
+                        gap: .5rem;
+
+                        &-avatar {
+                            height: 3rem;
+                            width: 3rem;
+                            border-radius: 50%;
+                            background-image: url('../../../public/avatars/boy\ 4.jpg');
+                            background-position: center;
+                            background-size: cover;
+                            background-repeat: no-repeat;
+                            box-shadow: rgba($color: #000000, $alpha: 0.1) 0px 4px 12px;
+                        }
+
+                        &-details {
+                            h4 {
+                                font-family: $secondary-font;
+                            }
+
+                            a {
+                                text-decoration: none;
+                                color: $white;
+                                font-size: .85rem;
+                                transition: .3s ease-in-out;
+
+                                &:hover {
+                                    color: $gray;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            &-bottom {
+                margin-top: .85rem;
+                padding: .85rem;
+                height: 100%;
+                border-radius: .5rem;
+                background-color: rgba($color: $black-shade, $alpha: .5);
+
+                .achievements {
+                    ul {
+                        list-style: none;
+
+                        li {
+                            @include flex (flex, center, space-between, initial);
+                            // gap: .5rem;
+                            background-color: $black-shade;
+                            padding: .5rem;
+                            border-radius: .25rem;
+
+                            &:not(:last-of-type) {
+                                margin-bottom: .5rem;
+                            }
+
+                            span {
+                                font-size: .85rem;
+                                // display: inline-block;
+
+                                &.user__image {
+                                    width: 2rem;
+                                    height: 2rem;
+                                    border-radius: 50%;
+                                    background-image: url('../../../public/avatars/boy\ 4.jpg');
+                                    background-position: center;
+                                    background-size: cover;
+                                    background-repeat: no-repeat;
+                                    box-shadow: rgba($color: #000000, $alpha: 0.1) 0px 4px 12px;
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
