@@ -19,3 +19,16 @@
     0% { transform: translateX(-5%) rotate(-1deg);}
     0% { transform: translateX(0%);}
 }
+
+@keyframes wheeze-in {
+    0% {
+        transform: translateX(0%);
+    }
+    20% {
+        transform: translate(-110%, 0);
+    }
+    50%,
+    100% {
+        transform: translate(0%, 0);
+    }
+}

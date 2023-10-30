@@ -31,8 +31,10 @@
                 <div class="middle__pane-welcome">
                     <div class="middle__pane-welcome-left">
                         <div class="intro">
-                            <h2>Welcome, Charles</h2>
-                            <span>Ready to begin a new adventure?</span>
+                            <h2>Good Evening, Charles</h2>
+                            <span class="animated__span">
+                                <span>Ready to unleash your inner quiz whiz? Dive in!</span>
+                            </span>
                         </div>
                         <div class="progress__blocks">
                             <div class="progress__blocks-block">
