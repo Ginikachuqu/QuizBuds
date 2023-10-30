@@ -58,7 +58,10 @@ nav {
         .user__avatar {
             width: 40px;
             height: 40px;
-            background-color: #000;
+            background-image: url('../../../public/avatars/boy\ 4.jpg');
+            background-position: 50% 20%;
+            background-size: 3rem;
+            background-repeat: no-repeat;
             margin-left: 1.25rem;
             border-radius: 50%;
         }
