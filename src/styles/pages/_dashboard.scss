@@ -11,7 +11,7 @@
             padding: 1.5rem .75rem;
             width: 14rem;
             max-width: 270px;
-            max-height: 430px;
+            max-height: 230px;
             background-color: rgba($color: $black-shade, $alpha: .5);
             border-radius: .2rem;
             backdrop-filter: blur(15px);
@@ -24,6 +24,12 @@
                         padding: .65rem .75rem;
                         background: $black-shade;
                         border-radius: .45rem;
+                        @include flex (flex, center, initial, row);
+                        gap: .5rem;
+
+                        svg {
+                            font-size: 1.35rem;
+                        }
 
                         a {
                             text-decoration: none;
@@ -65,7 +71,7 @@
                         margin-bottom: 2rem;
 
                         h2 {
-                            font-family: $secondary-font;
+                            font-family: $primary-font;
                             font-size: 2.15rem;
                         }
 
@@ -97,7 +103,7 @@
 
                             h3 {
                                 font-size: .85rem;
-                                font-family: $secondary-font;
+                                font-family: $primary-font;
                             }
 
                             span {
@@ -149,11 +155,11 @@
                     margin-bottom: 1rem;
 
                     h2 {
-                        font-family: $secondary-font;
+                        font-family: $primary-font;
                     }
 
                     span {
-                        font-family: $secondary-font;
+                        font-family: $primary-font;
                         color: $gray;
                         // font-size: 1rem;
                     }
@@ -192,14 +198,16 @@
 
                         &-details {
                             h4 {
-                                font-family: $secondary-font;
+                                font-family: $primary-font;
                             }
 
                             a {
+                                @include flex (inline-flex, center, initial, initial);
                                 text-decoration: none;
                                 color: $white;
                                 font-size: .85rem;
                                 transition: .3s ease-in-out;
+                                gap: .35rem;
 
                                 &:hover {
                                     color: $gray;

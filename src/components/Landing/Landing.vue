@@ -9,7 +9,7 @@
                     <span>Explore the world's most specialized <br>quizzes.</span>
                     <router-link to="/signup">
                         <span>Sign up</span>
-                        <GameIconsNinjaHeroicStance />
+                        <IonArrowForwardCircle />
                     </router-link>
                 </div>
             </div>
@@ -32,18 +32,144 @@
                 </div>
             </div>
         </div>
+
+        <!-- Features -->
+        <section class="landing__container__features">
+            <div class="landing__container__features-inner">
+                <div class="feature__blocks">
+                    <div class="feature__blocks-inner">
+                        <div class="feature__block feature__block-1">
+                            <div class="feature__block__left">
+                                <div class="title">
+                                    <h1>Discover Unique Topics</h1>
+                                    <IonSearchSharp />
+                                    
+                                </div>
+                                <div class="body">
+                                    <p>Unearth hidden gems and indulge your curiosities from arcane
+                                        <br>arts to futuristic tech, our niche quizzes challenge even the most
+                                        <br>passionate aficionados.
+                                    </p>
+                                    <router-link to='/'>
+                                        <span class="line transition__line">
+                                        </span>
+                                        <span>Play now</span>
+                                    </router-link>
+                                </div>
+                            </div>
+                            <div class="feature__block__right">
+                                <div class="image__container">
+                                    <div class="image__container-image"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature__block feature__block-2">
+                            <div class="feature__block__left">
+                                <div class="title">
+                                    <h1>Personalized Quizzing <br>Experience</h1>
+                                    <!-- <IonSearchSharp /> -->
+                                    
+                                </div>
+                                <div class="body">
+                                    <p>Crafted with precision, every quiz feels tailor-made for you. <br />Dive deep, expand your knowledge, and conquer challenges <br />designed specifically for the enthusiast in you.</p>
+                                    <router-link to='/'>
+                                        <span class="line transition__line">
+                                            <span class="line__inner"></span>
+                                        </span>
+                                        <span>Play now</span>
+                                    </router-link>
+                                </div>
+                            </div>
+                            <div class="feature__block__right">
+                                <div class="image__container">
+                                    <div class="image__container-image"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature__block feature__block-3">
+                            <div class="feature__block__left">
+                                <div class="title">
+                                    <h1>Compete and connect</h1>
+                                    <!-- <IonSearchSharp /> -->
+                                    <div class="line transition__line">
+                                        <div class="line__inner"></div>
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p>Rise up the ranks on the leaderboard. Connect with fellow enthusiasts, <br />challenge friends, and showcase your expertise.</p>
+                                    <router-link to='/'>
+                                        <span class="line transition__line">
+                                            <span class="line__inner"></span>
+                                        </span>
+                                        <span>Play now</span>
+                                    </router-link>
+                                </div>
+                            </div>
+                            <div class="feature__block__right">
+                                <div class="image__container">
+                                    <div class="image__container-image"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="feature__block feature__block-4">
+                            <div class="feature__block__left">
+                                <div class="title">
+                                    <h1>Become a Quizmaster</h1>
+                                    <IonSearchSharp />
+                                    <div class="line transition__line">
+                                        <div class="line__inner"></div>
+                                    </div>
+                                </div>
+                                <div class="body">
+                                    <p>Got a unique topic in mind? create & share your own quizzes. Gather followers <br>and leave your mark in the Quizbuds community.</p>
+                                    <router-link to='/'>
+                                        <span class="line transition__line">
+                                            <span class="line__inner"></span>
+                                        </span>
+                                        <span>Create quiz</span>
+                                    </router-link>
+                                </div>
+                            </div>
+                            <div class="feature__block__right">
+                                <div class="image__container">
+                                    <div class="image__container-image"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </template>
 <script>
 import { RouterLink } from 'vue-router';
-import GameIconsPlanetConquest from '../../assets/icons/GameIconsPlanetConquest.vue'
-import GameIconsNinjaHeroicStance from '../../assets/icons/GameIconsNinjaHeroicStance.vue'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { TextPlugin } from 'gsap/TextPlugin'
+import IonArrowForwardCircle from '../../assets/icons/IonArrowForwardCircle.vue'
+import IonSearchSharp from '../../assets/icons/IonSearchSharp.vue'
+
+gsap.registerPlugin(ScrollTrigger)
 
 export default {
     name: 'landing',
+    setup () {
+        const triggerAnim = gsap.timeline({
+            scrollTrigger: {
+                scrub: 1,
+                trigger: '.feature__blocks',
+                start: 'top 50%',
+                end: 'bottom 30%',
+                markers: true
+            }
+        })
+
+        return { triggerAnim }
+    },
     components: {
-        GameIconsPlanetConquest,
-        GameIconsNinjaHeroicStance
+        IonArrowForwardCircle,
+        IonSearchSharp
     }
 }
 </script>

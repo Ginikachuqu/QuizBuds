@@ -8,14 +8,14 @@
         </div>
         <ul>
             <li>
-                <GameIconsBirdHouse />
+                <IonHome />
                 <router-link to="/">
                     Home
                 </router-link>
                 
             </li>
             <li>
-                <GameIconsNinjaHeroicStance />
+                
                 <router-link to="/signup">
                     Sign up
                 </router-link>
@@ -27,15 +27,12 @@
 
 <script>
     import { RouterLink } from 'vue-router';
-    import GameIconsBirdHouse from '../../assets/icons/GameIconsBirdHouse.vue'
-    // import GameIconsPlanetConquest from '../../assets/icons/GameIconsPlanetConquest.vue'
-    import GameIconsNinjaHeroicStance from '../../assets/icons/GameIconsNinjaHeroicStance.vue'
+    import IonHome from '../../assets/icons/IonHome.vue'
 
     export default {
         name: 'navbar',
         components: {
-            GameIconsBirdHouse,
-            GameIconsNinjaHeroicStance
+            IonHome,
         }
     }
 </script>

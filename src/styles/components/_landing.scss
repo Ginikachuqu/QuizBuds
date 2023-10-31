@@ -1,5 +1,5 @@
 .landing__container {
-    margin-top: 3.5rem;
+    margin-top: 4.85rem;
     width: 100%;
     height: 400px;
     padding-left: $padding-left;
@@ -18,12 +18,13 @@
                 @include flex (flex, initial, initial, column);
                 margin-top: 3rem;
                 h1 {
-                    line-height: 4.75rem;
-                    font-size: 5rem;
+                    line-height: 3.75rem;
+                    font-size: 3.5rem;
+                    font-weight: bolder;
                     font-family: $secondary-font;
 
-                    .gradient {
-                        display: inline;
+                    span.gradient {
+                        display: inline-block;
                         font-size: inherit;
                         background: linear-gradient(-45deg, #8000ff, rgb(207,89,230), #6bc5f8), rgb(42, 43, 56);
                         background-clip: text;
@@ -44,7 +45,7 @@
                     margin-top: 2.5rem;
                     padding: .75rem;
                     width: 200px;
-                    background: linear-gradient(198deg, rgb(15,213,172) 0%, rgb(34,182,198) 100.2%);
+                    border: .1rem solid $gray;
                     border-radius: 10rem;
                     text-decoration: none;
                     color: $white;
@@ -137,6 +138,145 @@
                         //     width: 70%;
                         //     height: 70%;
                         // }
+                    }
+                }
+            }
+        }
+    }
+
+    &__features {
+        margin-top: 5rem;
+        width: 100%;
+        padding: 1rem;
+        
+        &-inner {
+            width: 90%;
+            margin: 0 auto;
+            
+            .feature__blocks {
+                width: 100%;
+                &-inner {
+                    width: 100%;
+
+                    .feature__block {
+                        position: relative;
+                        width: 100%;
+                        height: 40vw;
+                        margin-bottom: 8rem;
+                        padding: 2.5rem;
+                        @include flex (flex, center, initial, initial);
+                        // background: #181818;
+                        
+                        &__left {
+                            .title {
+                                @include flex (flex, center, initial, initial);
+                                gap: .25rem;
+
+                                h1 {
+                                    font-family: $secondary-font;
+                                    font-size: 1.55rem;
+                                    letter-spacing: .1rem;
+                                }
+                                svg {
+                                    font-size: 4rem;
+                                }
+                            }
+
+                            .body {
+                                margin-top: 1rem;
+
+                                p {
+                                    margin-bottom: 1rem;
+                                    font-size: .85rem;
+                                    line-height: 1.25rem;
+                                }
+
+                                a {
+                                    @include flex (inline-flex, center, initial, initial);
+                                    gap: .45rem;
+                                    text-decoration: none;
+                                    color: $white;
+                                    font-size: .85rem;
+                                    // letter-spacing: .15rem;
+                                    transition: all .3s ease-in-out;
+
+                                    .line {
+                                        display: inline-block;
+                                        width: 40px;
+                                        height: 2px;
+                                        background-color: $white;
+                                        transition: all .5s cubic-bezier(1, 0, 0, 1);
+                                    }
+
+                                    &:hover {
+                                        // color: $gray;
+
+                                        .line {
+                                            width: 70px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        &__right {
+                            position: absolute;
+                            right: 0;
+                            width: 50%;
+                            height: 70%;
+                            z-index: -1;
+                            // background-color: $white;
+
+                            .image__container {
+                                width: 100%;
+                                height: 100%;
+                                
+                                &-image {
+                                    width: 100%;
+                                    height: 100%;
+                                    background-size: cover;
+                                    background-position: center;
+                                    background-repeat: no-repeat;
+                                }
+                            }
+                        }
+
+                        &:nth-child(1) {
+                            .feature__block__right {
+                                .image__container {
+                                    &-image {
+                                        background-image: url('../../../public/temp/temp\ 1.png');
+                                    }
+                                }
+                            }
+                        }
+                        &:nth-child(2) {
+                            .feature__block__right {
+                                .image__container {
+                                    &-image {
+                                        background-image: url('../../../public/temp/temp\ 2.png');
+                                    }
+                                }
+                            }
+                        }
+                        &:nth-child(3) {
+                            .feature__block__right {
+                                .image__container {
+                                    &-image {
+                                        background-image: url('../../../public/temp/temp\ 1.png');
+                                    }
+                                }
+                            }
+                        }
+                        &:nth-child(4) {
+                            .feature__block__right {
+                                .image__container {
+                                    &-image {
+                                        background-image: url('../../../public/temp/temp\ 2.png');
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

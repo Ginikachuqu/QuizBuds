@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 // Views
 import Home from '@/views/Home/Home.vue'
-import Dashboard from '@views/Dashboard/Dashbord.vue'
+import Dashboard from '@views/Dashboard/Dashboard.vue'
 import Signup from '@views/SignUp/SignUp.vue'
 import Signin from '@views/SignIn/SignIn.vue'
 import Tournament from '@views/Tournament/Tournament.vue'

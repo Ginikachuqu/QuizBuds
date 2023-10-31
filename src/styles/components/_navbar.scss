@@ -14,7 +14,7 @@ nav {
 
         a {
             text-decoration: none;
-            font-family: $secondary-font;
+            font-family: $primary-font;
             font-size: 1.5rem;
             color: #fff;
             // img {
@@ -38,14 +38,13 @@ nav {
             }
 
             svg {
-                width: 1.5rem;
-                height: 1.5rem;
+                font-size: 1.25rem;
                 margin-right: .5rem;
             }
 
             a {
                 text-decoration: none;
-                font-family: $secondary-font;
+                font-family: $primary-font;
                 font-size: 1.15rem;
                 color: #fff;
                 transition: color 0.3s ease-in-out;

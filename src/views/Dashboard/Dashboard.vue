@@ -5,21 +5,25 @@
                 <div class="left__pane-inner">
                     <ul>
                         <li>
+                            <IonPlayCircleSharp />
                             <router-link to="/">
                                 Play random game
                             </router-link>
                         </li>
                         <li>
+                            <IonIosGameControllerB />
                             <router-link to="/">
                                 Create Tournament
                             </router-link>
                         </li>
                         <li>
+                            <IonCash />
                             <router-link to="/">
-                                FAQs
+                                Wager Zone
                             </router-link>
                         </li>
                         <li>
+                            <IonMdSettings />
                             <router-link to="/">
                                 Settings
                             </router-link>
@@ -97,7 +101,10 @@
                             <div class="user__info-avatar"></div>
                             <div class="user__info-details">
                                 <h4>Charles Grandison</h4>
-                                <router-link to="/">Edit Profile</router-link>
+                                <router-link to="/">
+                                    <IonEdit />
+                                    <span>Edit Profile</span>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -187,6 +194,11 @@
     import { RouterLink } from 'vue-router'
     import { register } from 'swiper/element/bundle'
     import { Swiper, SwiperSlide} from 'swiper/vue'
+    import IonPlayCircleSharp from '../../assets/icons/IonPlayCircleSharp.vue'
+    import IonIosGameControllerB from '../../assets/icons/IonIosGameControllerB.vue'
+    import IonCash from '../../assets/icons/IonCash.vue'
+    import IonMdSettings from '../../assets/icons/IonMdSettings.vue'
+    import IonEdit from '../../assets/icons/IonEdit.vue'
 
     import gameItem from '../../components/GameItem/GameItem.vue'
     
@@ -219,6 +231,11 @@
             }
         },
         components: {
+            IonPlayCircleSharp,
+            IonIosGameControllerB,
+            IonCash,
+            IonMdSettings,
+            IonEdit,
             gameItem,
             Swiper,
             SwiperSlide
