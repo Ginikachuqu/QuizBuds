@@ -54,9 +54,22 @@
                     // font-weight: bolder;
                     @include flex(inline-flex, center, center, row);
                     gap: .25rem;
-
+                    overflow: hidden;
+                    transition: .3s ease-out;
+                    
+                    &:hover {
+                        color: $gray;
+                        transform: scale(.95);
+                        
+                        svg {
+                            transform: translateX(0);
+                        }
+                    }
+                    
                     svg {
+                        transform: translateX(400%);
                         font-size: 1.5rem;
+                        transition: transform .3s ease-out;
                     }
                     span {
                         padding: 0;
@@ -77,8 +90,10 @@
                 height: 100%;
 
                 .landing__images {
+                    position: relative;
                     height: 100%;
                     width: 100%;
+                    z-index: -1;
 
                     &-pad {
                         position: relative;

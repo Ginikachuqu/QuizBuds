@@ -6,7 +6,7 @@
                     <ul>
                         <li>
                             <IonPlayCircleSharp />
-                            <router-link to="/">
+                            <router-link to="/game">
                                 Play random game
                             </router-link>
                         </li>

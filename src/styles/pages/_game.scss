@@ -1,0 +1,155 @@
+.game__wrapper {
+    margin-top: 4.85rem;
+    padding: 0 $padding-left;
+
+    &-inner {
+        @include flex (flex, initial, initial, initial);
+        gap: 1.5rem;
+
+        .left__pane {
+            position: sticky;
+            padding: 1.5rem .85rem;
+            width: 14rem;
+            max-width: 270px;
+            // max-height: 230px;
+            background-color: rgba($color: $black-shade, $alpha: .5);
+            border-radius: .2rem;
+            backdrop-filter: blur(15px);
+
+            &-header {
+                margin-bottom: 1.25rem;
+
+                h2 {
+                    font-size: 1.35rem;
+                }
+
+                span {
+                    font-size: .95rem;
+                    color: $gray;
+                }
+            }
+
+            &-body {
+                form {
+                    .difficulty__container {
+                        margin-bottom: 1.5rem;
+                        
+                        h2 {
+                            font-size: 1.25rem;
+                            margin-bottom: .35rem;
+                            line-height: 1.35rem;
+                        }
+
+                        div {
+                            input {
+                                margin-right: .5rem;
+                            }
+
+                            &:not(:last-of-type) {
+                                margin-bottom: .35rem;
+                            }
+                        }
+
+                        
+                    }
+
+                    .set__question__number {
+                        margin-bottom: 1rem;
+
+                        h2 {
+                            font-size: 1.25rem;
+                            margin-bottom: .65rem;
+                            line-height: 1.35rem;
+                        }
+                        
+                        div {
+                            input {
+                                margin-right: .5rem;
+                            }
+
+                            &:not(:last-of-type) {
+                                margin-bottom: .35rem;
+                            }
+                        }   
+                    }
+
+                    .set__quiz__type {
+                        width: 100%;
+
+                        h2 {
+                            font-size: 1.25rem;
+                            margin-bottom: .5rem;
+                        }
+
+                        select {
+                            width: 100%;
+                            padding: .65rem .2rem;
+                            outline: none;
+                            border-radius: .35rem;
+
+                            option {
+                                padding: .75rem .2rem;
+
+                            }
+                        }
+                    }
+
+                    .cta {
+                        width: 100%;
+                        margin-top: 1.5rem;
+                        display: inline-block;
+                        padding: .75rem;
+                        border: .1rem solid $gray;
+                        border-radius: 10rem;
+                        color: $white;
+                        font-size: 1rem;
+                        background: transparent;
+                        transition: all .3s cubic-bezier(1, 0, 0, 1);
+                        cursor: pointer;
+
+                        &:hover {
+                            transform: scale(.95);
+                        }
+                    }
+                }
+            }
+        }
+
+        .middle__pane {
+            width: 49rem;
+            background-color: rgba($color: $black-shade, $alpha: .5);
+        }
+
+        .right__pane {
+            width: 14rem;
+            max-width: 270px;
+            max-height: 430px;
+
+            .cash__reward__container {
+                width: 100%;
+                padding: .85rem .85rem;
+                background-color: rgba($color: $black-shade, $alpha: .5);
+                
+                &-inner {
+                    width: 100%;
+
+                    ul {
+                        list-style: none;
+
+                        li {
+                            @include flex (flex, initial, space-between, initial);
+
+                            span {
+                                display: inline-block;
+                                margin-bottom: .5rem;
+                                font-size: .85rem;
+
+                                &.money {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

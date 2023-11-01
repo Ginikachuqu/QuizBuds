@@ -42,7 +42,7 @@
                             <div class="feature__block__left">
                                 <div class="title">
                                     <h1>Discover Unique Topics</h1>
-                                    <IonSearchSharp />
+                                    <!-- <IonSearchSharp /> -->
                                     
                                 </div>
                                 <div class="body">
@@ -158,12 +158,18 @@ export default {
         const triggerAnim = gsap.timeline({
             scrollTrigger: {
                 scrub: 1,
-                trigger: '.feature__blocks',
-                start: 'top 50%',
-                end: 'bottom 30%',
-                markers: true
+                trigger: '.feature__block',
+                start: '80% center',
+                // end: 'bottom 30%',
+                // markers: true
             }
-        })
+        }).to('.feature__block__left .title', {
+            ease: 'expo.in',
+            yPercent: -150,
+            duration: 2
+        }, 'start')
+
+        console.log()
 
         return { triggerAnim }
     },

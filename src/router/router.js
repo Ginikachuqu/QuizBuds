@@ -7,6 +7,7 @@ import Dashboard from '@views/Dashboard/Dashboard.vue'
 import Signup from '@views/SignUp/SignUp.vue'
 import Signin from '@views/SignIn/SignIn.vue'
 import Tournament from '@views/Tournament/Tournament.vue'
+import Gamepage from '@views/Gamepage/Gamepage.vue'
 
 
 // Routes
@@ -31,6 +32,11 @@ const routes = [{
     path: '/create-tournament',
     name: 'Tournament',
     component: Tournament
+}
+, {
+    path: '/game',
+    name: 'Gamepage',
+    component: Gamepage
 }]
 
 const router = createRouter({
