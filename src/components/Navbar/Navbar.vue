@@ -3,7 +3,7 @@
         <div class="logo">
             <router-link to="/">
                 <!-- <img src="../../assets/images/logo.png" alt="buddies-logo"> -->
-                ?uizbuds
+                ?uizbudz
             </router-link>
         </div>
         <ul>
