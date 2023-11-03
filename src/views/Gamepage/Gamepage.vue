@@ -59,7 +59,23 @@
                 </div>
             </div>
             <div class="middle__pane">
-
+                <div class="middle__pane-inner">
+                    <div class="question__display">
+                        <h2>Who was the first man to ever kick ass?</h2>
+                    </div>
+                    <div class="options__container">
+                        <ul>
+                            <li>
+                                <button>A. Jackie Chan</button>
+                                <button>B. Bruce Lee</button>
+                            </li>
+                            <li>
+                                <button>C. Arnold Schwazeneger</button>
+                                <button>D. Sylvester Stallone</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="right__pane">
                 <div class="cash__reward__container">
@@ -72,11 +88,18 @@
                         </ul>
                     </div>
                 </div>
+                <!-- Leaderboard -->
+                <div class="leaderboard__container">
+                    <h2>Leaderboard</h2>
+                    <Leaderboard />
+                </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
+
 export default {
     name: 'Gamepage',
 
@@ -114,6 +137,9 @@ export default {
         },].reverse()
 
         return { cashReward }
+    },
+    components: {
+        Leaderboard,
     }
 }
 </script>

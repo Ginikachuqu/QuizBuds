@@ -1,0 +1,78 @@
+.leaderboard__container-inner {
+    width: 100%;
+    padding-top: .5rem;
+
+    ul {
+        list-style: none;
+
+        li {
+            @include flex (flex, center, space-between, initial);
+            
+            &:not(:last-of-type) {
+                margin-bottom: .5rem;
+            }
+
+            span {
+                display: inline-block;
+                
+                &.image__position {
+                    position: relative;
+                    width: 2rem;
+                    height: 2rem;
+                    border-radius: 50%;
+                    
+                    .image {
+                        width: 100%;
+                        height: 100%;
+                        background-image: url('../../../public/avatars/boy\ 4.jpg');
+                        background-position: center;
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                        border-radius: 50%;
+                    }
+                    
+                    .position {
+                        @include flex (flex, center, center, initial);
+                        position: absolute;
+                        height: .85rem;
+                        width: .85rem;
+                        top: -.25rem;
+                        right: -.25rem;
+                        background-color: $green;
+                        border-radius: 50%;
+                        font-size: .65rem;
+                    }
+                }
+
+                &.name {
+                    font-size: .85rem;
+                }
+
+                &.prize {
+                    font-size: .85rem;
+                }
+            }
+
+            &:nth-of-type(2) {
+                span.image {
+                    background-image: url('../../../public/avatars/girl\ 6.jpg');
+                }
+            }
+            &:nth-of-type(3) {
+                span.image {
+                    background-image: url('../../../public/avatars/girl\ 1.jpg');
+                }
+            }
+            &:nth-of-type(4) {
+                span.image {
+                    background-image: url('../../../public/avatars/girl\ 7.jpg');
+                }
+            }
+            &:nth-of-type(5) {
+                span.image {
+                    background-image: url('../../../public/avatars/boy\ 6.jpg');
+                }
+            }
+        }
+    }
+}
