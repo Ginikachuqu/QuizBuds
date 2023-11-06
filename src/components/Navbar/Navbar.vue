@@ -25,16 +25,11 @@
     </nav>
 </template>
 
-<script>
+<script setup>
     import { RouterLink } from 'vue-router';
     import IonHome from '../../assets/icons/IonHome.vue'
 
-    export default {
-        name: 'navbar',
-        components: {
-            IonHome,
-        }
-    }
+
 </script>
 
 <style lang="sass" scoped></style>

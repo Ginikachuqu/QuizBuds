@@ -1,6 +1,22 @@
 .game__wrapper {
     margin-top: 4.85rem;
+    position: relative;
     padding: 0 $padding-left;
+
+    // &::before {
+    //     content: 'asas';
+    //     display: inline-block;
+    //     height: 100%;
+    //     width: 100%;
+    //     // background-color: $green;
+    //     position: absolute;
+    //     background-image: url('../../../public/planet.png');
+    //     background-position: 100% 10%;
+    //     background-size: cover;
+    //     background-repeat: no-repeat;
+    //     z-index: -1;
+    //     animation: wobble 3s ease infinite;
+    // }
 
     &-inner {
         @include flex (flex, initial, initial, initial);
@@ -100,7 +116,8 @@
                         display: inline-block;
                         padding: .75rem;
                         border: .1rem solid $gray;
-                        border-radius: 10rem;
+                        border-radius: .65rem;
+                            box-shadow: 0 0.375em 0 currentcolor;
                         color: $white;
                         font-size: 1rem;
                         background: transparent;
@@ -130,6 +147,7 @@
                 height: 18rem;
                 border-radius: .25rem;
                 border: 1px solid $white;
+                cursor: none;
             }
 
             .options__container {
@@ -151,6 +169,7 @@
                             background: transparent;
                             border: 1px solid $white;
                             border-radius: .65rem;
+                            box-shadow: 0 0.375em 0 currentcolor;
                             font-family: $primary-font;
                             color: $white;
                             font-size: .95rem;
@@ -158,7 +177,6 @@
                             transition: all .3s ease-in-out;
                             
                             &:hover {
-                                box-shadow: 0 0.375em 0 currentcolor;
                                 transform: scale(.97);
                             }
 

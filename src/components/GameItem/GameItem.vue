@@ -10,11 +10,8 @@
         </div>
     </button>
 </template>
-<script>
-export default {
-    props: ['item'],
-    name: 'gameItem',
-}
+<script setup>
+defineProps(['item'])
 </script>
 <style lang="sass" scoped>
 

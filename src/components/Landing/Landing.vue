@@ -142,41 +142,16 @@
         </section>
     </div>
 </template>
-<script>
-import { RouterLink } from 'vue-router';
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { TextPlugin } from 'gsap/TextPlugin'
-import IonArrowForwardCircle from '../../assets/icons/IonArrowForwardCircle.vue'
-import IonSearchSharp from '../../assets/icons/IonSearchSharp.vue'
+<script setup>
+    import { RouterLink } from 'vue-router';
+    import gsap from 'gsap'
+    import { ScrollTrigger } from 'gsap/ScrollTrigger'
+    import { TextPlugin } from 'gsap/TextPlugin'
+    import IonArrowForwardCircle from '../../assets/icons/IonArrowForwardCircle.vue'
+    import IonSearchSharp from '../../assets/icons/IonSearchSharp.vue'
 
-gsap.registerPlugin(ScrollTrigger)
+    gsap.registerPlugin(ScrollTrigger)
 
-export default {
-    name: 'landing',
-    setup () {
-        const triggerAnim = gsap.timeline({
-            scrollTrigger: {
-                scrub: 1,
-                trigger: '.feature__block',
-                start: '80% center',
-                // end: 'bottom 30%',
-                // markers: true
-            }
-        }).to('.feature__block__left .title', {
-            ease: 'expo.in',
-            yPercent: -150,
-            duration: 2
-        }, 'start')
 
-        console.log()
-
-        return { triggerAnim }
-    },
-    components: {
-        IonArrowForwardCircle,
-        IonSearchSharp
-    }
-}
 </script>
 <style lang="scss" scoped></style>

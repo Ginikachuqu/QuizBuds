@@ -5,13 +5,8 @@
     </div>
 </template>
 
-<script>
+<script setup>
     import landing from '@components/Landing/Landing.vue'
     
-    export default {
-        // name: 'Home',
-        components: {
-            landing,
-        }
-    }
+    
 </script>

@@ -190,7 +190,8 @@
         </div>
     </div>
 </template>
-<script>
+<script setup>
+    import { ref } from 'vue'
     import { RouterLink } from 'vue-router'
     import { register } from 'swiper/element/bundle'
     import { Swiper, SwiperSlide} from 'swiper/vue'
@@ -203,13 +204,9 @@
     import gameItem from '../../components/GameItem/GameItem.vue'
     
     register()
+    const username = 'Charles'
 
-    export default {
-        name: 'Dashboard',
-        data () {
-           return { 
-               username: 'Charles',
-               gameTypes: [{
+    const gameTypes = ref([{
                    name: 'Japanese Anime & Manga',
                    image: '../../../public/naruto.jpg',
                }, {
@@ -227,19 +224,7 @@
                }, {
                     name: 'Science & Nature',
                    image: '../../../public/nature-science.jpg',
-               }]
-            }
-        },
-        components: {
-            IonPlayCircleSharp,
-            IonIosGameControllerB,
-            IonCash,
-            IonMdSettings,
-            IonEdit,
-            gameItem,
-            Swiper,
-            SwiperSlide
-        }
-    }
+    }])
+
 </script>
 <style lang="scss" scoped></style>

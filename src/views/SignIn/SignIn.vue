@@ -16,7 +16,7 @@
                         <label for="password">Enter password:</label>
                         <input type="password" name="password" id="password" placeholder="Enter password">
                     </div>
-                    <button class="s__button">Sign in</button>
+                    <button @click.prevent='' class="s__button">Sign in</button>
                 </form>
                 <div>
                     <p>Don't have an account? <router-link to='/signup'>Sign up</router-link> </p>
@@ -26,6 +26,6 @@
     </div>
 </template>
 
-<script>
+<script setup>
     import { RouterLink } from 'vue-router';
 </script>

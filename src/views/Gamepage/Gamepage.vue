@@ -97,14 +97,11 @@
         </div>
     </div>
 </template>
-<script>
+<script setup>
+import { ref } from 'vue'
 import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
 
-export default {
-    name: 'Gamepage',
-
-    setup () {
-        const cashReward = [{
+const cashReward = ref([{
             id: 1, amount: '$100'
         },{
             id: 2, amount: '$500'
@@ -134,14 +131,7 @@ export default {
             id: 14, amount: '$800,000'
         },{
             id: 15, amount: '$100,000'
-        },].reverse()
-
-        return { cashReward }
-    },
-    components: {
-        Leaderboard,
-    }
-}
+        },].reverse())
 </script>
 <style lang="">
     
