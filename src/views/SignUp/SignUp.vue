@@ -6,6 +6,11 @@
                     <h2>Sign up!</h2>
                 </div>
                 <form>
+                    <!-- Username -->
+                    <div class="email__container">
+                        <label for="name">Enter Full Name:</label>
+                        <input type="text" name="name" id="name" placeholder="Enter full name" v-model="user__name">
+                    </div>
                     <!-- Email -->
                     <div class="email__container">
                         <label for="email">Enter email:</label>
@@ -32,24 +37,52 @@
 
 <script setup>
     import { ref } from 'vue'
+    import { db } from '../../../firebase.config'
+    import { updateProfile } from 'firebase/auth'
+    import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
     import { useStore } from 'vuex'
     import { RouterLink, useRouter } from 'vue-router';
 
+    const user__name = ref('')
     const user__email = ref('')
     const user__password = ref('')
     const user__confirmpass = ref('')
+    
 
     const store = useStore()
 
     const router = useRouter()
 
+    // const validateCredentials = (email, password, confirmPassword) => {
+    //     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+    //     const passwordRegex = /^(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$/
+
+    //     !email.match(emailRegex) ? 'Invalid email address' : ''
+    //     !password.match(emailRegex) || password !== confirmPassword ? 'Invalid email address' : ''
+
+    //     return null; // Validation passed
+    // }
+
     const handleSubmit = async () => {
+        const email = user__email.value
+        const username = user__name.value
+
         try {
             await store.dispatch('signup', {
                 email: user__email.value,
-                password: user__password.value
+                password: user__password.value,
+                username: user__name.value
             })
 
+            await updateProfile(store.state.user, {
+                displayName: user__name.value,
+            })
+            console.log('User profile updated')
+            console.log(store.state.user.uid)
+
+            await setDoc(doc(db, 'users', store.state.user.uid), {email, username})
+
+            console.log('User sent to store')
             router.push('/dashboard')
         } catch (err) {
             console.log(err.message)

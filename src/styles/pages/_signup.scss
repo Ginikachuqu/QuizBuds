@@ -1,6 +1,6 @@
 .signup__container {
     height: 100%;
-    margin-top: 4.25rem;
+    margin-top: 2.45rem;
     padding: 1rem $padding-right 0 $padding-left;
 
     .form__container {
@@ -9,7 +9,7 @@
     
         &-inner {
             width: 350px;
-            height: 450px;
+            min-height: 450px;
             margin: 2rem auto 0;
             background-color: rgba($color: $black-shade, $alpha: .5);
             border-radius: .5rem;

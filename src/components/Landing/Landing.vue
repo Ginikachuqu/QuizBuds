@@ -143,15 +143,37 @@
     </div>
 </template>
 <script setup>
+    import { onMounted } from 'vue'
     import { RouterLink } from 'vue-router';
     import gsap from 'gsap'
     import { ScrollTrigger } from 'gsap/ScrollTrigger'
     import { TextPlugin } from 'gsap/TextPlugin'
     import IonArrowForwardCircle from '../../assets/icons/IonArrowForwardCircle.vue'
     import IonSearchSharp from '../../assets/icons/IonSearchSharp.vue'
-
+    
+    
+    
     gsap.registerPlugin(ScrollTrigger)
+    
+    onMounted (() => {
+        const blocks = document.querySelectorAll('.feature__block')
 
-
+        blocks.forEach(block => {
+            gsap.timeline({
+                scrollTrigger: {
+                    scrub: 1,
+                    trigger: block,
+                    start: 'top 50%',
+                    end: 'bottom 30%',
+                    scrub: true,
+                    // markers: true
+                }
+            }).to('.feature__block .title', {
+                ease: 'expo.in',
+                yPercent: -150
+            })
+        })
+        
+    })
 </script>
 <style lang="scss" scoped></style>

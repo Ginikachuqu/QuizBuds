@@ -61,17 +61,14 @@
             <div class="middle__pane">
                 <div class="middle__pane-inner">
                     <div class="question__display">
-                        <h2>Who was the first man to ever kick ass?</h2>
+                        <h2>{{ currentQuestion }}</h2>
                     </div>
                     <div class="options__container">
                         <ul>
-                            <li>
-                                <button>A. Jackie Chan</button>
-                                <button>B. Bruce Lee</button>
-                            </li>
-                            <li>
-                                <button>C. Arnold Schwazeneger</button>
-                                <button>D. Sylvester Stallone</button>
+                            <li v-for="(option, index) in options" :key="index">
+                                <button :disabled='answered' @click='selectOption(option)'>
+                                    {{option}}
+                                </button>
                             </li>
                         </ul>
                     </div>
@@ -98,7 +95,7 @@
     </div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
 
 const cashReward = ref([{
@@ -131,7 +128,66 @@ const cashReward = ref([{
             id: 14, amount: '$800,000'
         },{
             id: 15, amount: '$100,000'
-        },].reverse())
+    },].reverse())
+
+    const questionsData = ref({
+        responsecode: 0,
+        results: [
+            {
+                category: "Entertainment: Japanese Anime & Manga",
+                type: 'multiple',
+                difficulty: 'medium',
+                question: 'Who was the first man to ever kick ass?',
+                correct_answer: 'Jackie Chan',
+                incorrect_answers: ['Bruce Lee', 'Arnold Schwazeneger', 'Sylvester Stallone']
+            }, {
+                category: "Entertainment: Japanese Anime & Manga",
+                type: "multiple",
+                difficulty: "hard",
+                question: "What year was &quot;JoJo&#039;s Bizarre Adventure: Phantom Blood&quot; first released?",
+                correct_answer: "1987",
+                incorrect_answers: ["2013", "1983","1995"]
+            }, {
+                "category": "Entertainment: Japanese Anime & Manga",
+                "type": "multiple",
+                difficulty: "hard",
+                question: "In what year did the manga &quot;Ping Pong&quot; begin serialization?",
+                correct_answer: "1996",
+                incorrect_answers: ["2014", "2010", "2003"]
+            }
+        ]
+    })
+
+    const currentQuestionIndex = ref(0)
+    const answered = ref(false)
+
+    // Get the current Question
+    const currentQuestion = computed(() => questionsData.value.results[currentQuestionIndex.value].question)
+    const options = computed(() => {
+        const correct_answer = questionsData.value.results[currentQuestionIndex.value].correct_answer
+
+        const incorrect_answers = questionsData.value.results[currentQuestionIndex.value].incorrect_answers
+
+        return [correct_answer, ...incorrect_answers]
+    })
+
+    const selectedOption = ref(null)
+
+    const selectOption =(option) => {
+        selectedOption.value = option
+        answered.value = true
+
+        if (option === questionsData.value.results[currentQuestionIndex.value].correct_answer) {
+            console.log('Correct')
+        } else {
+            console.log('Weird response. You failed!')
+        }
+
+        currentQuestionIndex.value++
+        answered.value = false
+    }
+
+    console.log(currentQuestionIndex.value)
 </script>
 <style lang="">
     
