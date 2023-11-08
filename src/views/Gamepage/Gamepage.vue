@@ -62,7 +62,7 @@
             <div class="middle__pane">
                 <div class="middle__pane-inner">
                     <div class="question__display">
-                        <h2>{{ currentQuestion }}</h2>
+                        <h2 v-html="currentQuestion"></h2>
                     </div>
                     <div class="options__container">
                         <ul>
@@ -163,6 +163,19 @@ const cashReward = ref([{
     const currentQuestionIndex = ref(0)
     const answered = ref(false)
 
+    const shuffleOptions = (optionsArray) => {
+        for (let i = optionsArray.length -1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1))
+
+            const temp = optionsArray[i]
+            optionsArray[i] = optionsArray[j]
+            optionsArray[j] = temp
+        }
+
+        console.log(optionsArray)
+        return optionsArray
+    }
+
     // Get the current Question
     const currentQuestion = computed(() => questionsData.value.results[currentQuestionIndex.value].question)
     const options = computed(() => {
@@ -170,7 +183,9 @@ const cashReward = ref([{
 
         const incorrect_answers = questionsData.value.results[currentQuestionIndex.value].incorrect_answers
 
-        return [correct_answer, ...incorrect_answers]
+        const optionsList = [correct_answer, ...incorrect_answers]
+
+        return shuffleOptions(optionsList)
     })
 
     const selectedOption = ref(null)
