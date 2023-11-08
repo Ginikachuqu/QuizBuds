@@ -1,4 +1,5 @@
 <template lang="">
+    <!-- <ErrorToast /> -->
     <div class="game__wrapper">
         <div class="game__wrapper-inner">
             <div class="left__pane">
@@ -96,6 +97,7 @@
 </template>
 <script setup>
 import { ref, computed } from 'vue'
+import ErrorToast from '@components/ErrorToast/ErrorToast.vue'
 import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
 
 const cashReward = ref([{
@@ -179,6 +181,7 @@ const cashReward = ref([{
 
         if (option === questionsData.value.results[currentQuestionIndex.value].correct_answer) {
             console.log('Correct')
+            // option.classList.add('correct')
         } else {
             console.log('Weird response. You failed!')
         }
