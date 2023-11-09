@@ -77,12 +77,9 @@
             await updateProfile(store.state.user, {
                 displayName: user__name.value,
             })
-            console.log('User profile updated')
-            console.log(store.state.user.uid)
 
             await setDoc(doc(db, 'users', store.state.user.uid), {email, username})
 
-            console.log('User sent to store')
             router.push('/dashboard')
         } catch (err) {
             console.log(err.message)

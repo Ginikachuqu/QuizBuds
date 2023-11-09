@@ -101,7 +101,7 @@
                             <div class="user__info-avatar"></div>
                             <div class="user__info-details">
                                 <h4>Charles Grandison</h4>
-                                <router-link to="/">
+                                <router-link to="/editprofile">
                                     <IonEdit />
                                     <span>Edit Profile</span>
                                 </router-link>

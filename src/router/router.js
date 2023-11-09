@@ -8,6 +8,7 @@ import Signup from '@views/SignUp/SignUp.vue'
 import Signin from '@views/SignIn/SignIn.vue'
 import Tournament from '@views/Tournament/Tournament.vue'
 import Gamepage from '@views/Gamepage/Gamepage.vue'
+import EditProfile from '@views/EditProfile/EditProfile.vue'
 
 
 // Routes
@@ -37,6 +38,10 @@ const routes = [{
     path: '/game',
     name: 'Gamepage',
     component: Gamepage
+}, {
+    path: '/editprofile',
+    name: 'EditProfile',
+    component: EditProfile
 }]
 
 const router = createRouter({

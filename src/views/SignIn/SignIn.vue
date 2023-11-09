@@ -16,7 +16,7 @@
                         <label for="password">Enter password:</label>
                         <input type="password" name="password" id="password" placeholder="Enter password">
                     </div>
-                    <button @click.prevent='' class="s__button">Sign in</button>
+                    <button @click.prevent='handleSubmit' class="s__button">Sign in</button>
                 </form>
                 <div>
                     <p>Don't have an account? <router-link to='/signup'>Sign up</router-link> </p>
@@ -27,5 +27,27 @@
 </template>
 
 <script setup>
-    import { RouterLink } from 'vue-router';
+    import { ref } from 'vue'
+    import { RouterLink, useRouter } from 'vue-router';
+    import { useStore } from 'vuex'
+
+    const store = useStore()
+
+    const router = useRouter()
+
+    const user__email = ref('')
+    const user__password = ref('')
+
+    const handleSubmit = async () => {
+        const email = user__email.value
+        const password = user__password.value
+
+        try {
+            await store.dispatch('login', { email, password})
+
+            router('/')
+        } catch (err) {
+            throw new Error(err.message)
+        }
+    }
 </script>
