@@ -54,6 +54,21 @@ nav {
                     
                 }
             }
+
+            button {
+                font-family: $primary-font;
+                background: transparent;
+                color: $white;
+                font-size: 1.15rem;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                transition: color 0.3s ease-in-out;
+
+                &:hover {
+                    color: $gray;
+                }
+            }
         }
 
         .user__avatar {

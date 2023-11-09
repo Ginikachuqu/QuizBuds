@@ -9,12 +9,12 @@
                     <!-- Email -->
                     <div class="email__container">
                         <label for="email">Enter email:</label>
-                        <input type="email" name="email" id="email" placeholder="Enter email">
+                        <input type="email" name="email" id="email" placeholder="Enter email" v-model="user__email">
                     </div>
                     <!-- Password -->
                     <div class="password__container">
                         <label for="password">Enter password:</label>
-                        <input type="password" name="password" id="password" placeholder="Enter password">
+                        <input type="password" name="password" id="password" placeholder="Enter password" v-model="user__password">
                     </div>
                     <button @click.prevent='handleSubmit' class="s__button">Sign in</button>
                 </form>
@@ -42,10 +42,12 @@
         const email = user__email.value
         const password = user__password.value
 
+        console.log(email, password)
+
         try {
             await store.dispatch('login', { email, password})
 
-            router('/')
+            router.push('/dashboard')
         } catch (err) {
             throw new Error(err.message)
         }

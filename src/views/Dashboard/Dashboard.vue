@@ -24,7 +24,7 @@
                         </li>
                         <li>
                             <IonMdSettings />
-                            <router-link to="/">
+                            <router-link to="/editprofile">
                                 Settings
                             </router-link>
                         </li>
@@ -200,11 +200,15 @@
     import IonCash from '../../assets/icons/IonCash.vue'
     import IonMdSettings from '../../assets/icons/IonMdSettings.vue'
     import IonEdit from '../../assets/icons/IonEdit.vue'
+    import { useStore } from 'vuex'
 
     import gameItem from '../../components/GameItem/GameItem.vue'
     
     register()
+
+    const store = useStore()
     const username = 'Charles'
+    
 
     const gameTypes = ref([{
                    name: 'Japanese Anime & Manga',
