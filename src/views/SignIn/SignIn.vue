@@ -42,8 +42,6 @@
         const email = user__email.value
         const password = user__password.value
 
-        console.log(email, password)
-
         try {
             await store.dispatch('login', { email, password})
 
