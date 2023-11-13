@@ -14,18 +14,19 @@
                 </router-link>
                 
             </li>
-            <li v-if="authIsReady">
-                <IonHome />
+            <li v-if="authIsReady && user">
+                <IcRoundSpaceDashboard />
                 <router-link to="/dashboard">
                     Dashboard
                 </router-link>
             </li>
-            <li v-if="authIsReady">
+            <li v-if="authIsReady && !user">
+                <IonMdKey />
                 <router-link to="/signup">
                     Sign up
                 </router-link>
             </li>
-            <li v-if="!authIsReady">
+            <li v-if="authIsReady && user">
                 <button @click.prevent="handleLogout">
                     Log out
                 </button>
@@ -40,12 +41,15 @@
     import { RouterLink, useRouter } from 'vue-router';
     import { useStore } from 'vuex'
     import IonHome from '../../assets/icons/IonHome.vue'
+    import IcBaselineDoorFront from '../../assets/icons/IcBaselineDoorFront.vue'
+    import IcRoundSpaceDashboard from '../../assets/icons/IcRoundSpaceDashboard.vue'
+    import IonMdKey from '../../assets/icons/IonMdKey.vue'
 
     const store = useStore()
 
-    const authIsReady = computed(() => store.state.authIsReady)
+    const user = computed(() => store.state.user)
 
-    console.log(authIsReady)
+    const authIsReady = computed(() => store.state.authIsReady)
     
     const router = useRouter()
     

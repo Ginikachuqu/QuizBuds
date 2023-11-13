@@ -25,7 +25,10 @@
                         <label for="confirm password">Confirm password:</label>
                         <input type="password" name="confirm password" id="confirm password" placeholder="Confirm password" v-model="user__confirmpass">
                     </div>
-                    <button @click.prevent="handleSubmit" class="s__button">Sign up</button>
+                    <button :disabled="isDisabled" @click.prevent='handleSubmit' class="s__button">
+                        <SvgSpinners12DotsScaleRotate v-if="isLoading"/>
+                        <span v-if="!isLoading">Sign In</span>
+                    </button>
                 </form>
                 <div>
                     <p>Already have an account? <router-link to='/signin'>Sign in</router-link> </p>
@@ -42,11 +45,14 @@
     import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
     import { useStore } from 'vuex'
     import { RouterLink, useRouter } from 'vue-router';
+    import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
     const user__name = ref('')
     const user__email = ref('')
     const user__password = ref('')
     const user__confirmpass = ref('')
+    const isLoading = ref(false)
+    const isDisabled = ref(false)
     
 
     const store = useStore()
@@ -67,6 +73,9 @@
         const email = user__email.value
         const username = user__name.value
 
+        isLoading.value = true
+        isDisabled.value = true
+
         try {
             await store.dispatch('signup', {
                 email: user__email.value,
@@ -82,6 +91,8 @@
 
             router.push('/dashboard')
         } catch (err) {
+            isLoading.value = false
+            isDisabled.value = false
             console.log(err.message)
         }
     }

@@ -16,7 +16,10 @@
                         <label for="password">Enter password:</label>
                         <input type="password" name="password" id="password" placeholder="Enter password" v-model="user__password">
                     </div>
-                    <button @click.prevent='handleSubmit' class="s__button">Sign in</button>
+                    <button :disabled="isDisabled" @click.prevent='handleSubmit' class="s__button">
+                        <SvgSpinners12DotsScaleRotate v-if="isLoading"/>
+                        <span v-if="!isLoading">Sign In</span>
+                    </button>
                 </form>
                 <div>
                     <p>Don't have an account? <router-link to='/signup'>Sign up</router-link> </p>
@@ -30,11 +33,14 @@
     import { ref } from 'vue'
     import { RouterLink, useRouter } from 'vue-router';
     import { useStore } from 'vuex'
+    import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
     const store = useStore()
 
     const router = useRouter()
 
+    const isLoading = ref(false)
+    const isDisabled = ref(false)
     const user__email = ref('')
     const user__password = ref('')
 
@@ -42,11 +48,16 @@
         const email = user__email.value
         const password = user__password.value
 
+        isLoading.value = true
+        isDisabled.value = true
+
         try {
             await store.dispatch('login', { email, password})
 
             router.push('/dashboard')
         } catch (err) {
+            isLoading.value = false
+            isDisabled.value = false
             throw new Error(err.message)
         }
     }
