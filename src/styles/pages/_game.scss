@@ -91,13 +91,14 @@
 
                     .set__quiz__type {
                         width: 100%;
-
+                        
                         h2 {
                             font-size: 1.25rem;
                             margin-bottom: .5rem;
                         }
-
+                        
                         select {
+                            font-family: $primary-font;
                             width: 100%;
                             padding: .65rem .2rem;
                             outline: none;
@@ -138,6 +139,43 @@
             background-color: rgba($color: $black-shade, $alpha: .5);
             border-radius: .25rem;
             padding: 1.5rem;
+
+            .life__lines {
+                margin-bottom: .85rem;
+
+                & > button {
+                    margin: 0 .25rem;
+                }
+                
+                .life__btn {
+                    background: transparent;
+                    border: none;
+                    outline: none;
+                    color: $white;
+                    padding: .15rem .25rem;
+                    border-radius: .45rem;
+                    font-size: .85rem;
+                    font-family: $primary-font;
+                    transition: .3s ease-in-out;
+                    cursor: pointer;
+
+                    &:disabled {
+                        color: $gray;
+                        cursor: not-allowed;
+
+                        &:hover {
+                            transform: none;
+                            border: none;
+                        }
+                    }
+                    
+                    &:hover {
+                        color: $gray;
+                        border: 1px solid $white;
+                        transform: scale(.97);
+                    }
+                }
+            }
 
             .question__display {
                 width: 100%;

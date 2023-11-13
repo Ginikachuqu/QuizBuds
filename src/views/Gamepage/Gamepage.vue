@@ -1,5 +1,6 @@
 <template lang="">
     <!-- <ErrorToast /> -->
+    <Modal v-if="showModal"/>
     <div class="game__wrapper">
         <div class="game__wrapper-inner">
             <div class="left__pane">
@@ -61,6 +62,15 @@
             </div>
             <div class="middle__pane">
                 <div class="middle__pane-inner">
+                    <div class="life__lines">
+                        <span>Life lines:</span>
+                        <button disabled class="life__btn fifty__fity">
+                            50:50
+                        </button>
+                        <button class="life__btn phone__a__friend">
+                            Call
+                        </button>
+                    </div>
                     <div class="question__display">
                         <h2 v-html="currentQuestion"></h2>
                     </div>
@@ -98,39 +108,40 @@
 <script setup>
 import { ref, computed } from 'vue'
 import ErrorToast from '@components/ErrorToast/ErrorToast.vue'
+import Modal from '@components/Modal/Modal.vue'
 import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
 
-const cashReward = ref([{
-            id: 1, amount: '$100'
-        },{
-            id: 2, amount: '$500'
-        },{
-            id:3, amount: '$1000'
-        },{
-            id: 4, amount: '$10,000'
-        },{
-            id: 5, amount: '$50,000'
-        },{
-            id: 6, amount: '$100,000'
-        },{
-            id: 7, amount: '$150,000'
-        },{
-            id: 8, amount: '$200,000'
-        },{
-            id: 9, amount: '$250,000'
-        },{
-            id: 10, amount: '$300,000'
-        },{
-            id: 11, amount: '$400,000'
-        },{
-            id: 12, amount: '$640,000'
-        },{
-            id: 13, amount: '$750,000'
-        },{
-            id: 14, amount: '$800,000'
-        },{
-            id: 15, amount: '$100,000'
-    },].reverse())
+    const cashReward = ref([{
+                id: 1, amount: '$100'
+            },{
+                id: 2, amount: '$500'
+            },{
+                id:3, amount: '$1000'
+            },{
+                id: 4, amount: '$10,000'
+            },{
+                id: 5, amount: '$50,000'
+            },{
+                id: 6, amount: '$100,000'
+            },{
+                id: 7, amount: '$150,000'
+            },{
+                id: 8, amount: '$200,000'
+            },{
+                id: 9, amount: '$250,000'
+            },{
+                id: 10, amount: '$300,000'
+            },{
+                id: 11, amount: '$400,000'
+            },{
+                id: 12, amount: '$640,000'
+            },{
+                id: 13, amount: '$750,000'
+            },{
+                id: 14, amount: '$800,000'
+            },{
+                id: 15, amount: '$100,000'
+        },].reverse())
 
     const questionsData = ref({
         responsecode: 0,
@@ -161,7 +172,9 @@ const cashReward = ref([{
     })
 
     const currentQuestionIndex = ref(0)
+    const currentAmountIndex = ref(0)
     const answered = ref(false)
+    const showModal = ref(false)
 
     const shuffleOptions = (optionsArray) => {
         for (let i = optionsArray.length -1; i > 0; i--) {

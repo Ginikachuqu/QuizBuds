@@ -1,0 +1,34 @@
+.modal__container {
+    @include flex (flex, center, center, initial);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: $black, $alpha: .95);
+    color: $black-shade;
+    z-index: 10000;
+
+    &-inner {
+        width: 50%;
+        height: 70%;
+        border-radius: 1.5rem;
+        padding: 2rem $padding-left;
+        background-color: $white;
+        @include flex (flex, center, center, column);
+
+
+        // .image {
+
+        // }
+
+        h2 {
+            font-size: 3.25rem;
+            font-family: $secondary-font;
+        }
+        
+        p {
+            font-size: 1.25rem;
+        }
+    }
+}
