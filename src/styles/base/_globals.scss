@@ -12,3 +12,14 @@ body {
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
 }
+
+button {
+    &:disabled {
+        color: $gray;
+        cursor: not-allowed;
+
+        &:hover {
+            transform: none;
+        }
+    }
+}

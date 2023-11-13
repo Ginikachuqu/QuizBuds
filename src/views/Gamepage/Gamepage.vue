@@ -89,9 +89,9 @@
                 <div class="cash__reward__container">
                     <div class="cash__reward__container-inner">
                         <ul>
-                            <li v-for="cash in cashReward" :key="cash.id">
+                            <li v-for="(cash, index) in cashReward" :key="cash.id">
                                 <span>{{ cash.id }}</span>
-                                <span>{{ cash.amount }}</span>
+                                <span v-show="index === currentAmountIndex" :class="{'active' : index === currentAmountIndex}">{{ cash.amount }}</span>
                             </li>
                         </ul>
                     </div>
@@ -106,7 +106,7 @@
     </div>
 </template>
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import ErrorToast from '@components/ErrorToast/ErrorToast.vue'
 import Modal from '@components/Modal/Modal.vue'
 import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
@@ -172,7 +172,7 @@ import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
     })
 
     const currentQuestionIndex = ref(0)
-    const currentAmountIndex = ref(0)
+    const currentAmountIndex = ref(cashReward.value.length - 1)
     const answered = ref(false)
     const showModal = ref(false)
 
@@ -217,6 +217,10 @@ import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
         currentQuestionIndex.value++
         answered.value = false
     }
+
+    watch(currentQuestionIndex, () => {
+        currentAmountIndex.value--
+    })
 
     console.log(currentQuestionIndex.value)
 </script>

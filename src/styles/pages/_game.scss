@@ -135,7 +135,7 @@
 
         .middle__pane {
             width: 49rem;
-            max-height: 490px;
+            min-height: 490px;
             background-color: rgba($color: $black-shade, $alpha: .5);
             border-radius: .25rem;
             padding: 1.5rem;
@@ -253,7 +253,7 @@
                                 margin-bottom: .5rem;
                                 font-size: .85rem;
 
-                                &.money.active {
+                                &.active {
                                     &::after {
                                         content: '';
                                         display: inline-block;
