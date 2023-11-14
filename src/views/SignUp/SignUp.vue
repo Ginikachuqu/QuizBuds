@@ -72,6 +72,9 @@
     const handleSubmit = async () => {
         const email = user__email.value
         const username = user__name.value
+        const walletBalance = 0
+        const gender = null
+        
 
         isLoading.value = true
         isDisabled.value = true
@@ -87,7 +90,7 @@
                 displayName: user__name.value,
             })
 
-            await setDoc(doc(db, 'users', store.state.user.uid), {email, username})
+            await setDoc(doc(db, 'users', store.state.user.uid), {email, username, walletBalance, gender})
 
             router.push('/dashboard')
         } catch (err) {

@@ -35,7 +35,7 @@
                 <div class="middle__pane-welcome">
                     <div class="middle__pane-welcome-left">
                         <div class="intro">
-                            <h2>Good Evening, Charles</h2>
+                            <h2>Good Evening, {{ username }}</h2>
                             <span class="animated__span">
                                 <span>Ready to unleash your inner quiz whiz? Dive in!</span>
                             </span>
@@ -47,7 +47,7 @@
                             </div>
                             <div class="progress__blocks-block">
                                 <h3>Available Funds</h3>
-                                <span>$1,000,000</span>
+                                <span> ${{ walletBalance }}</span>
                             </div>
                             <div class="progress__blocks-block">
                                 <h3>Buds Progress</h3>
@@ -191,7 +191,9 @@
     </div>
 </template>
 <script setup>
-    import { ref } from 'vue'
+    import { ref, computed } from 'vue'
+    import { db } from '../../../firebase.config'
+    import { collection, doc, getDoc } from 'firebase/firestore'
     import { RouterLink } from 'vue-router'
     import { register } from 'swiper/element/bundle'
     import { Swiper, SwiperSlide} from 'swiper/vue'
@@ -207,8 +209,31 @@
     register()
 
     const store = useStore()
-    const username = 'Charles'
+
+    const user = computed(() => store.state.user)
+
+    const authIsReady = computed(() => store.state.authIsReady)
+
+    const username = computed(() => user.value.displayName.split(' ')[1])
+
+    const walletBalance = ref(null)
+
     
+    const getWalletBalance = async () => {
+        const docRef = doc(db, 'users', store.state.user.uid)
+        const docSnap = await getDoc(docRef)
+        let response = null;
+
+        if (docSnap.exists()) {
+            response = docSnap.data()
+        } else {
+            console.log('Document does not exist')
+        }
+        console.log(response.walletBalance)
+        walletBalance.value = response.walletBalance
+    }
+    
+    getWalletBalance()
 
     const gameTypes = ref([{
                    name: 'Japanese Anime & Manga',
