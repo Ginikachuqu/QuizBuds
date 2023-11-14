@@ -30,5 +30,18 @@
         p {
             font-size: 1.25rem;
         }
+
+        a {
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 1.15rem;
+            text-decoration: none;
+            color: $green;
+            transition: all .3s ease-in-out;
+
+            &:hover {
+                transform: scale(1.075);
+            }
+        }
     }
 }

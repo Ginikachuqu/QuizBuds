@@ -5,11 +5,16 @@
                 Trophy Image
             </div>
             <h2>Game over!</h2>
-            <p>You won $450,000</p>
+            <p>You won {{ amount }}</p>
+            <router-link to="/dashboard">
+                Go to Dashboard
+            </router-link>
         </div>
     </div>
 </template>
 <script setup>
+import { RouterLink } from 'vue-router'
+defineProps(['amount'])
 
 </script>
 <style lang="scss" scoped></style>

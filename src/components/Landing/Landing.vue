@@ -5,6 +5,11 @@
                 <div class="title">
                     <h1>
                         Unleash <br> Your <span class="gradient">Intellectual </span> Capabilities...
+                        <!-- <span class="c__line">
+                            <span class="c__line-inner">
+                                Unleash
+                            </span>
+                        </span> -->
                     </h1>
                     <span>Explore the world's most specialized <br>quizzes.</span>
                     <router-link to="/signup">
@@ -170,6 +175,7 @@
                 }
             }).to('.feature__block .title', {
                 ease: 'expo.in',
+                duration: .2,
                 yPercent: -150
             })
         })

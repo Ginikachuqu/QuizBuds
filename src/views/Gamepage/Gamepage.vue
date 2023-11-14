@@ -1,6 +1,6 @@
 <template lang="">
     <!-- <ErrorToast /> -->
-    <Modal v-if="showModal"/>
+    <Modal v-if="showModal" :amount='winningAmount'/>
     <div class="game__wrapper">
         <div class="game__wrapper-inner">
             <div class="left__pane">
@@ -14,33 +14,22 @@
                         <div class="difficulty__container">
                             <h2>Set difficulty level</h2>
                             <div>
-                                <input type="radio" name="difficulty" id="easy" value="easy" checked>
-                                <label for="easy">Easy</label>
+                                <label for="easy">
+                                    <input type="radio" name="difficulty" id="easy" value="easy" checked>
+                                    <span>Easy</span>
+                                </label>
                             </div>
                             <div>
-                                <input type="radio" name="difficulty" id="medium" value="medium">
-                                <label for="medium">Medium</label>
+                                <label for="medium">
+                                    <input type="radio" name="difficulty" id="medium" value="medium">
+                                    <span>Medium</span>
+                                </label>
                             </div>
                             <div>
-                                <input type="radio" name="difficulty" id="hard" value="hard">
-                                <label for="hard">Hard</label>
-                            </div>
-                        </div>
-
-                        <!-- Number of questions -->
-                        <div class="set__question__number">
-                            <h2>Set number of questions</h2>
-                            <div>
-                                <input type="radio" name="ques-num" id="10" value="10" checked>
-                                <label for="easy">10</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="ques-num" id="20" value="20">
-                                <label for="medium">20</label>
-                            </div>
-                            <div>
-                                <input type="radio" name="ques-num" id="30" value="30">
-                                <label for="hard">30</label>
+                                <label for="hard">
+                                    <input type="radio" name="difficulty" id="hard" value="hard">
+                                    <span>Hard</span>
+                                </label>
                             </div>
                         </div>
 
@@ -56,7 +45,7 @@
                                 <option value="Anime">History</option>
                             </select>
                         </div>
-                        <button class="cta">Start Game</button>
+                        <button :disabled="isPlaying" class="cta">Start Game</button>
                     </form>
                 </div>
             </div>
@@ -64,10 +53,10 @@
                 <div class="middle__pane-inner">
                     <div class="life__lines">
                         <span>Life lines:</span>
-                        <button disabled class="life__btn fifty__fity">
+                        <button :disabled="!lifelines.fiftyFifty" @click="useFiftyFifty" class="life__btn fifty__fity">
                             50:50
                         </button>
-                        <button class="life__btn phone__a__friend">
+                        <button :disabled="!lifelines.phoneAFriend" @click="usePhoneAFriend" class="life__btn phone__a__friend">
                             Call
                         </button>
                     </div>
@@ -78,7 +67,8 @@
                         <ul>
                             <li v-for="(option, index) in options" :key="index">
                                 <button :disabled='answered' @click='selectOption(option)'>
-                                    {{option}}
+                                    <SvgSpinners12DotsScaleRotate v-if="isChecking"/>
+                                    <span v-if="!isChecking">{{ option }}</span>
                                 </button>
                             </li>
                         </ul>
@@ -91,7 +81,7 @@
                         <ul>
                             <li v-for="(cash, index) in cashReward" :key="cash.id">
                                 <span>{{ cash.id }}</span>
-                                <span v-show="index === currentAmountIndex" :class="{'active' : index === currentAmountIndex}">{{ cash.amount }}</span>
+                                <span :class="{'active' : index === currentAmountIndex}">{{ cash.amount }}</span>
                             </li>
                         </ul>
                     </div>
@@ -110,6 +100,7 @@ import { ref, computed, watch } from 'vue'
 import ErrorToast from '@components/ErrorToast/ErrorToast.vue'
 import Modal from '@components/Modal/Modal.vue'
 import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
+import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
     const cashReward = ref([{
                 id: 1, amount: '$100'
@@ -168,13 +159,39 @@ import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
                 correct_answer: "1996",
                 incorrect_answers: ["2014", "2010", "2003"]
             }
+            , {
+                "category": "Entertainment: Japanese Anime & Manga",
+                "type": "multiple",
+                difficulty: "hard",
+                question: "Who was the protagonist in the series PEAKY BLINDERS?",
+                correct_answer: "Tommy Shelby",
+                incorrect_answers: ["Arthur Shelby", "Suzzan", "Flitwick"]
+            }
+            , {
+                "category": "Entertainment: Japanese Anime & Manga",
+                "type": "multiple",
+                difficulty: "hard",
+                question: "What series has a villian named Lord Voldemort?",
+                correct_answer: "Harry Potter",
+                incorrect_answers: ["Merlin", "Robinhood", "Dominion"]
+            }
         ]
     })
 
+    const isPlaying = ref(true)
     const currentQuestionIndex = ref(0)
     const currentAmountIndex = ref(cashReward.value.length - 1)
+    const winningAmount = ref('')
+    const selectedOption = ref(null)
+    const isChecking = ref(false)
+    const lifelines = ref({
+        phoneAFriend: true,
+        fiftyFifty: true
+    })
+    const friends = ref(['Eduardo', 'Wyatt', 'Chloe', 'Charlotte'])
     const answered = ref(false)
     const showModal = ref(false)
+    
 
     const shuffleOptions = (optionsArray) => {
         for (let i = optionsArray.length -1; i > 0; i--) {
@@ -200,22 +217,90 @@ import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
 
         return shuffleOptions(optionsList)
     })
+    
 
-    const selectedOption = ref(null)
+    // Lifelines functions
+    const usePhoneAFriend = () => {
+        // Get a random friend
+        const randomFriendIndex = Math.floor(Math.random() * friends.value.length)
+        // Get random option
+        const randomOptionIndex = Math.floor(Math.random() * options.value.length)
+
+        lifelines.value.phoneAFriend = false
+
+        // console.log(randomFriendIndex, randomOptionIndex)
+        // console.log(`${friends.value[randomFriendIndex]} thinks its ${options.value[randomOptionIndex]}`)
+        return [friends.value[randomFriendIndex, options.value[randomOptionIndex]]]
+    }
+
+    const useFiftyFifty = () => {
+        if (!answered.value) {
+            // clone options array to avoid modifying original array
+            const clonedOptions = [...options.value]
+
+            // Find correct option
+            const correctOptionIndex = options.value.findIndex(option => option === questionsData.value.results[currentQuestionIndex.value].correct_answer)
+
+            // remove two random incorrect options
+            let removedCount = 0
+            let currentIndex = 0
+            
+            while (removedCount < 2 && currentIndex < clonedOptions.length) {
+                if (currentIndex !== correctOptionIndex && Math.random() > 0.5) {
+                    clonedOptions.splice(currentIndex, 1)
+                    removedCount++
+                } else {
+                    currentIndex++
+                }
+            }
+
+            // update options with the modified array
+            // options.value = clonedOptions
+            console.log(clonedOptions)
+
+            // Disabled lifeline
+            lifelines.fiftyFifty = false
+        }
+    }
 
     const selectOption =(option) => {
         selectedOption.value = option
+        isChecking.value = true
         answered.value = true
 
-        if (option === questionsData.value.results[currentQuestionIndex.value].correct_answer) {
+        setTimeout(() => {
+            if (option === questionsData.value.results[currentQuestionIndex.value].correct_answer) {
             console.log('Correct')
-            // option.classList.add('correct')
-        } else {
-            console.log('Weird response. You failed!')
-        }
+            if (currentQuestionIndex.value + 1 === questionsData.value.results.length) {
+                // Get final prize amount
+                const finalPrizeIndex = currentAmountIndex.value
+                winningAmount.value = cashReward.value[finalPrizeIndex].amount
 
-        currentQuestionIndex.value++
-        answered.value = false
+                // Add amount won to user's current funds
+
+                // Display modal
+                showModal.value = true
+
+            } else {
+                currentQuestionIndex.value++
+            }
+                isChecking.value = false
+                answered.value = false
+            } else {
+                // Get final prize amount
+                const finalPrizeIndex = currentAmountIndex.value
+
+                // Set wining amount to zero if user fails first question
+                currentQuestionIndex.value <= 0 ? winningAmount.value = 0 : winningAmount.value = cashReward.value[finalPrizeIndex].amount
+
+                // Add amount won to user's current funds
+
+                // Display modal
+                showModal.value = true
+                console.log('Weird response. You failed!', winningAmount.value)
+            }
+        }, 3000)
+
     }
 
     watch(currentQuestionIndex, () => {
