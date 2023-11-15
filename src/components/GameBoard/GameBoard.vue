@@ -74,7 +74,6 @@ results: [
 
 // Variable Definitions
 const emits = defineEmits(['incrementAmount', 'endGame'])
-const isPlaying = ref(true)
 const currentQuestionIndex = ref(0)
 const options = ref([])
 let currentAmountIndex = defineProps(['currentAmountIndex'])

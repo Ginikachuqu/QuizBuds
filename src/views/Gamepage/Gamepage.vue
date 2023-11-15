@@ -9,25 +9,25 @@
                     <span>Set preferred game modes</span>
                 </div>
                 <div class="left__pane-body">
-                    <form>
+                    <form @submit.prevent="handleFetch">
                         <!-- Difficulty Level -->
                         <div class="difficulty__container">
                             <h2>Set difficulty level</h2>
                             <div>
                                 <label for="easy">
-                                    <input type="radio" name="difficulty" id="easy" value="easy" checked>
+                                    <input type="radio" v-model="difficulty" name="difficulty" id="easy" value="easy">
                                     <span>Easy</span>
                                 </label>
                             </div>
                             <div>
                                 <label for="medium">
-                                    <input type="radio" name="difficulty" id="medium" value="medium">
+                                    <input type="radio" v-model="difficulty" name="difficulty" id="medium" value="medium">
                                     <span>Medium</span>
                                 </label>
                             </div>
                             <div>
                                 <label for="hard">
-                                    <input type="radio" name="difficulty" id="hard" value="hard">
+                                    <input type="radio" v-model="difficulty" name="difficulty" id="hard" value="hard">
                                     <span>Hard</span>
                                 </label>
                             </div>
@@ -36,7 +36,7 @@
                         <!-- Quiz type -->
                         <div class="set__quiz__type">
                             <h2>Choose quiz type</h2>
-                            <select name="quiz__type" id="quiz__type">
+                            <select name="quiz__type" v-model="quizCategory" id="quiz__type">
                                 <option value="Select preferred quiz type" disabled>Select preferred quiz type</option>
                                 <option value="Anime">Anime</option>
                                 <option value="Anime">Musicals</option>
@@ -86,6 +86,7 @@ import Placeholder from '@components/Placeholder/Placeholder.vue'
 import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
 import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
+
     const cashReward = ref([{
             id: 1, amount: '$100'
         },{
@@ -118,11 +119,24 @@ import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsSc
             id: 15, amount: '$100,000'
     },].reverse())
 
+    const gameData = ref({
+        // Question Data gotten from the API
+        // questionData: null;
+    })
     const showModal = ref(false)
-    const isPlaying = ref(true)
+    const isPlaying = ref(false)
+    const difficulty = ref('easy')
+    const quizCategory = ref('Select preferred quiz type')
     const winningAmount = ref(0)
     let currentAmountIndex = ref(cashReward.value.length - 1)
 
+
+    // Fetch function
+    const handleFetch = async () => {
+        const url = ''
+    }
+
+    // Emit functions
     const incrementAmount = () => {
         console.log('emit: ' + currentAmountIndex.value--)
         // return currentAmountIndex--
