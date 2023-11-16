@@ -47,7 +47,10 @@
                             </div>
                             <div class="progress__blocks-block">
                                 <h3>Available Funds</h3>
-                                <span> ${{ walletBalance }}</span>
+                                <span>
+                                    <SvgSpinners12DotsScaleRotate v-if="walletBalance == null"/>
+                                    <span v-else>{{ walletBalance }} </span>
+                                </span>
                             </div>
                             <div class="progress__blocks-block">
                                 <h3>Buds Progress</h3>
@@ -119,9 +122,6 @@
                                 <span>
                                     Musicals
                                 </span>
-                                <span>
-                                    13/30
-                                </span>
                                 <span class="user__image">
                                     <!-- Image -->
                                 </span>
@@ -132,9 +132,6 @@
                                 </span>
                                 <span>
                                     Movies
-                                </span>
-                                <span>
-                                    29/30
                                 </span>
                                 <span class="user__image">
                                     <!-- Image -->
@@ -147,9 +144,6 @@
                                 <span>
                                     Politics
                                 </span>
-                                <span>
-                                    28/30
-                                </span>
                                 <span class="user__image">
                                     <!-- Image -->
                                 </span>
@@ -161,9 +155,6 @@
                                 <span>
                                     Architecture
                                 </span>
-                                <span>
-                                    28/30
-                                </span>
                                 <span class="user__image">
                                     <!-- Image -->
                                 </span>
@@ -174,9 +165,6 @@
                                 </span>
                                 <span>
                                     Sports
-                                </span>
-                                <span>
-                                    20/30
                                 </span>
                                 <span class="user__image">
                                     <!-- Image -->
@@ -202,6 +190,7 @@
     import IonCash from '../../assets/icons/IonCash.vue'
     import IonMdSettings from '../../assets/icons/IonMdSettings.vue'
     import IonEdit from '../../assets/icons/IonEdit.vue'
+    import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
     import { useStore } from 'vuex'
 
     import gameItem from '../../components/GameItem/GameItem.vue'
