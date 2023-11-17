@@ -28,55 +28,13 @@ import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsSc
 
 // props defination
 
-const questionsData = ref({
-responsecode: 0,
-results: [
-{
-    category: "Entertainment: Japanese Anime & Manga",
-    type: 'multiple',
-    difficulty: 'medium',
-    question: 'Who was the first man to ever kick ass?',
-    correct_answer: 'Jackie Chan',
-    incorrect_answers: ['Bruce Lee', 'Arnold Schwazeneger', 'Sylvester Stallone']
-}, {
-    category: "Entertainment: Japanese Anime & Manga",
-    type: "multiple",
-    difficulty: "hard",
-    question: "What year was &quot;JoJo&#039;s Bizarre Adventure: Phantom Blood&quot; first released?",
-    correct_answer: "1987",
-    incorrect_answers: ["2013", "1983","1995"]
-}, {
-    "category": "Entertainment: Japanese Anime & Manga",
-    "type": "multiple",
-    difficulty: "hard",
-    question: "In what year did the manga &quot;Ping Pong&quot; begin serialization?",
-    correct_answer: "1996",
-    incorrect_answers: ["2014", "2010", "2003"]
-}
-, {
-    "category": "Entertainment: Japanese Anime & Manga",
-    "type": "multiple",
-    difficulty: "hard",
-    question: "Who was the protagonist in the series PEAKY BLINDERS?",
-    correct_answer: "Tommy Shelby",
-    incorrect_answers: ["Arthur Shelby", "Suzzan", "Flitwick"]
-}
-, {
-    "category": "Entertainment: Japanese Anime & Manga",
-    "type": "multiple",
-    difficulty: "hard",
-    question: "What series has a villian named Lord Voldemort?",
-    correct_answer: "Harry Potter",
-    incorrect_answers: ["Merlin", "Robinhood", "Dominion"]
-}
-]
-})
+const questionsData = defineProps(['quizData'])
 
 // Variable Definitions
 const emits = defineEmits(['incrementAmount', 'endGame'])
 const currentQuestionIndex = ref(0)
 const options = ref([])
-let currentAmountIndex = defineProps(['currentAmountIndex'])
+// let currentAmountIndex = defineProps(['currentAmountIndex'])
 const selectedOption = ref(null)
 const isChecking = ref(false)
 const lifelines = ref({
@@ -87,6 +45,8 @@ const friends = ref(['Eduardo', 'Wyatt', 'Chloe', 'Charlotte'])
 const answered = ref(false)
 const gameEnded = ref(false)
 
+
+console.log(questionsData)
 
 const shuffleOptions = () => {
     const correct_answer = questionsData.value.results[currentQuestionIndex.value].correct_answer

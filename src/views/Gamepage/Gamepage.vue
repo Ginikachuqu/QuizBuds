@@ -52,7 +52,7 @@
             <div class="middle__pane">
                 <div class="middle__pane-inner">
                     <!-- Gameboard Component -->
-                    <GameBoard v-if="isPlaying" :currentAmountIndex="currentAmountIndex" @endGame="endGame" @incrementAmount="incrementAmount"/>
+                    <GameBoard v-if="isPlaying" :quizData="quizData" :currentAmountIndex="currentAmountIndex" @endGame="endGame" @incrementAmount="incrementAmount"/>
                     <!-- Placeholder Component -->
                     <Placeholder v-else/>
                 </div>
@@ -63,7 +63,7 @@
                         <ul>
                             <li v-for="(cash, index) in cashReward" :key="cash.id">
                                 <span>{{ cash.id }}</span>
-                                <span :class="{'active' : index === currentAmountIndex}">{{ cash.amount }}</span>
+                                <span :class="{'active' : index === currentAmountIndex}">${{ cash.amount }}</span>
                             </li>
                         </ul>
                     </div>
@@ -124,12 +124,9 @@ import { useStore } from 'vuex'
 
     const store = useStore()
 
-    const gameData = ref({
-        // Question Data gotten from the API
-        // questionData: null;
-    })
+    const gameData = ref([])
     const showModal = ref(false)
-    const isPlaying = ref(true)
+    const isPlaying = ref(false)
     const difficulty = ref('easy')
     const quizCategory = ref('Select preferred quiz type')
     const winningAmount = ref(0)
@@ -138,7 +135,22 @@ import { useStore } from 'vuex'
 
     // Fetch function
     const handleFetch = async () => {
-        const url = ''
+        const url = `https://opentdb.com/api.php?amount=15&category=21&difficulty=${difficulty.value}&type=multiple`
+
+        try {
+            const response = await fetch(url)
+
+            if (!response.ok) throw new Error('Response is defective')
+            const data = await response.json()
+            
+            gameData.value = {...data}
+
+            isPlaying.value = true
+            console.log(gameData.value)
+        } catch (err) {
+            console.log(err)
+        }
+
     }
 
     // Get current funds from firestore
@@ -161,8 +173,10 @@ import { useStore } from 'vuex'
         const currentFunds = await getWalletBalance()
         const docRef = doc(db, 'users', store.state.user.uid)
 
+        console.log(currentFunds, amount)
+
         try {
-            updateDoc(docRef, {'walletBalance': +amount})
+            updateDoc(docRef, {'walletBalance': (amount * 1)})
         } catch (err) {
             console.log(err.message)
         }
@@ -180,7 +194,6 @@ import { useStore } from 'vuex'
 
         // Update user's funds in firestore
         updateFunds(cashReward.value[finalPrizeIndex].amount)
-        // updateFunds(0)
         showModal.value = true
     }
 

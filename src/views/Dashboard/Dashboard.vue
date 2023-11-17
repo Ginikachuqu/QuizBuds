@@ -49,7 +49,7 @@
                                 <h3>Available Funds</h3>
                                 <span>
                                     <SvgSpinners12DotsScaleRotate v-if="walletBalance == null"/>
-                                    <span v-else>{{ walletBalance }} </span>
+                                    <span v-else>${{ walletBalance }} </span>
                                 </span>
                             </div>
                             <div class="progress__blocks-block">

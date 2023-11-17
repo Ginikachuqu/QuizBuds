@@ -5,7 +5,7 @@
                 Trophy Image
             </div>
             <h2>Game over!</h2>
-            <p>You won {{ amount }}</p>
+            <p>You won ${{ amount }}</p>
             <router-link to="/dashboard">
                 Go to Dashboard
             </router-link>
