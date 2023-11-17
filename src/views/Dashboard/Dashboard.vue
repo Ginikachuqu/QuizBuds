@@ -35,7 +35,7 @@
                 <div class="middle__pane-welcome">
                     <div class="middle__pane-welcome-left">
                         <div class="intro">
-                            <h2>Good Evening, {{ username }}</h2>
+                            <h2>Good {{ timeOfDay() }}, {{ username }}</h2>
                             <span class="animated__span">
                                 <span>Ready to unleash your inner quiz whiz? Dive in!</span>
                             </span>
@@ -222,7 +222,22 @@
         walletBalance.value = response.walletBalance
     }
     
-    getWalletBalance()
+    // Get time of day
+    const timeOfDay = () => {
+        let myDate = new Date()
+        let hours = myDate.getHours()
+        let daytime;
+
+        if (hours < 12) {
+            daytime = 'Morning'
+        } else if (hours >= 12 && hours <= 17) {
+            daytime = 'Afternoon'
+        } else {
+            daytime ='Evening'
+        }
+
+        return daytime
+    }
 
     const gameTypes = ref([{
                    name: 'Japanese Anime & Manga',
