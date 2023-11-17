@@ -222,6 +222,8 @@
         walletBalance.value = response.walletBalance
     }
     
+    getWalletBalance()
+
     // Get time of day
     const timeOfDay = () => {
         let myDate = new Date()
