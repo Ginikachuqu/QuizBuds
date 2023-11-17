@@ -24,13 +24,14 @@
 </template>
 <script setup>
 import { ref, toRef, computed, watch, onMounted, defineEmits } from 'vue'
+import { db } from '../../../firebase.config'
+import { doc, updateDoc, setDoc } from 'firebase/firestore'
+import { useStore } from 'vuex'
 import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
 // props defination
-
 const { gameData } = defineProps(['gameData'])
 const questionsData = gameData.results
-
 
 // Variable Definitions
 const emits = defineEmits(['incrementAmount', 'endGame'])
@@ -45,6 +46,7 @@ const lifelines = ref({
 const friends = ref(['Eduardo', 'Wyatt', 'Chloe', 'Charlotte'])
 const answered = ref(false)
 const gameEnded = ref(false)
+const store = useStore()
 
 console.log(questionsData[currentQuestionIndex.value])
 const shuffleOptions = () => {
@@ -75,6 +77,33 @@ watch(() => questionsData[currentQuestionIndex.value], () => {
 
 // Get the current Question
 const currentQuestion = computed(() => questionsData[currentQuestionIndex.value].question)
+
+// Update Current Quiz in firebase
+const updateQuiz = async (values) => {
+    const docRef = doc(db, 'users', store.state.user.uid)
+        
+    try {
+        // Get current state of the game
+        const gameState = {
+            questionIndex: currentQuestionIndex.value,
+            lifelineValues: {
+                phoneAFriend: lifelines.value.phoneAFriend,
+                fiftyFifty: lifelines.value.fiftyFifty
+            },
+            question: currentQuestion.value
+        }
+        
+        // Update current quiz value
+        await updateDoc(docRef, {'currentQuiz': values})
+
+        // Update game state
+        await updateDoc(docRef, {'gameState': gameState})
+        
+    } catch (err) {
+        console.log(err.message)
+    }
+}
+
 
 // Lifelines functions
 const usePhoneAFriend = () => {
@@ -122,29 +151,32 @@ const useFiftyFifty = () => {
     }
 }
 
-const selectOption =(option) => {
+const selectOption = async (option) => {
     selectedOption.value = option
     isChecking.value = true
     answered.value = true
 
     setTimeout(() => {
         if (option === questionsData[currentQuestionIndex.value].correct_answer) {
-        console.log('Correct')
-        if (currentQuestionIndex.value + 1 === questionsData.length) {
-            // End game
-            gameEnded.value = true
-        } else {
-            console.log(currentQuestionIndex.value)
-            currentQuestionIndex.value++
-        }
+            console.log('Correct')
+            if (currentQuestionIndex.value + 1 === questionsData.length) {
+                // End game
+                updateQuiz(null)
+                gameEnded.value = true
+            } else {
+                console.log(currentQuestionIndex.value)
+                updateQuiz(questionsData)
+                currentQuestionIndex.value++
+            }
             isChecking.value = false
             answered.value = false
-        } else {
-            // End Game
-            gameEnded.value = true
+            } else {
+                // End Game
+                updateQuiz(null)
+                gameEnded.value = true
 
-            // console.log('Weird response. You failed!', winningAmount.value)
-        }
+                console.log('Weird response. You failed!')
+            }
     }, 3000)
 
 }

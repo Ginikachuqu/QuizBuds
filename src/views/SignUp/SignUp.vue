@@ -74,6 +74,9 @@
         const username = user__name.value
         const walletBalance = 0
         const gender = null
+        const currentQuiz = null
+        const currentGameState = null
+        const timestamp = serverTimestamp()
         
 
         isLoading.value = true
@@ -90,7 +93,7 @@
                 displayName: user__name.value,
             })
 
-            await setDoc(doc(db, 'users', store.state.user.uid), {email, username, walletBalance, gender})
+            await setDoc(doc(db, 'users', store.state.user.uid), {email, username, walletBalance, gender, currentQuiz, currentGameState, timestamp})
 
             router.push('/dashboard')
         } catch (err) {

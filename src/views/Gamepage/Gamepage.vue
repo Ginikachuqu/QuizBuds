@@ -132,6 +132,20 @@ import { useStore } from 'vuex'
     const winningAmount = ref(0)
     let currentAmountIndex = ref(cashReward.value.length - 1)
 
+    // Update Current Quiz in firebase
+    const updateQuiz = async (gameData) => {
+        const docRef = doc(db, 'users', store.state.user.uid)
+            
+        try {
+            // Get current state of the game
+            // const questionIndex = currentQuestionIndex.value
+            // const lifeLineValues = {...lifelines.value}
+            // const question = currentQuestion.value
+            await updateDoc(docRef, {'currentQuiz': gameData})
+        } catch (err) {
+            console.log(err.message)
+        }
+    }
 
     // Fetch function
     const handleFetch = async () => {
@@ -145,8 +159,9 @@ import { useStore } from 'vuex'
             
             gameData.value = {...data}
 
+            await updateQuiz(gameData.value)
+
             isPlaying.value = true
-            console.log(gameData.value)
         } catch (err) {
             console.log(err)
         }
