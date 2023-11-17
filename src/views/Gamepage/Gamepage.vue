@@ -52,7 +52,7 @@
             <div class="middle__pane">
                 <div class="middle__pane-inner">
                     <!-- Gameboard Component -->
-                    <GameBoard v-if="isPlaying" :quizData="quizData" :currentAmountIndex="currentAmountIndex" @endGame="endGame" @incrementAmount="incrementAmount"/>
+                    <GameBoard v-if="isPlaying" :gameData="gameData" @endGame="endGame" @incrementAmount="incrementAmount"/>
                     <!-- Placeholder Component -->
                     <Placeholder v-else/>
                 </div>
@@ -91,35 +91,35 @@ import { useStore } from 'vuex'
 
 
     const cashReward = ref([{
-            id: 1, amount: '100'
+            id: 1, amount: 100
         },{
-            id: 2, amount: '500'
+            id: 2, amount: 500
         },{
-            id:3, amount: '1000'
+            id:3, amount: 1000
         },{
-            id: 4, amount: '10,000'
+            id: 4, amount: 10000
         },{
-            id: 5, amount: '50,000'
+            id: 5, amount: 50000
         },{
-            id: 6, amount: '100,000'
+            id: 6, amount: 100000
         },{
-            id: 7, amount: '150,000'
+            id: 7, amount: 150000
         },{
-            id: 8, amount: '200,000'
+            id: 8, amount: 200000
         },{
-            id: 9, amount: '250,000'
+            id: 9, amount: 250000
         },{
-            id: 10, amount: '300,000'
+            id: 10, amount: 300000
         },{
-            id: 11, amount: '400,000'
+            id: 11, amount: 400000
         },{
-            id: 12, amount: '640,000'
+            id: 12, amount: 640000
         },{
-            id: 13, amount: '750,000'
+            id: 13, amount: 750000
         },{
-            id: 14, amount: '800,000'
+            id: 14, amount: 800000
         },{
-            id: 15, amount: '100,000'
+            id: 15, amount: 1000000
     },].reverse())
 
     const store = useStore()
@@ -156,13 +156,17 @@ import { useStore } from 'vuex'
     // Get current funds from firestore
     const getWalletBalance = async () => {
         const docRef = doc(db, 'users', store.state.user.uid)
-        const docSnap = await getDoc(docRef)
         let response = null;
-
-        if (docSnap.exists()) {
-            response = docSnap.data()
-        } else {
-            console.log('Document does not exist')
+        
+        try {
+            const docSnap = await getDoc(docRef)
+            if (docSnap.exists()) {
+                response = docSnap.data()
+            } else {
+                console.log('Document does not exist')
+            }
+        } catch (err) {
+            console.log(err.message)
         }
         console.log(response.walletBalance)
         return response.walletBalance
@@ -170,13 +174,12 @@ import { useStore } from 'vuex'
 
     // Update firestore Doc (update user's game money)
     const updateFunds = async (amount) => {
-        const currentFunds = await getWalletBalance()
         const docRef = doc(db, 'users', store.state.user.uid)
-
-        console.log(currentFunds, amount)
-
+        
         try {
-            updateDoc(docRef, {'walletBalance': (amount * 1)})
+            const currentFunds = await getWalletBalance()
+            console.log(currentFunds, amount)
+            updateDoc(docRef, {'walletBalance': currentFunds + amount})
         } catch (err) {
             console.log(err.message)
         }
@@ -188,12 +191,12 @@ import { useStore } from 'vuex'
         // return currentAmountIndex--
     }
 
-    const endGame = () => {
+    const endGame = async () => {
         const finalPrizeIndex = currentAmountIndex.value
         currentAmountIndex.value >= cashReward.value.length - 1 ? winningAmount.value = 0 : winningAmount.value = cashReward.value[finalPrizeIndex].amount
 
         // Update user's funds in firestore
-        updateFunds(cashReward.value[finalPrizeIndex].amount)
+        await updateFunds(cashReward.value[finalPrizeIndex].amount)
         showModal.value = true
     }
 

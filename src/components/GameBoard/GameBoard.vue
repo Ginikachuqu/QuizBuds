@@ -16,25 +16,26 @@
             <li v-for="(option, index) in options" :key="index">
                 <button :disabled='answered' @click='selectOption(option)'>
                     <SvgSpinners12DotsScaleRotate v-if="isChecking && selectedOption === option"/>
-                    <span v-else>{{ option }}</span>
+                    <span v-html="option" v-else></span>
                 </button>
             </li>
         </ul>
     </div>            
 </template>
 <script setup>
-import { ref, computed, watch, onMounted, defineEmits } from 'vue'
+import { ref, toRef, computed, watch, onMounted, defineEmits } from 'vue'
 import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
 // props defination
 
-const questionsData = defineProps(['quizData'])
+const { gameData } = defineProps(['gameData'])
+const questionsData = gameData.results
+
 
 // Variable Definitions
 const emits = defineEmits(['incrementAmount', 'endGame'])
 const currentQuestionIndex = ref(0)
 const options = ref([])
-// let currentAmountIndex = defineProps(['currentAmountIndex'])
 const selectedOption = ref(null)
 const isChecking = ref(false)
 const lifelines = ref({
@@ -45,12 +46,10 @@ const friends = ref(['Eduardo', 'Wyatt', 'Chloe', 'Charlotte'])
 const answered = ref(false)
 const gameEnded = ref(false)
 
-
-console.log(questionsData)
-
+console.log(questionsData[currentQuestionIndex.value])
 const shuffleOptions = () => {
-    const correct_answer = questionsData.value.results[currentQuestionIndex.value].correct_answer
-    const incorrect_answers = questionsData.value.results[currentQuestionIndex.value].incorrect_answers
+    const correct_answer = questionsData[currentQuestionIndex.value].correct_answer
+    const incorrect_answers = questionsData[currentQuestionIndex.value].incorrect_answers
     const optionsList = [correct_answer, ...incorrect_answers]
 
     for (let i = optionsList.length -1; i > 0; i--) {
@@ -70,12 +69,12 @@ onMounted(() => {
     shuffleOptions();
 });
 
-watch(() => questionsData.value.results[currentQuestionIndex.value], () => {
+watch(() => questionsData[currentQuestionIndex.value], () => {
     shuffleOptions();
 });
 
 // Get the current Question
-const currentQuestion = computed(() => questionsData.value.results[currentQuestionIndex.value].question)
+const currentQuestion = computed(() => questionsData[currentQuestionIndex.value].question)
 
 // Lifelines functions
 const usePhoneAFriend = () => {
@@ -96,7 +95,7 @@ const useFiftyFifty = () => {
         const clonedOptions = [...options.value]
 
         // Find correct option
-        const correctOptionIndex = options.value.findIndex(option => option === questionsData.value.results[currentQuestionIndex.value].correct_answer)
+        const correctOptionIndex = options.value.findIndex(option => option === questionsData[currentQuestionIndex.value].correct_answer)
 
         // remove two random incorrect options
         let removedCount = 0
@@ -129,13 +128,13 @@ const selectOption =(option) => {
     answered.value = true
 
     setTimeout(() => {
-        if (option === questionsData.value.results[currentQuestionIndex.value].correct_answer) {
+        if (option === questionsData[currentQuestionIndex.value].correct_answer) {
         console.log('Correct')
-        if (currentQuestionIndex.value + 1 === questionsData.value.results.length) {
+        if (currentQuestionIndex.value + 1 === questionsData.length) {
             // End game
             gameEnded.value = true
         } else {
-            console.log(currentQuestionIndex.value, currentAmountIndex)
+            console.log(currentQuestionIndex.value)
             currentQuestionIndex.value++
         }
             isChecking.value = false
