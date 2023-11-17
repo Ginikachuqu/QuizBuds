@@ -1,4 +1,5 @@
 <template lang="">
+    <!-- <PAFModal v-if="showPAFModal"/> -->
     <div class="life__lines">
         <span>Life lines:</span>
         <button :disabled="lifelines.fiftyFifty" @click="useFiftyFifty" class="life__btn fifty__fity">
@@ -27,6 +28,7 @@ import { ref, toRef, computed, watch, onMounted, defineEmits } from 'vue'
 import { db } from '../../../firebase.config'
 import { doc, updateDoc, setDoc } from 'firebase/firestore'
 import { useStore } from 'vuex'
+import PAFModal from '@components/PAFModal/PAFModal.vue'
 import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
 // props defination
@@ -46,6 +48,7 @@ const lifelines = ref({
 const friends = ref(['Eduardo', 'Wyatt', 'Chloe', 'Charlotte'])
 const answered = ref(false)
 const gameEnded = ref(false)
+const showPAFModal = ref(true)
 const store = useStore()
 
 console.log(questionsData[currentQuestionIndex.value])
@@ -77,6 +80,8 @@ watch(() => questionsData[currentQuestionIndex.value], () => {
 
 // Get the current Question
 const currentQuestion = computed(() => questionsData[currentQuestionIndex.value].question)
+
+
 
 // Update Current Quiz in firebase
 const updateQuiz = async (values) => {
@@ -114,6 +119,7 @@ const usePhoneAFriend = () => {
 
     lifelines.value.phoneAFriend = false
 
+    console.log([friends.value[randomFriendIndex], options.value[randomOptionIndex]]])
     return [friends.value[randomFriendIndex, options.value[randomOptionIndex]]]
 }
 
