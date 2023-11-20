@@ -1,4 +1,5 @@
 <template lang="">
+    <ErrorToast v-if="setError"/>
     <div class="signup__container">
         <div class="form__container">
             <div class="form__container-inner">
@@ -45,6 +46,7 @@
     import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
     import { useStore } from 'vuex'
     import { RouterLink, useRouter } from 'vue-router';
+    import ErrorToast from '@components/ErrorToast/ErrorToast.vue'
     import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
     const user__name = ref('')
@@ -53,6 +55,8 @@
     const user__confirmpass = ref('')
     const isLoading = ref(false)
     const isDisabled = ref(false)
+    const setError = ref(true)
+    const errorMessage = ref('')
     
 
     const store = useStore()
@@ -76,6 +80,7 @@
         const gender = null
         const currentQuiz = null
         const currentGameState = null
+        const previousAttempts = null
         const timestamp = serverTimestamp()
         
 
@@ -93,7 +98,7 @@
                 displayName: user__name.value,
             })
 
-            await setDoc(doc(db, 'users', store.state.user.uid), {email, username, walletBalance, gender, currentQuiz, currentGameState, timestamp})
+            await setDoc(doc(db, 'users', store.state.user.uid), {email, username, walletBalance, gender, currentQuiz, currentGameState, timestamp, previousAttempts})
 
             router.push('/dashboard')
         } catch (err) {

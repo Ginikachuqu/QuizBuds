@@ -15,4 +15,14 @@
         @include flex (flex, center, space-between, initial);
         gap: .65rem;
     }
+
+    svg {
+        font-size: 1.15rem;
+        cursor: pointer;
+        transition: all .3s ease-in-out;
+
+        &:hover {
+            transform: scale(1.19);
+        }
+    }
 }

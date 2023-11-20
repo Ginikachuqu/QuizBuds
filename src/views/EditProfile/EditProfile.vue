@@ -1,4 +1,5 @@
 <template lang="">
+    <!-- <ErrorToast /> -->
     <div class="edit__container">
         <div class="edit__container-inner">
             <div class="top">
@@ -12,7 +13,7 @@
                             <div class="user__name">
                                 <label for="username">
                                     <span>Change Display Name:</span>
-                                    <input type="text" v-model="displayName" name="username" id="username" placeholder="Enter new display name">
+                                    <input type="text" v-model="username" name="username" id="username" placeholder="Enter new display name">
                                 </label>
                             </div>
 
@@ -31,7 +32,10 @@
                                 </div>
                             </div>
 
-                            <button @click="handleUpdate">Update Details</button>
+                            <button :disabled="isDisabled" @click.prevent='handleUpdate' class="s__button">
+                                <SvgSpinners12DotsScaleRotate v-if="isLoading"/>
+                                <span v-if="!isLoading">Update Details</span>
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -72,14 +76,34 @@ import { db } from '../../../firebase.config'
 import { updateProfile } from 'firebase/auth'
 import { doc, updateDoc, getDoc } from 'firebase/firestore'
 import { useStore } from 'vuex'
+import ErrorToast from '@components/ErrorToast/ErrorToast.vue'
+import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
 const store = useStore()
 
-const displayName = ref(store.state.user.displayName)
+const username = ref(store.state.user.displayName)
 const gender = ref('')
+const isDisabled = ref(false)
+const isLoading = ref(false)
 
 
-console.log(store.state.user.displayName)
+console.log(store.state.user)
+
+const getUsername = async () => {
+    const docRef = doc(db, 'users', store.state.user.uid)
+    const docSnap = await getDoc(docRef)
+    let response = null
+
+    if (docSnap.exists()) {
+        response = docSnap.data()
+    } else {
+        console.log('Document does not exist')
+    }
+    
+    console.log(response.username)
+
+    username.value = response.username
+}
 
 const getGender = async () => {
     const docRef = doc(db, 'users', store.state.user.uid)
@@ -93,16 +117,29 @@ const getGender = async () => {
     }
     
     console.log(response.gender)
-    
+
     gender.value = response.gender
 }
 
+getUsername()
 getGender()
 
-const handleUpdate = (e) => {
+const handleUpdate = async (e) => {
     e.preventDefault();
+    isLoading.value = true
+    isDisabled.value = true
+    const docRef = doc(db, 'users', store.state.user.uid)
     
-    console.log(displayName, gender)
+    try {
+        await updateDoc(docRef, {'username': username.value})
+
+        await updateDoc(docRef, {'gender': gender.value})
+    } catch (err) {
+        console.log(err.message)
+    }
+
+    isLoading.value = false
+    isDisabled.value = false
 }
 </script>
 <style lang="scss" scoped>

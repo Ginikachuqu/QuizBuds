@@ -13,7 +13,7 @@
                         <li>
                             <IonIosGameControllerB />
                             <router-link to="/">
-                                Create Tournament
+                                Create Challenge
                             </router-link>
                         </li>
                         <li>
@@ -203,11 +203,26 @@
 
     const authIsReady = computed(() => store.state.authIsReady)
 
-    const username = computed(() => user.value.displayName.split(' ')[0])
+    const username = ref('')
 
     const walletBalance = ref(null)
 
+    const getUsername = async () => {
+        const docRef = doc(db, 'users', store.state.user.uid)
+        const docSnap = await getDoc(docRef)
+        let response = null
+
+        if (docSnap.exists()) {
+            response = docSnap.data()
+        } else {
+            console.log('Document does not exist')
+        }
     
+        console.log(response.username)
+
+        username.value = response.username
+    }
+
     const getWalletBalance = async () => {
         const docRef = doc(db, 'users', store.state.user.uid)
         const docSnap = await getDoc(docRef)
@@ -222,6 +237,7 @@
         walletBalance.value = response.walletBalance
     }
     
+    getUsername()
     getWalletBalance()
 
     // Get time of day
