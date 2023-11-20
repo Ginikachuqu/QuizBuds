@@ -12,7 +12,7 @@
                             <div class="user__name">
                                 <label for="username">
                                     <span>Change Display Name:</span>
-                                    <input type="text" name="username" id="username" placeholder="Enter new display name">
+                                    <input type="text" v-model="displayName" name="username" id="username" placeholder="Enter new display name">
                                 </label>
                             </div>
 
@@ -21,17 +21,17 @@
                                 <span>Select Gender</span>
                                 <div>
                                     <label for="male">
-                                        <input type="radio" name="gender" id="male" value="male">
+                                        <input type="radio" v-model='gender' name="gender" id="male" value="male">
                                         <span>Male</span>
                                     </label>
                                     <label for="female">
-                                        <input type="radio" name="gender" id="female" value="female">
+                                        <input type="radio" v-model="gender" name="gender" id="female" value="female">
                                         <span>Female</span>
                                     </label>
                                 </div>
                             </div>
 
-                            <button>Update Details</button>
+                            <button @click="handleUpdate">Update Details</button>
                         </form>
                     </div>
                 </div>
@@ -67,7 +67,43 @@
     </div>
 </template>
 <script setup>
+import { ref } from 'vue'
+import { db } from '../../../firebase.config'
+import { updateProfile } from 'firebase/auth'
+import { doc, updateDoc, getDoc } from 'firebase/firestore'
+import { useStore } from 'vuex'
 
+const store = useStore()
+
+const displayName = ref(store.state.user.displayName)
+const gender = ref('')
+
+
+console.log(store.state.user.displayName)
+
+const getGender = async () => {
+    const docRef = doc(db, 'users', store.state.user.uid)
+    const docSnap = await getDoc(docRef)
+    let response = null
+
+    if (docSnap.exists()) {
+        response = docSnap.data()
+    } else {
+        console.log('Document does not exist')
+    }
+    
+    console.log(response.gender)
+    
+    gender.value = response.gender
+}
+
+getGender()
+
+const handleUpdate = (e) => {
+    e.preventDefault();
+    
+    console.log(displayName, gender)
+}
 </script>
 <style lang="scss" scoped>
     

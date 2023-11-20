@@ -203,7 +203,7 @@
 
     const authIsReady = computed(() => store.state.authIsReady)
 
-    const username = computed(() => user.value.displayName.split(' ')[1])
+    const username = computed(() => user.value.displayName.split(' ')[0])
 
     const walletBalance = ref(null)
 
