@@ -2,9 +2,9 @@
     <div class="paf__container">
         <div class="paf__container-inner">
             <div class="paf__avatar__container">
-                <div class="paf__avatar"></div>
+                <div class="paf__avatar" :style="{'background-image': 'url(' + response[0].avatar + ')'}"></div>
             </div>
-            <div class="paf__message">{{ response[0] }} thinks it's {{ response[1] }}</div>
+            <div class="paf__message">{{ response[0].name }} thinks it's {{ response[1] }}</div>
             <div class="paf__close" @click="closeIcon = true">
                 <IonIosCloseCircle />
             </div>

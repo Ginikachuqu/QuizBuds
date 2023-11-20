@@ -216,3 +216,27 @@
         }
     }
 }
+
+.loading__screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    background-color: rgba($color: $black-shade, $alpha: .98);
+    @include flex (flex, center, center, initial);
+    
+    &-inner {
+        @include flex (flex, center, center, column);
+
+        svg {
+            font-size: 2.25rem;
+        }
+
+        p {
+            font-size: 1.15rem;
+            margin-top: .5rem;
+        }
+    }
+}

@@ -1,6 +1,12 @@
 <template lang="">
     <!-- <ErrorToast /> -->
     <Modal v-if="showModal" :amount='winningAmount'/>
+    <div v-if="loader" class="loading__screen">
+        <div class="loading__screen-inner">
+            <SvgSpinners12DotsScaleRotate />
+            <p>Please wait while we fetch the questions.</p>
+        </div>
+    </div>
     <div class="game__wrapper">
         <div class="game__wrapper-inner">
             <div class="left__pane">
@@ -38,11 +44,23 @@
                             <h2>Choose quiz type</h2>
                             <select name="quiz__type" v-model="quizCategory" id="quiz__type">
                                 <option value="Select preferred quiz type" disabled>Select preferred quiz type</option>
-                                <option value="Anime">Anime</option>
-                                <option value="Anime">Musicals</option>
-                                <option value="Anime">Movies</option>
-                                <option value="Anime">Science & Nature</option>
-                                <option value="Anime">History</option>
+                                <option value="31">Japanese Anime</option>
+                                <option value="12">Music</option>
+                                <option value="14">Television</option>
+                                <option value="17">Science & Nature</option>
+                                <option value="23">History</option>
+                                <option value="9">General Knowledge</option>
+                                <option value="10">Books</option>
+                                <option value="11">Film</option>
+                                <option value="15">Video Games</option>
+                                <option value="18">Computers</option>
+                                <option value="20">Mythology</option>
+                                <option value="21">Sports</option>
+                                <option value="22">Geography</option>
+                                <option value="25">Art</option>
+                                <option value="29">Comics</option>
+                                <option value="30">Gadgets</option>
+                                <option value="32">Cartoons & Animations</option>
                             </select>
                         </div>
                         <button :disabled="isPlaying" @click.prevent="handleFetch" class="cta">Start Game</button>
@@ -126,6 +144,7 @@ import { useStore } from 'vuex'
 
     const gameData = ref([])
     const showModal = ref(false)
+    const loader = ref(false)
     const isPlaying = ref(false)
     const difficulty = ref('easy')
     const quizCategory = ref('Select preferred quiz type')
@@ -149,8 +168,9 @@ import { useStore } from 'vuex'
 
     // Fetch function
     const handleFetch = async () => {
-        const url = `https://opentdb.com/api.php?amount=15&category=21&difficulty=${difficulty.value}&type=multiple`
+        const url = `https://opentdb.com/api.php?amount=15&category=${quizCategory.value}&difficulty=${difficulty.value}&type=multiple`
 
+        loader.value = true
         try {
             const response = await fetch(url)
 
@@ -161,8 +181,10 @@ import { useStore } from 'vuex'
 
             await updateQuiz(gameData.value)
 
+            loader.value = false
             isPlaying.value = true
         } catch (err) {
+            loader.value = false
             console.log(err)
         }
 

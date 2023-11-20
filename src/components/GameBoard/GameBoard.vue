@@ -45,7 +45,7 @@ const lifelines = ref({
     phoneAFriend: false,
     fiftyFifty: false
 })
-const friends = ref(['Eduardo', 'Wyatt', 'Chloe', 'Charlotte'])
+const friends = ref([{name: 'Eduardo', avatar: '../../../public/temp/Eduardo.jpg'}, {name: 'Wyatt', avatar: '../../../public/temp/Wyatt.jpg'}, {name: 'Chloe', avatar: '../../../public/temp/Chloe.jpg'}, {name: 'Charlotte', avatar: '../../../public/temp/Charlotte.jpg'}])
 const friendResponse = ref([])
 const answered = ref(false)
 const gameEnded = ref(false)
@@ -118,7 +118,7 @@ const usePhoneAFriend = () => {
     // Get random option
     const randomOptionIndex = Math.floor(Math.random() * options.value.length)
 
-    lifelines.value.phoneAFriend = false
+    lifelines.value.phoneAFriend = true
 
     showPAFModal.value = true
 
@@ -126,7 +126,7 @@ const usePhoneAFriend = () => {
 
     friendResponse.value = [...newArray]
 
-    // console.log(friendResponse.value)
+    console.log(friendResponse.value)
 }
 
 const useFiftyFifty = () => {
