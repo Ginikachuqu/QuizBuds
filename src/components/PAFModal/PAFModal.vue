@@ -4,13 +4,30 @@
             <div class="paf__avatar__container">
                 <div class="paf__avatar"></div>
             </div>
-            <div class="paf__message">Ada says Hi</div>
-            <div class="paf__close">X</div>
+            <div class="paf__message">{{ response[0] }} thinks it's {{ response[1] }}</div>
+            <div class="paf__close" @click="closeIcon = true">
+                <IonIosCloseCircle />
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
+import { ref, watch, defineEmits } from 'vue'
+import IonIosCloseCircle from '../../assets/icons/IonIosCloseCircle.vue'
+
+const { friendResponse } = defineProps(['friendResponse'])
+
+const response = [...friendResponse]
+
+const closeIcon = ref(false)
+
+console.log(closeIcon.value)
+const emits = defineEmits(['closeWindow'])
+
+watch(closeIcon, () => {
+    emits('closeWindow')
+})
 
 </script>
 

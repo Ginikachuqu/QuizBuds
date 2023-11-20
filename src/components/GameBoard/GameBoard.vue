@@ -1,5 +1,5 @@
 <template lang="">
-    <!-- <PAFModal v-if="showPAFModal"/> -->
+    <PAFModal v-if="showPAFModal" :friendResponse="friendResponse" @closeWindow="closeWindow"/>
     <div class="life__lines">
         <span>Life lines:</span>
         <button :disabled="lifelines.fiftyFifty" @click="useFiftyFifty" class="life__btn fifty__fity">
@@ -46,9 +46,10 @@ const lifelines = ref({
     fiftyFifty: false
 })
 const friends = ref(['Eduardo', 'Wyatt', 'Chloe', 'Charlotte'])
+const friendResponse = ref([])
 const answered = ref(false)
 const gameEnded = ref(false)
-const showPAFModal = ref(true)
+const showPAFModal = ref(false)
 const store = useStore()
 
 console.log(questionsData[currentQuestionIndex.value])
@@ -119,8 +120,13 @@ const usePhoneAFriend = () => {
 
     lifelines.value.phoneAFriend = false
 
-    console.log([friends.value[randomFriendIndex], options.value[randomOptionIndex]]])
-    return [friends.value[randomFriendIndex, options.value[randomOptionIndex]]]
+    showPAFModal.value = true
+
+    const newArray = [friends.value[randomFriendIndex], options.value[randomOptionIndex]]
+
+    friendResponse.value = [...newArray]
+
+    // console.log(friendResponse.value)
 }
 
 const useFiftyFifty = () => {
@@ -185,6 +191,10 @@ const selectOption = async (option) => {
             }
     }, 3000)
 
+}
+
+const closeWindow = () => {
+    showPAFModal.value = false
 }
 
 watch(currentQuestionIndex, () => {
