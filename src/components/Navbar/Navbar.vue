@@ -31,7 +31,7 @@
                     Log out
                 </button>
             </li>
-            <div class="user__avatar" :style="{ 'background-image': 'url(' + user__avatar + ')' }"></div>
+            <!-- <div class="user__avatar" :style="{ 'background-image': 'url(' + user__avatar + ')' }"></div> -->
         </ul>
     </nav>
 </template>
@@ -51,7 +51,7 @@
 
     const authIsReady = computed(() => store.state.authIsReady)
 
-    const user__avatar = ref(store.state.user.photoURL)
+    // const user__avatar = ref(store.state.user.photoURL)
     
     const router = useRouter()
     

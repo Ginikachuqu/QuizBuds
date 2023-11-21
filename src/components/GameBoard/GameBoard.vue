@@ -28,6 +28,7 @@ import { ref, toRef, computed, watch, onMounted, defineEmits } from 'vue'
 import { db } from '../../../firebase.config'
 import { doc, updateDoc, setDoc } from 'firebase/firestore'
 import { useStore } from 'vuex'
+import { useToast } from 'vue-toastification'
 import PAFModal from '@components/PAFModal/PAFModal.vue'
 import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
@@ -51,6 +52,7 @@ const answered = ref(false)
 const gameEnded = ref(false)
 const showPAFModal = ref(false)
 const store = useStore()
+const toast = useToast()
 
 console.log(questionsData[currentQuestionIndex.value])
 const shuffleOptions = () => {
@@ -170,7 +172,7 @@ const selectOption = async (option) => {
 
     setTimeout(() => {
         if (option === questionsData[currentQuestionIndex.value].correct_answer) {
-            console.log('Correct')
+            toast.success('Correct')
             if (currentQuestionIndex.value + 1 === questionsData.length) {
                 // End game
                 updateQuiz(null)
@@ -187,7 +189,7 @@ const selectOption = async (option) => {
                 updateQuiz(null)
                 gameEnded.value = true
 
-                console.log('Weird response. You failed!')
+                toast.error('Weird answer. You failed!')
             }
     }, 3000)
 

@@ -101,7 +101,7 @@
                 <div class="right__pane-top">
                     <div class="right__pane-top-inner">
                         <div class="user__info">
-                            <div class="user__info-avatar" :style="{ 'background-image': 'url(' + user__avatar + ')' }"></div>
+                            <div class="user__info-avatar" ></div>
                             <div class="user__info-details">
                                 <h4>{{ username }}</h4>
                                 <router-link to="/editprofile">
@@ -138,6 +138,8 @@
     const store = useStore()
 
     const user = computed(() => store.state.user)
+
+    console.log(user.value)
 
     const authIsReady = computed(() => store.state.authIsReady)
 

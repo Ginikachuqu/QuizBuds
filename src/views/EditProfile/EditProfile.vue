@@ -45,22 +45,8 @@
                 </div>
                 <div class="avatar__picker__container">
                     <div class="avatar__picker__container-inner">
-                        <button @click.prevent='addPhoto' class="avatar avatar__1" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700571403/Quizbuds%20Images/boy_1_dsdncg.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__2" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566442/Quizbuds%20Images/boy_6_j8pbbi.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__3" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566435/Quizbuds%20Images/girl_4_rfitb9.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__4" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566413/Quizbuds%20Images/girl_5_xj1joe.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__5" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566410/Quizbuds%20Images/girl_3_gw2tbu.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__6" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566407/Quizbuds%20Images/boy_4_gjhkks.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__7" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566405/Quizbuds%20Images/boy_5_yje5p3.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__8" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566404/Quizbuds%20Images/girl_7_ldjrrv.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__9" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566405/Quizbuds%20Images/girl_1_xyf2ye.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__10" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566404/Quizbuds%20Images/boy_2_i74ywz.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__11" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566403/Quizbuds%20Images/girl_6_tehuct.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__12" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700571983/Quizbuds%20Images/Boy_x_pp3lgs.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__12" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566403/Quizbuds%20Images/girl_9_a7czcu.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__13" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566402/Quizbuds%20Images/girl_2_i567l0.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__14" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566400/Quizbuds%20Images/man_3_ap7hk8.jpg"></button>
-                        <button @click.prevent='addPhoto' class="avatar avatar__15" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700566399/Quizbuds%20Images/man_1_ppbmwx.jpg"></button>
+                        <!-- <button @click.prevent='addPhoto' class="avatar avatar__1" data-photoURL="https://res.cloudinary.com/doqyk8frz/image/upload/v1700571403/Quizbuds%20Images/boy_1_dsdncg.jpg"></button> -->
+                        <button v-for="imageURL in imageURLs" class="avatar" @click.prevent="addPhoto" :style="{ 'background-image': 'url(' + imageURL + ')' }" :data-photoURL="imageURL"></button>
                     </div>
                 </div>
             </div>
@@ -80,6 +66,24 @@ import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsSc
 const store = useStore()
 
 const toast = useToast()
+
+const imageURLs = ref([
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700571983/Quizbuds%20Images/Boy_x_pp3lgs.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700571403/Quizbuds%20Images/boy_1_dsdncg.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566442/Quizbuds%20Images/boy_6_j8pbbi.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566435/Quizbuds%20Images/girl_4_rfitb9.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566413/Quizbuds%20Images/girl_5_xj1joe.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566410/Quizbuds%20Images/girl_3_gw2tbu.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566407/Quizbuds%20Images/boy_4_gjhkks.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566405/Quizbuds%20Images/boy_5_yje5p3.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566404/Quizbuds%20Images/girl_7_ldjrrv.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566404/Quizbuds%20Images/boy_2_i74ywz.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566403/Quizbuds%20Images/man_2_a163ex.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566403/Quizbuds%20Images/girl_9_a7czcu.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566402/Quizbuds%20Images/girl_2_i567l0.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566400/Quizbuds%20Images/man_3_ap7hk8.jpg',
+    'https://res.cloudinary.com/doqyk8frz/image/upload/v1700566399/Quizbuds%20Images/man_1_ppbmwx.jpg',
+])
 
 const username = ref(store.state.user.displayName)
 const gender = ref('')

@@ -1,5 +1,4 @@
 <template lang="">
-    <ErrorToast v-if="setError"/>
     <div class="signup__container">
         <div class="form__container">
             <div class="form__container-inner">
@@ -55,8 +54,6 @@
     const user__confirmpass = ref('')
     const isLoading = ref(false)
     const isDisabled = ref(false)
-    const setError = ref(true)
-    const errorMessage = ref('')
     
 
     const store = useStore()
@@ -96,6 +93,7 @@
 
             await updateProfile(store.state.user, {
                 displayName: user__name.value,
+                photoURL: 'https://res.cloudinary.com/doqyk8frz/image/upload/v1700577072/Quizbuds%20Images/3d-astronaut-falling-down-cosmos-flat-line-art-design-illustration_ofsxzf.jpg'
             })
 
             await setDoc(doc(db, 'users', store.state.user.uid), {email, username, walletBalance, gender, currentQuiz, currentGameState, timestamp, previousAttempts})
