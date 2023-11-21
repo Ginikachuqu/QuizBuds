@@ -1,10 +1,9 @@
 <template lang="">
-    <!-- <ErrorToast /> -->
     <Modal v-if="showModal" :amount='winningAmount'/>
     <div v-if="loader" class="loading__screen">
         <div class="loading__screen-inner">
             <SvgSpinners12DotsScaleRotate />
-            <p>Please wait while we fetch the questions.</p>
+            <p>Fetching questions...</p>
         </div>
     </div>
     <div class="game__wrapper">
@@ -63,7 +62,10 @@
                                 <option value="32">Cartoons & Animations</option>
                             </select>
                         </div>
-                        <button :disabled="isPlaying" @click.prevent="handleFetch" class="cta">Start Game</button>
+                        <button :disabled="isPlaying" @click.prevent="handleFetch" class="cta">
+                            <SvgSpinners12DotsScaleRotate v-if="loader"/>
+                            <span v-if="!loader">Start Game</span>
+                        </button>
                     </form>
                 </div>
             </div>
@@ -165,6 +167,8 @@ import { useStore } from 'vuex'
             console.log(err.message)
         }
     }
+
+    // Update previous attempts data in firebase
 
     // Fetch function
     const handleFetch = async () => {

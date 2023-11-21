@@ -11,7 +11,8 @@
             padding: 1.5rem .75rem;
             width: 14rem;
             max-width: 270px;
-            max-height: 270px;
+            // min-height: 270px;
+            max-height: 300px;
             background-color: rgba($color: $black-shade, $alpha: .5);
             border-radius: .2rem;
             backdrop-filter: blur(15px);
@@ -211,48 +212,6 @@
 
                                 &:hover {
                                     color: $gray;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            &-bottom {
-                margin-top: .85rem;
-                padding: .85rem;
-                height: 100%;
-                border-radius: .5rem;
-                background-color: rgba($color: $black-shade, $alpha: .5);
-
-                .achievements {
-                    ul {
-                        list-style: none;
-
-                        li {
-                            @include flex (flex, center, space-between, initial);
-                            // gap: .5rem;
-                            background-color: $black-shade;
-                            padding: .5rem;
-                            border-radius: .25rem;
-
-                            &:not(:last-of-type) {
-                                margin-bottom: .5rem;
-                            }
-
-                            span {
-                                font-size: .85rem;
-                                // display: inline-block;
-
-                                &.user__image {
-                                    width: 2rem;
-                                    height: 2rem;
-                                    border-radius: 50%;
-                                    background-image: url('../../../public/avatars/boy\ 4.jpg');
-                                    background-position: center;
-                                    background-size: cover;
-                                    background-repeat: no-repeat;
-                                    box-shadow: rgba($color: #000000, $alpha: 0.1) 0px 4px 12px;
                                 }
                             }
                         }

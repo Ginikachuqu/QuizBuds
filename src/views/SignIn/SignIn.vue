@@ -31,11 +31,14 @@
 
 <script setup>
     import { ref } from 'vue'
+    import { useToast } from 'vue-toastification'
     import { RouterLink, useRouter } from 'vue-router';
     import { useStore } from 'vuex'
     import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
     const store = useStore()
+
+    const toast = useToast()
 
     const router = useRouter()
 
@@ -53,12 +56,12 @@
 
         try {
             await store.dispatch('login', { email, password})
-
+            toast.success('Sign in successful!')
             router.push('/dashboard')
         } catch (err) {
             isLoading.value = false
             isDisabled.value = false
-            throw new Error(err.message)
+            toast.error('Invalid credentials')
         }
     }
 </script>

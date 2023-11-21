@@ -101,77 +101,15 @@
                 <div class="right__pane-top">
                     <div class="right__pane-top-inner">
                         <div class="user__info">
-                            <div class="user__info-avatar"></div>
+                            <div class="user__info-avatar" :style="{ 'background-image': 'url(' + user__avatar + ')' }"></div>
                             <div class="user__info-details">
-                                <h4>Charles Grandison</h4>
+                                <h4>{{ username }}</h4>
                                 <router-link to="/editprofile">
                                     <IonEdit />
                                     <span>Edit Profile</span>
                                 </router-link>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="right__pane-bottom">
-                    <div class="achievements">
-                        <ul>
-                            <li>
-                                <span>
-                                    10th
-                                </span>
-                                <span>
-                                    Musicals
-                                </span>
-                                <span class="user__image">
-                                    <!-- Image -->
-                                </span>
-                            </li>
-                            <li>
-                                <span>
-                                    1st
-                                </span>
-                                <span>
-                                    Movies
-                                </span>
-                                <span class="user__image">
-                                    <!-- Image -->
-                                </span>
-                            </li>
-                            <li>
-                                <span>
-                                    2nd
-                                </span>
-                                <span>
-                                    Politics
-                                </span>
-                                <span class="user__image">
-                                    <!-- Image -->
-                                </span>
-                            </li>
-                            <li>
-                                <span>
-                                    1st
-                                </span>
-                                <span>
-                                    Architecture
-                                </span>
-                                <span class="user__image">
-                                    <!-- Image -->
-                                </span>
-                            </li>
-                            <li>
-                                <span>
-                                    5th
-                                </span>
-                                <span>
-                                    Sports
-                                </span>
-                                <span class="user__image">
-                                    <!-- Image -->
-                                </span>
-                            </li>
-                            
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -202,6 +140,8 @@
     const user = computed(() => store.state.user)
 
     const authIsReady = computed(() => store.state.authIsReady)
+
+    const user__avatar = ref(store.state.user.photoURL)
 
     const username = ref('')
 
