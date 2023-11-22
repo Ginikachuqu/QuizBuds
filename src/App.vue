@@ -18,6 +18,11 @@
 
 <style lang="scss" scoped>
   .app__container {
+    width: 100vw;
     padding: 1rem 2.5rem 0 2.5rem;
+
+    @media screen and (max-width: 768px) {
+      padding: .85rem
+    }
   }
 </style>

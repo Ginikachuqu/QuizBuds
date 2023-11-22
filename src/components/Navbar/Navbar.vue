@@ -2,33 +2,33 @@
     <nav>
         <div class="logo">
             <router-link to="/">
-                <!-- <img src="../../assets/images/logo.png" alt="buddies-logo"> -->
-                ?uizbudz
+                Q
             </router-link>
         </div>
         <ul>
             <li>
-                <IonHome />
                 <router-link to="/">
-                    Home
+                    <IonHome />
+                    <span>Home</span>
                 </router-link>
                 
             </li>
             <li v-if="authIsReady && user">
-                <IcRoundSpaceDashboard />
                 <router-link to="/dashboard">
-                    Dashboard
+                    <IcRoundSpaceDashboard />
+                    <span>Dashboard</span>
                 </router-link>
             </li>
             <li v-if="authIsReady && !user">
-                <IonMdKey />
                 <router-link to="/signup">
-                    Sign up
+                    <IonMdKey />
+                    <span>Sign up</span>
                 </router-link>
             </li>
             <li v-if="authIsReady && user">
                 <button @click.prevent="handleLogout">
-                    Log out
+                    <IonPower />
+                    <span>Log out</span>
                 </button>
             </li>
             <!-- <div class="user__avatar" :style="{ 'background-image': 'url(' + user__avatar + ')' }"></div> -->
@@ -44,6 +44,7 @@
     import IcBaselineDoorFront from '../../assets/icons/IcBaselineDoorFront.vue'
     import IcRoundSpaceDashboard from '../../assets/icons/IcRoundSpaceDashboard.vue'
     import IonMdKey from '../../assets/icons/IonMdKey.vue'
+    import IonPower from '../../assets/icons/IonPower.vue'
 
     const store = useStore()
 

@@ -36,26 +36,28 @@ nav {
             &:not(:last-of-type) {
                 margin-right: 1.25rem;
             }
-
+            
             svg {
                 font-size: 1.25rem;
                 margin-right: .5rem;
             }
-
+            
             a {
+                @include flex(flex, center, center, initial);
                 text-decoration: none;
                 font-family: $primary-font;
                 font-size: 1.15rem;
                 color: #fff;
                 transition: color 0.3s ease-in-out;
-
+                
                 &:hover {
                     color: $gray;
                     
                 }
             }
-
+            
             button {
+                @include flex(flex, center, center, initial);
                 font-family: $primary-font;
                 background: transparent;
                 color: $white;

@@ -120,7 +120,6 @@
                             <div class="feature__block__left">
                                 <div class="title">
                                     <h1>Become a Quizmaster</h1>
-                                    <IonSearchSharp />
                                     <div class="line transition__line">
                                         <div class="line__inner"></div>
                                     </div>
