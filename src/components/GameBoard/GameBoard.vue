@@ -54,7 +54,7 @@ const showPAFModal = ref(false)
 const store = useStore()
 const toast = useToast()
 
-console.log(questionsData[currentQuestionIndex.value])
+// console.log(questionsData[currentQuestionIndex.value])
 const shuffleOptions = () => {
     const correct_answer = questionsData[currentQuestionIndex.value].correct_answer
     const incorrect_answers = questionsData[currentQuestionIndex.value].incorrect_answers
@@ -172,7 +172,7 @@ const selectOption = async (option) => {
 
     setTimeout(() => {
         if (option === questionsData[currentQuestionIndex.value].correct_answer) {
-            toast.success('Correct')
+            toast.success('Correct 🎉')
             if (currentQuestionIndex.value + 1 === questionsData.length) {
                 // End game
                 updateQuiz(null)
@@ -189,14 +189,10 @@ const selectOption = async (option) => {
                 updateQuiz(null)
                 gameEnded.value = true
 
-                toast.error('Weird answer. You failed!')
+                toast.error('Weird answer. You failed! 😈')
             }
     }, 3000)
 
-}
-
-const closeWindow = () => {
-    showPAFModal.value = false
 }
 
 watch(currentQuestionIndex, () => {

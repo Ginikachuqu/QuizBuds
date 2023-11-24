@@ -101,7 +101,7 @@
 import { ref, computed, watch, onMounted } from 'vue'
 import { db } from '../../../firebase.config'
 import { doc, updateDoc, getDoc } from 'firebase/firestore'
-import ErrorToast from '@components/ErrorToast/ErrorToast.vue'
+import { useToast } from 'vue-toastification'
 import Modal from '@components/Modal/Modal.vue'
 import GameBoard from '@components/GameBoard/GameBoard.vue'
 import Placeholder from '@components/Placeholder/Placeholder.vue'
@@ -144,6 +144,8 @@ import { useStore } from 'vuex'
 
     const store = useStore()
 
+    const toast = useToast()
+
     const gameData = ref([])
     const showModal = ref(false)
     const loader = ref(false)
@@ -180,16 +182,23 @@ import { useStore } from 'vuex'
 
             if (!response.ok) throw new Error('Response is defective')
             const data = await response.json()
-            
-            gameData.value = {...data}
+            console.log(data)
+            if (data.response_code !== 0) {
+                toast.error('Error retrieving question data 😢. Please retry or pick another difficulty level.')
+                loader.value = false
+                isPlaying.value = false
+            } else {
+                gameData.value = {...data}
 
-            await updateQuiz(gameData.value)
+                await updateQuiz(gameData.value)
 
-            loader.value = false
-            isPlaying.value = true
+                loader.value = false
+                isPlaying.value = true
+            }
         } catch (err) {
             loader.value = false
-            console.log(err)
+            isPlaying.value = false
+            toast.error(err)
         }
 
     }
@@ -237,7 +246,7 @@ import { useStore } from 'vuex'
         currentAmountIndex.value >= cashReward.value.length - 1 ? winningAmount.value = 0 : winningAmount.value = cashReward.value[finalPrizeIndex].amount
 
         // Update user's funds in firestore
-        await updateFunds(cashReward.value[finalPrizeIndex].amount)
+        await updateFunds(winningAmount.value)
         showModal.value = true
     }
 
