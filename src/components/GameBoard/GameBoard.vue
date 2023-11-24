@@ -195,6 +195,11 @@ const selectOption = async (option) => {
 
 }
 
+// Close Phone a Friend Modal
+const closeWindow = () => {
+    showPAFModal.value = false
+}
+
 watch(currentQuestionIndex, () => {
     emits('incrementAmount')
 })

@@ -56,7 +56,6 @@
                                 <option value="20">Mythology</option>
                                 <option value="21">Sports</option>
                                 <option value="22">Geography</option>
-                                <option value="25">Art</option>
                                 <option value="29">Comics</option>
                                 <option value="30">Gadgets</option>
                                 <option value="32">Cartoons & Animations</option>
@@ -166,7 +165,7 @@ import { useStore } from 'vuex'
             // const question = currentQuestion.value
             await updateDoc(docRef, {'currentQuiz': gameData})
         } catch (err) {
-            console.log(err.message)
+            toast.error('Unable to update quiz in database.')
         }
     }
 
@@ -216,10 +215,29 @@ import { useStore } from 'vuex'
                 console.log('Document does not exist')
             }
         } catch (err) {
-            console.log(err.message)
+            toast.error('Unable to retrive wallet balance.')
         }
-        console.log(response.walletBalance)
+
         return response.walletBalance
+    }
+
+    // Fetch total games value
+    const getTotalGames = async () => {
+        const docRef = doc(db, 'users', store.state.user.uid)
+        let response = null;
+        
+        try {
+            const docSnap = await getDoc(docRef)
+            if (docSnap.exists()) {
+                response = docSnap.data()
+            } else {
+                toast.error('Document does not exist')
+            }
+        } catch (err) {
+            toast.error('Unable to retrive data')
+        }
+
+        return response.totalGamesPlayed
     }
 
     // Update firestore Doc (update user's game money)
@@ -228,10 +246,24 @@ import { useStore } from 'vuex'
         
         try {
             const currentFunds = await getWalletBalance()
-            console.log(currentFunds, amount)
+            
             updateDoc(docRef, {'walletBalance': currentFunds + amount})
         } catch (err) {
-            console.log(err.message)
+            toast.error('Fund update failed')
+        }
+    }
+
+    // Update total games played
+    const updateTotal = async () => {
+        const docRef = doc(db, 'users', store.state.user.uid)
+        
+        try {
+            const currentAmount = await getTotalGames()
+            
+            updateDoc(docRef, {'totalGamesPlayed': currentAmount + 1})
+            console.log('Done')
+        } catch (err) {
+            toast.error('Total Games update failed')
         }
     }
 
@@ -247,11 +279,12 @@ import { useStore } from 'vuex'
 
         // Update user's funds in firestore
         await updateFunds(winningAmount.value)
+        await updateTotal()
         showModal.value = true
     }
 
     console.log('curentAmountIndex: ' + currentAmountIndex.value)
 </script>
-<style lang="">
+<style lang="scss" scoped>
     
 </style>

@@ -55,6 +55,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { db } from '../../../firebase.config'
 import { updateProfile } from 'firebase/auth'
@@ -66,6 +67,8 @@ import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsSc
 const store = useStore()
 
 const toast = useToast()
+
+const router = useRouter()
 
 const imageURLs = ref([
     'https://res.cloudinary.com/doqyk8frz/image/upload/v1700571983/Quizbuds%20Images/Boy_x_pp3lgs.jpg',
@@ -145,6 +148,7 @@ const handleUpdate = async (e) => {
         })
         await updateDoc(docRef, {'gender': gender.value})
         toast.success('Profile successfully updated!')
+        router.push('/dashboard')
     } catch (err) {
         toast.error('Profile not updated')
     }

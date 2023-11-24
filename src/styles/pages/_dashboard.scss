@@ -11,8 +11,8 @@
             padding: 1.5rem .75rem;
             width: 14rem;
             max-width: 270px;
-            // min-height: 270px;
-            max-height: 300px;
+            // min-height: 100px;
+            max-height: 190px;
             background-color: rgba($color: $black-shade, $alpha: .5);
             border-radius: .2rem;
             backdrop-filter: blur(15px);
@@ -22,20 +22,24 @@
                     list-style: none;
 
                     li {
-                        padding: .65rem .75rem;
                         background: $black-shade;
                         border-radius: .45rem;
-                        @include flex (flex, center, initial, row);
-                        gap: .5rem;
-
+                        
                         svg {
                             font-size: 1.35rem;
                         }
-
+                        
                         a {
+                            @include flex (flex, center, initial, row);
+                            gap: .5rem;
+                            padding: .65rem .75rem;
                             text-decoration: none;
                             color: $white;
                             transition: .3s ease-in-out;
+
+                            span {
+                                font-size: .95rem;
+                            }
 
                             &:hover {
                                 color: $gray;

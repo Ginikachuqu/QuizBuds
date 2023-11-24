@@ -5,27 +5,21 @@
                 <div class="left__pane-inner">
                     <ul>
                         <li>
-                            <IonPlayCircleSharp />
                             <router-link to="/game">
-                                Play game
+                                <IonPlayCircleSharp />
+                                <span>Play Game</span>
                             </router-link>
                         </li>
                         <li>
-                            <IonIosGameControllerB />
                             <router-link to="/">
-                                Create Challenge
+                                <IonIosGameControllerB />
+                                <span>Create Challenge</span>
                             </router-link>
                         </li>
                         <li>
-                            <IonCash />
-                            <router-link to="/">
-                                Wager Zone
-                            </router-link>
-                        </li>
-                        <li>
-                            <IonMdSettings />
                             <router-link to="/editprofile">
-                                Settings
+                                <IonMdSettings />
+                                <span>Settings</span>
                             </router-link>
                         </li>
                     </ul>
@@ -55,8 +49,8 @@
                             <div class="progress__blocks-block">
                                 <h3>Buds Progress</h3>
                                 <div class="progress__path">
-                                    <div class="progress__path-bar">
-                                        <div class="progress__path-bar-inner"></div>
+                                    <div class="progress__num">
+                                        <span>Total Games Played: {{ totalGamesPlayed }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -149,6 +143,8 @@
 
     const walletBalance = ref(null)
 
+    const totalGamesPlayed = ref(0)
+
     const getUsername = async () => {
         const docRef = doc(db, 'users', store.state.user.uid)
         const docSnap = await getDoc(docRef)
@@ -178,9 +174,24 @@
         console.log(response.walletBalance)
         walletBalance.value = response.walletBalance
     }
+
+    const totalGames = async () => {
+        const docRef = doc(db, 'users', store.state.user.uid)
+        const docSnap = await getDoc(docRef)
+        let response = null;
+
+        if (docSnap.exists()) {
+            response = docSnap.data()
+        } else {
+            console.log('Document does not exist')
+        }
+        console.log(response.walletBalance)
+        totalGamesPlayed.value = response.totalGamesPlayed
+    }
     
     getUsername()
     getWalletBalance()
+    totalGames()
 
     // Get time of day
     const timeOfDay = () => {
