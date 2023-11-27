@@ -33,6 +33,9 @@
             </li>
             <!-- <div class="user__avatar" :style="{ 'background-image': 'url(' + user__avatar + ')' }"></div> -->
         </ul>
+        <div class="trigger">
+            <button>Trigger</button>
+        </div>
     </nav>
 </template>
 

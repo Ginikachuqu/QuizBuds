@@ -11,7 +11,7 @@
                             </span>
                         </span> -->
                     </h1>
-                    <span>Explore the world's most specialized <br>quizzes.</span>
+                    <span class="caption">Explore the world's most specialized <br>quizzes.</span>
                     <router-link to="/signup">
                         <span>Sign up</span>
                         <IonArrowForwardCircle />
@@ -159,26 +159,26 @@
     
     gsap.registerPlugin(ScrollTrigger)
     
-    onMounted (() => {
-        const blocks = document.querySelectorAll('.feature__block')
+    // onMounted (() => {
+    //     const blocks = document.querySelectorAll('.feature__block')
 
-        blocks.forEach(block => {
-            gsap.timeline({
-                scrollTrigger: {
-                    scrub: 1,
-                    trigger: block,
-                    start: 'top 50%',
-                    end: 'bottom 30%',
-                    scrub: true,
-                    // markers: true
-                }
-            }).to('.feature__block .title', {
-                ease: 'expo.in',
-                duration: .2,
-                yPercent: -150
-            })
-        })
+    //     blocks.forEach(block => {
+    //         gsap.timeline({
+    //             scrollTrigger: {
+    //                 scrub: 1,
+    //                 trigger: block,
+    //                 start: 'top 50%',
+    //                 end: 'bottom 30%',
+    //                 scrub: true,
+    //                 // markers: true
+    //             }
+    //         }).to('.feature__block .title', {
+    //             ease: 'expo.in',
+    //             duration: .2,
+    //             yPercent: -150
+    //         })
+    //     })
         
-    })
+    // })
 </script>
 <style lang="scss" scoped></style>
