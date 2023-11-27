@@ -36,9 +36,9 @@ nav {
         
         @include media("<=phone") {
             position: absolute;
-            top: 2.65rem;
+            top: 3.15rem;
             right: 0;
-            height: 20vh;
+            height: 22vh;
             width: 50%;
             background-color: $black;
             flex-direction: column;
@@ -113,9 +113,15 @@ nav {
 
     .trigger {
         display: none;
+        font-size: 1.5rem;
+        
+        svg {
+            margin-top: .25rem;
+        }
 
         @include media("<=phone") {
             display: block;
+            cursor: pointer;
         }
     }
 }

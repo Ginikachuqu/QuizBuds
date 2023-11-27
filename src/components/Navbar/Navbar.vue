@@ -34,7 +34,7 @@
             <!-- <div class="user__avatar" :style="{ 'background-image': 'url(' + user__avatar + ')' }"></div> -->
         </ul>
         <div class="trigger">
-            <button>Trigger</button>
+            <IonMenu />
         </div>
     </nav>
 </template>
@@ -48,6 +48,7 @@
     import IcRoundSpaceDashboard from '../../assets/icons/IcRoundSpaceDashboard.vue'
     import IonMdKey from '../../assets/icons/IonMdKey.vue'
     import IonPower from '../../assets/icons/IonPower.vue'
+    import IonMenu from '../../assets/icons/IonMenu.vue'
 
     const store = useStore()
 
