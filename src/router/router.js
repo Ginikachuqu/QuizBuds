@@ -7,7 +7,7 @@ import Home from '@/views/Home/Home.vue'
 import Dashboard from '@views/Dashboard/Dashboard.vue'
 import Signup from '@views/SignUp/SignUp.vue'
 import Signin from '@views/SignIn/SignIn.vue'
-import Tournament from '@views/Tournament/Tournament.vue'
+import Challenge from '@views/Challenge/Challenge.vue'
 import Gamepage from '@views/Gamepage/Gamepage.vue'
 import EditProfile from '@views/EditProfile/EditProfile.vue'
 
@@ -34,9 +34,9 @@ const routes = [{
     component: Signin,
     meta: { requiresGuest: true}
 }, {
-    path: '/create-tournament',
-    name: 'Tournament',
-    component: Tournament,
+    path: '/challenge',
+    name: 'Challenge',
+    component: Challenge,
     meta: { requiresAuth: true}
 }
 , {
