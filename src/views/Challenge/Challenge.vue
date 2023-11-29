@@ -12,7 +12,7 @@
                     </div>
                     <!-- Slider -->
                     <div class="slider">
-                        <swiper-container navigation :slides-per-view="4" :space-between="10">
+                        <swiper-container navigation="true" :slides-per-view="4" :space-between="10">
                             <swiper-slide v-for="item in gameTypes" :key="item">
                                 <gameItem :item="item"/>
                             </swiper-slide>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="button__container">
                     <div class="link__display">
-                        <input disabled placeholder="https://joinmygame.com?join=345678" type="text" />
+                        <input disabled placeholder="https://quizbuds.com?join=345678" type="text" />
                         <div class="copy__btn">
                             <button class="copy">
                                 <span>Copy</span>
@@ -73,7 +73,7 @@
                             </button>
                         </div>
                     </div>
-                    <button class="cta">Create</button>
+                    <button class="cta">Create Challenge</button>
                 </div>
             </div>
         </div>

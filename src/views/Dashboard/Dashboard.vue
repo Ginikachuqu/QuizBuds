@@ -67,7 +67,7 @@
                     </div>
                     <!-- Slider -->
                     <div class="slider">
-                        <swiper-container navigation :slides-per-view="4" :space-between="30" @swiper="onSwiper" @slideChange="onSlideChange">
+                        <swiper-container navigation="true" :slides-per-view="4" :space-between="30" @swiper="onSwiper" @slideChange="onSlideChange">
                             <swiper-slide v-for="item in gameTypes" :key="item">
                                 <gameItem :item="item"/>
                             </swiper-slide>

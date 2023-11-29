@@ -8,6 +8,7 @@ import Dashboard from '@views/Dashboard/Dashboard.vue'
 import Signup from '@views/SignUp/SignUp.vue'
 import Signin from '@views/SignIn/SignIn.vue'
 import Challenge from '@views/Challenge/Challenge.vue'
+import ChallengeInterface from '@views/ChallengeInterface/ChallengeInterface.vue'
 import Gamepage from '@views/Gamepage/Gamepage.vue'
 import EditProfile from '@views/EditProfile/EditProfile.vue'
 
@@ -37,6 +38,11 @@ const routes = [{
     path: '/challenge',
     name: 'Challenge',
     component: Challenge,
+    meta: { requiresAuth: true}
+}, {
+    path: '/challenge-interface',
+    name: 'ChallengeInterface',
+    component: ChallengeInterface,
     meta: { requiresAuth: true}
 }
 , {

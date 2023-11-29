@@ -5,12 +5,14 @@
                 <div class="gif__container-gif"></div>
             </div>
             <div class="waiting__text">
-                <span>Set up game and click Start to begin!</span> 
+                <span>{{ placeholderMessage }}</span> 
             </div>
         </div>
     </div>
 </template>
 <script setup>
+defineProps(['placeholderMessage'])
+
 
 </script>
 <style lang="">
