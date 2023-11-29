@@ -12,9 +12,9 @@
                     </div>
                     <!-- Slider -->
                     <div class="slider">
-                        <swiper-container navigation="true" :slides-per-view="4" :space-between="10">
+                        <swiper-container navigation="true" :slides-per-view="4" :space-between="15">
                             <swiper-slide v-for="item in gameTypes" :key="item">
-                                <gameItem :item="item"/>
+                                <gameItem :item="item" @click.prevent="handleClick(item.value)"/>
                             </swiper-slide>
                         </swiper-container>
                     </div>
@@ -81,6 +81,7 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+import { v4 as uuidv4 } from 'uuid'
 import { register } from 'swiper/element/bundle'
 import { Swiper, SwiperSlide} from 'swiper/vue'
 import gameItem from '../../components/GameItem/GameItem.vue'
@@ -89,35 +90,96 @@ import IonCopy from '../../assets/icons/IonCopy.vue'
 register()
 
 const wagerActive = ref(false)
+const gameCategory = ref('')
+const difficulty = ref('easy')
+
+const gameTypes = ref([{
+                   name: 'Japanese Anime & Manga',
+                   image: '../../../public/naruto.jpg',
+                   value: 31
+               }, {
+                    name: 'Music',
+                   image: '../../../public/architecture.jpg',
+                   value: 12
+               }, {
+                    name: 'Television',
+                   image: '../../../public/video-games.jpg',
+                   value: 14
+               }, {
+                    name: 'Science & Nature',
+                   image: '../../../public/sports.jpg',
+               },  {
+                    name: 'History',
+                   image: '../../../public/politics.jpg',
+               }, 
+                {
+                    name: 'General knowledge',
+                   image: '../../../public/politics.jpg',
+               }, {
+                    name: 'Science & Nature',
+                   image: '../../../public/nature-science.jpg',
+                }, {
+                    name: 'Books',
+                    image: '../../../public/nature-science.jpg',
+                    value: 10
+                }, {
+                    name: 'Film',
+                    image: '../../../public/nature-science.jpg',
+                    value: 11
+                }, {
+                    name: 'Video Games',
+                    image: '../../../public/nature-science.jpg',
+                    value: 15
+                }, {
+                    name: 'Computers',
+                    image: '../../../public/nature-science.jpg',
+                    value: 18
+                }, {
+                    name: 'Mythology',
+                    image: '../../../public/nature-science.jpg',
+                    value: 20
+                }, {
+                    name: 'Sports',
+                    image: '../../../public/nature-science.jpg',
+                    value: 21
+                }, {
+                    name: 'Geography',
+                    image: '../../../public/nature-science.jpg',
+                    value: 22
+                }, {
+                    name: 'Comics',
+                    image: '../../../public/nature-science.jpg',
+                    value: 29
+                }, {
+                    name: 'Gadgets',
+                    image: '../../../public/nature-science.jpg',
+                    value: 30
+                }, {
+                    name: 'Cartoons & Animations',
+                    image: '../../../public/nature-science.jpg',
+                    value: 32
+}])
 
 const handleCheck = () => {
     wagerActive.value = !wagerActive.value
     console.log(wagerActive.value)
 }
 
-const gameTypes = ref([{
-                   name: 'Japanese Anime & Manga',
-                   image: '../../../public/naruto.jpg',
-               }, {
-                    name: 'Architecture',
-                   image: '../../../public/architecture.jpg',
-               }, {
-                    name: 'Video Games',
-                   image: '../../../public/video-games.jpg',
-               }, {
-                    name: 'Sports',
-                   image: '../../../public/sports.jpg',
-               },  {
-                    name: 'Politics',
-                   image: '../../../public/politics.jpg',
-               }, 
-                {
-                    name: 'Politics',
-                   image: '../../../public/politics.jpg',
-               }, {
-                    name: 'Science & Nature',
-                   image: '../../../public/nature-science.jpg',
-    }])
+const handleClick = (value) => {
+    gameCategory.value = value
+}
+
+const createChallenge = () => {
+    // Create game room in Firebase's Realtime Database
+
+    // Fetch questions from opentdb api
+
+    // Save questions data in RT DB
+
+    // Route client to challenge game interface
+}
+
+
 </script>
 
 <style lang="scss">
