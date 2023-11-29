@@ -189,7 +189,7 @@ const selectOption = async (option) => {
                 updateQuiz(null)
                 gameEnded.value = true
 
-                toast.error('Weird answer. You failed! 😈')
+                toast.error(`Weird answer. You failed! 😈 Correct answer is ${questionsData[currentQuestionIndex.value].correct_answer}`)
             }
     }, 3000)
 
