@@ -65,7 +65,7 @@
                 </div>
                 <div class="button__container">
                     <div class="link__display">
-                        <input disabled ref="generatedTextRef" placeholder="https://quizbuds.com?join=345678" type="text" v-model="inputCodeValue"/>
+                        <input disabled v-on:focus="$event.target.select()" ref="generatedTextRef" placeholder="https://quizbuds.com?join=345678" type="text" v-model="inputCodeValue"/>
                         <div class="copy__btn">
                             <button :disabled="isDisabled" class="copy" @click="copyToClipboard">
                                 <span>Copy</span>
@@ -189,7 +189,7 @@ const generateCode = () => {
 }
 
 const copyToClipboard = () => {
-    generatedTextRef.value.select()
+    generatedTextRef.value.focus()
     document.execCommand('copy')
     console.log(generatedTextRef.value)
 }
