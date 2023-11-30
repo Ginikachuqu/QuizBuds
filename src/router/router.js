@@ -40,7 +40,7 @@ const routes = [{
     component: Challenge,
     meta: { requiresAuth: true}
 }, {
-    path: '/challenge-interface',
+    path: '/challenge-interface/:id',
     name: 'ChallengeInterface',
     component: ChallengeInterface,
     meta: { requiresAuth: true}

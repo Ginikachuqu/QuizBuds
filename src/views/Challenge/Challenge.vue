@@ -74,7 +74,10 @@
                         </div>
                     </div>
                     <button class="cta" @click.prevent="generateCode" v-show="!showCreateButton">Get game code</button>
-                    <button class="cta" @click.prevent="createChallenge" v-if="showCreateButton">Create Challenge</button>
+                    <button class="cta" @click.prevent="createChallenge" v-if="showCreateButton">
+                        <SvgSpinners12DotsScaleRotate v-if="isLoading"/>
+                        <span v-if="!isLoading">Create Challenge</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -82,11 +85,17 @@
 </template>
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { doc, updateDoc } from 'firebase/firestore'
+import { db } from '../../../firebase.config'
 import { v4 as uuidv4 } from 'uuid'
 import { register } from 'swiper/element/bundle'
 import { Swiper, SwiperSlide} from 'swiper/vue'
+import { useToast } from 'vue-toastification'
+import { useStore } from 'vuex'
 import gameItem from '../../components/GameItem/GameItem.vue'
 import IonCopy from '../../assets/icons/IonCopy.vue'
+import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
 register()
 
@@ -97,6 +106,11 @@ const showCreateButton = ref(false)
 const inputCodeValue = ref('')
 const generatedTextRef = ref(null)
 const isDisabled = ref(true)
+const isLoading = ref(false)
+
+const toast = useToast()
+const route = useRouter()
+const store = useStore()
 
 const gameTypes = ref([{
                    name: 'Japanese Anime & Manga',
@@ -179,8 +193,8 @@ const generateCode = () => {
     const gameCode = uuidv4()
 
     // Modify value of input box
-    inputCodeValue.value = gameCode
-
+    inputCodeValue.value = `http://localhost:5173/challenge-interface/${gameCode}`
+    
     // Activate copy button
     isDisabled.value = false
 
@@ -188,20 +202,51 @@ const generateCode = () => {
     showCreateButton.value = !showCreateButton.value
 }
 
-const copyToClipboard = () => {
-    generatedTextRef.value.focus()
-    document.execCommand('copy')
-    console.log(generatedTextRef.value)
+// Copy url to clipboard
+const copyToClipboard = async() => {
+    try {
+        generatedTextRef.value.select()
+
+        await navigator.clipboard.writeText(inputCodeValue.value)
+
+        toast.success('Copied')
+    } catch (err) {
+        toast.error('Unable to copy text.')
+    }
 }
 
-const createChallenge = () => {
-    // Create game room in Firebase's Realtime Database
-
+const createChallenge = async() => {
+    isLoading.value = true
+    const docRef = doc(db, 'users', store.state.user.uid)
     // Fetch questions from opentdb api
 
     // Save questions data in RT DB
 
     // Route client to challenge game interface
+    // Destructure URL string to get the appropriate path
+    const urlString = inputCodeValue.value
+    const url = new URL(urlString)
+    const path = url.pathname
+    const pathParts = path.split('/')
+    const gameCode = pathParts[pathParts.length - 1]
+
+    try {
+        // Create game room in user's database
+        await updateDoc(docRef, {'currentChallenge': {
+            challengeID: gameCode,
+            questionData: [],
+            challengeCreator: store.state.user.displayName,
+            participants: [],
+        }})
+        console.log('Challenge room created')
+    } catch (err) {
+        isLoading.value = false
+        console.log(err.message)
+    }
+    
+    
+    // Redirect user
+    route.push(`${path}`)
 }
 
 
