@@ -65,15 +65,16 @@
                 </div>
                 <div class="button__container">
                     <div class="link__display">
-                        <input disabled placeholder="https://quizbuds.com?join=345678" type="text" />
+                        <input disabled ref="generatedTextRef" placeholder="https://quizbuds.com?join=345678" type="text" v-model="inputCodeValue"/>
                         <div class="copy__btn">
-                            <button class="copy">
+                            <button :disabled="isDisabled" class="copy" @click="copyToClipboard">
                                 <span>Copy</span>
                                 <IonCopy />
                             </button>
                         </div>
                     </div>
-                    <button class="cta">Create Challenge</button>
+                    <button class="cta" @click.prevent="generateCode" v-show="!showCreateButton">Get game code</button>
+                    <button class="cta" @click.prevent="createChallenge" v-if="showCreateButton">Create Challenge</button>
                 </div>
             </div>
         </div>
@@ -92,6 +93,10 @@ register()
 const wagerActive = ref(false)
 const gameCategory = ref('')
 const difficulty = ref('easy')
+const showCreateButton = ref(false)
+const inputCodeValue = ref('')
+const generatedTextRef = ref(null)
+const isDisabled = ref(true)
 
 const gameTypes = ref([{
                    name: 'Japanese Anime & Manga',
@@ -167,6 +172,26 @@ const handleCheck = () => {
 
 const handleClick = (value) => {
     gameCategory.value = value
+}
+
+const generateCode = () => {
+    // Generate Game code
+    const gameCode = uuidv4()
+
+    // Modify value of input box
+    inputCodeValue.value = gameCode
+
+    // Activate copy button
+    isDisabled.value = false
+
+    // Activate create button
+    showCreateButton.value = !showCreateButton.value
+}
+
+const copyToClipboard = () => {
+    generatedTextRef.value.select()
+    document.execCommand('copy')
+    console.log(generatedTextRef.value)
 }
 
 const createChallenge = () => {
