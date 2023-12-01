@@ -220,7 +220,7 @@ const copyToClipboard = async() => {
 const handleFetch = async () => {
         const url = `https://opentdb.com/api.php?amount=15&category=${quizCategory.value}&difficulty=${difficulty.value}&type=multiple`
         let response = ''
-
+        console.log(quizCategory.value)
         try {
             response = await fetch(url)
 
@@ -247,7 +247,7 @@ const handleFetch = async () => {
 const createChallenge = async() => {
     isLoading.value = true
     const docRef = doc(db, 'users', store.state.user.uid)
-
+    const gameStatus = 'pending'
     // Route client to challenge game interface
     // Destructure URL string to get the appropriate path
     const urlString = inputCodeValue.value
@@ -270,16 +270,8 @@ const createChallenge = async() => {
                 name: store.state.user.displayName,
                 score: 0
             }],
+            status: gameStatus
         })
-        // await updateDoc(docRef, {'currentChallenge': {
-        //     challengeID: gameCode,
-        //     questionData: [questionData],
-        //     challengeCreator: store.state.user.displayName,
-        //     participants: [{
-        //         name: store.state.user.displayName,
-        //         score: 0
-        //     }],
-        // }})
 
         // Redirect user
         route.push(`${path}`)
