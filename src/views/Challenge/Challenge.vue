@@ -86,7 +86,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../../../firebase.config'
 import { v4 as uuidv4 } from 'uuid'
 import { register } from 'swiper/element/bundle'
@@ -100,7 +100,7 @@ import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsSc
 register()
 
 const wagerActive = ref(false)
-const gameCategory = ref('')
+const quizCategory = ref('')
 const difficulty = ref('easy')
 const showCreateButton = ref(false)
 const inputCodeValue = ref('')
@@ -185,9 +185,10 @@ const handleCheck = () => {
 }
 
 const handleClick = (value) => {
-    gameCategory.value = value
+    quizCategory.value = value
 }
 
+// Generate game code
 const generateCode = () => {
     // Generate Game code
     const gameCode = uuidv4()
@@ -215,12 +216,37 @@ const copyToClipboard = async() => {
     }
 }
 
+// Fetch questions
+const handleFetch = async () => {
+        const url = `https://opentdb.com/api.php?amount=15&category=${quizCategory.value}&difficulty=${difficulty.value}&type=multiple`
+        let response = ''
+
+        try {
+            response = await fetch(url)
+
+            if (!response.ok) throw new Error('Response is defective')
+
+            const data = await response.json()
+
+            console.log(data)
+            if (data.response_code !== 0) {
+                toast.error('Error retrieving question data 😢. Please retry or pick another difficulty level.')
+                isLoading.value = false
+            } else {
+                response = data
+                isLoading.value = false
+            }
+        } catch (err) {
+            toast.error(err)
+            isLoading.value = false
+        }
+
+    return response
+}
+
 const createChallenge = async() => {
     isLoading.value = true
     const docRef = doc(db, 'users', store.state.user.uid)
-    // Fetch questions from opentdb api
-
-    // Save questions data in RT DB
 
     // Route client to challenge game interface
     // Destructure URL string to get the appropriate path
@@ -231,22 +257,38 @@ const createChallenge = async() => {
     const gameCode = pathParts[pathParts.length - 1]
 
     try {
+        // Fetch questions from opentdb api
+        const questionData = await handleFetch()
+        console.log(questionData)
+
         // Create game room in user's database
-        await updateDoc(docRef, {'currentChallenge': {
+        await setDoc(doc(db, 'challenges', gameCode), {
             challengeID: gameCode,
-            questionData: [],
+            questionData: [questionData],
             challengeCreator: store.state.user.displayName,
-            participants: [],
-        }})
+            participants: [{
+                name: store.state.user.displayName,
+                score: 0
+            }],
+        })
+        // await updateDoc(docRef, {'currentChallenge': {
+        //     challengeID: gameCode,
+        //     questionData: [questionData],
+        //     challengeCreator: store.state.user.displayName,
+        //     participants: [{
+        //         name: store.state.user.displayName,
+        //         score: 0
+        //     }],
+        // }})
+
+        // Redirect user
+        route.push(`${path}`)
         console.log('Challenge room created')
     } catch (err) {
         isLoading.value = false
-        console.log(err.message)
+        console.log(err)
+        toast.error(err.message)
     }
-    
-    
-    // Redirect user
-    route.push(`${path}`)
 }
 
 

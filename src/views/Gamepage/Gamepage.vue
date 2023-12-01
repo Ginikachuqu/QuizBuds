@@ -199,7 +199,6 @@ import { useStore } from 'vuex'
             isPlaying.value = false
             toast.error(err)
         }
-
     }
 
     // Get current funds from firestore
