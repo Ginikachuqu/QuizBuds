@@ -42,6 +42,19 @@
 
                 .slider {
                     max-width: 750px;
+                    position: relative;
+
+                    .item__overlay {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        right: 0;
+                        bottom: 0;
+                        background-color: rgba(255, 255, 255, 0.7);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
                 }
             }
 
@@ -97,8 +110,35 @@
                 }
             }
 
+            &-max {
+                div {
+                    text-align: center;
+                    margin-bottom: .25rem;
 
+                    span {
+                        font-size: 1.15rem;
+                    }
 
+                    small {
+                        display: inline-block;
+                        color: $gray;
+                        font-style: italic;
+                        font-size: .75rem;
+                        // margin-top: -.25rem;
+                    }
+                }
+
+                input {
+                    padding: .25rem;
+                    background: none;
+                    outline: none;
+                    width: 100%;
+                    border: 1px solid $white;
+                    color: $white;
+                    font-family: $primary-font;
+                    transition: all .3s cubic-bezier(1, 0, 0, 1);
+                }
+            }
 
             &-wager {
                 margin-top: 2rem;

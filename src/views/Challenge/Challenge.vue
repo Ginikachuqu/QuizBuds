@@ -14,7 +14,7 @@
                     <div class="slider">
                         <swiper-container navigation="true" :slides-per-view="4" :space-between="15">
                             <swiper-slide v-for="item in gameTypes" :key="item">
-                                <gameItem :item="item" @click.prevent="handleClick(item.value)"/>
+                                <gameItem :item="item" @click.prevent="handleClick(item.value)" @item-clicked="handleItemClicked" />
                             </swiper-slide>
                         </swiper-container>
                     </div>
@@ -43,6 +43,15 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="challenge__body-max">
+                    <label>
+                        <div>
+                            <span>Set number of participants: </span> <br />
+                            <small>Maximum number participants allowed is 15</small>
+                        </div>
+                        <input type="number" name="maxParticipants" id="maxParticipants" v-model="maxParticipants" min="3" max="15">
+                    </label>
                 </div>
                 <div class="challenge__body-wager">
                     <div class="wager__header">
@@ -95,6 +104,7 @@ import { useToast } from 'vue-toastification'
 import { useStore } from 'vuex'
 import gameItem from '../../components/GameItem/GameItem.vue'
 import IonCopy from '../../assets/icons/IonCopy.vue'
+// import IonIosCheckmarkCircle from '../../assets/icons/IonIosCheckmarkCircle.vue'
 import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
 register()
@@ -105,6 +115,7 @@ const difficulty = ref('easy')
 const showCreateButton = ref(false)
 const inputCodeValue = ref('')
 const generatedTextRef = ref(null)
+const maxParticipants = ref('')
 const isDisabled = ref(true)
 const isLoading = ref(false)
 
@@ -115,68 +126,84 @@ const store = useStore()
 const gameTypes = ref([{
                    name: 'Japanese Anime & Manga',
                    image: '../../../public/naruto.jpg',
-                   value: 31
+                   value: 31,
+                   selected: false
                }, {
                     name: 'Music',
                    image: '../../../public/architecture.jpg',
-                   value: 12
+                   value: 12,
+                   selected: false
                }, {
                     name: 'Television',
                    image: '../../../public/video-games.jpg',
-                   value: 14
+                   value: 14,
+                   selected: false
                }, {
                     name: 'Science & Nature',
                    image: '../../../public/sports.jpg',
+                   value: 17,
+                   selected: false
                },  {
                     name: 'History',
                    image: '../../../public/politics.jpg',
+                   value: 23,
+                   selected: false
                }, 
                 {
                     name: 'General knowledge',
                    image: '../../../public/politics.jpg',
+                   value: 9,
+                   selected: false
                }, {
-                    name: 'Science & Nature',
-                   image: '../../../public/nature-science.jpg',
-                }, {
                     name: 'Books',
                     image: '../../../public/nature-science.jpg',
-                    value: 10
+                    value: 10,
+                    selected: false
                 }, {
                     name: 'Film',
                     image: '../../../public/nature-science.jpg',
-                    value: 11
+                    value: 11,
+                    selected: false
                 }, {
                     name: 'Video Games',
                     image: '../../../public/nature-science.jpg',
-                    value: 15
+                    value: 15,
+                    selected: false
                 }, {
                     name: 'Computers',
                     image: '../../../public/nature-science.jpg',
-                    value: 18
+                    value: 18,
+                    selected: false
                 }, {
                     name: 'Mythology',
                     image: '../../../public/nature-science.jpg',
-                    value: 20
+                    value: 20,
+                    selected: false
                 }, {
                     name: 'Sports',
                     image: '../../../public/nature-science.jpg',
-                    value: 21
+                    value: 21,
+                    selected: false
                 }, {
                     name: 'Geography',
                     image: '../../../public/nature-science.jpg',
-                    value: 22
+                    value: 22,
+                    selected: false
                 }, {
                     name: 'Comics',
                     image: '../../../public/nature-science.jpg',
-                    value: 29
+                    value: 29,
+                    selected: false
                 }, {
                     name: 'Gadgets',
                     image: '../../../public/nature-science.jpg',
-                    value: 30
+                    value: 30,
+                    selected: false
                 }, {
                     name: 'Cartoons & Animations',
                     image: '../../../public/nature-science.jpg',
-                    value: 32
+                    value: 32,
+                    selected: false
 }])
 
 const handleCheck = () => {
@@ -184,8 +211,16 @@ const handleCheck = () => {
     console.log(wagerActive.value)
 }
 
-const handleClick = (value) => {
+const handleClick = (value, activeStatus) => {
     quizCategory.value = value
+    activeStatus = !activeStatus
+    console.log(activeStatus)
+}
+
+const handleItemClicked = (selectedValue) => {
+    gameTypes.value.forEach(item => {
+        item.selected = item.value === selectedValue
+    })
 }
 
 // Generate game code
@@ -220,7 +255,7 @@ const copyToClipboard = async() => {
 const handleFetch = async () => {
         const url = `https://opentdb.com/api.php?amount=15&category=${quizCategory.value}&difficulty=${difficulty.value}&type=multiple`
         let response = ''
-        console.log(quizCategory.value)
+
         try {
             response = await fetch(url)
 
@@ -266,8 +301,11 @@ const createChallenge = async() => {
             challengeID: gameCode,
             questionData: [questionData],
             challengeCreator: store.state.user.displayName,
+            maxParticipants: maxParticipants.value,
             participants: [{
-                name: store.state.user.displayName,
+                id: store.state.user.uid,
+                avatar: store.state.user.photoURL,
+                name: store.state.user.displayName.split(' ')[0],
                 score: 0
             }],
             status: gameStatus

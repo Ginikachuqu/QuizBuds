@@ -95,6 +95,47 @@
     const isPlaying = ref(false)
     const winningAmount = ref(0)
     let currentAmountIndex = ref(cashReward.value.length - 1)
+    console.log(store.state.user)
+    const players = ref([])
+
+    // Get participants from firebase
+    const getPlayers = async (gameCode) => {
+        const docRef = doc(db, 'users', gameCode)
+        const docSnap = await getDoc(docRef)
+        let response = null
+
+        if (docSnap.exists()) {
+            response = docSnap.data()
+        } else {
+            console.log('Document does not exist')
+        }
+    
+        console.log(response)
+
+        return response
+        // username.value = response.username
+    }
+
+    // Update leaderboard
+    const fetchParticipants = async() => {
+        // Fetch game code from URL
+        const url = new URL(window.location)
+        const path = url.pathname
+        const pathParts = path.split('/')
+        const gameCode = pathParts[pathParts.length - 1]
+
+        // Fetch participants
+        try {
+            players.value = await getPlayers(gameCode)
+            console.log(players.value)
+        } catch (err) {
+            console.log(err.message)
+            toast.error(err.message)
+        }
+        
+    }
+
+    fetchParticipants()
 </script>
 
 <style lang="scss" scoped> 
