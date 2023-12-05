@@ -110,9 +110,9 @@
             console.log('Document does not exist')
         }
     
-        console.log(response)
+        console.log(response.participants)
 
-        return response
+        return response.participants
         // username.value = response.username
     }
 
@@ -126,6 +126,30 @@
 
         // const userRef = doc(db, 'users', store.state.user.uid)
         const docRef = doc(db, 'challenges', gameCode)
+
+        try {
+            // Check if the new user is already in the list
+            const isNewUser = previousList.some(user => user.id === store.state.user.uid);
+
+            // If the new user is not in the list, add them
+            if (!isNewUser) {
+              previousList.push({
+                id: store.state.user.uid,
+                avatar: store.state.user.photoURL,
+                name: store.state.user.displayName.split(' ')[0],
+                score: 0
+              });
+
+              // Update firestore with new data
+              await updateDoc(docRef, {'participants': previousList})
+  
+              console.log('previousList sent!')
+            } else {
+              console.log('User already exists in the list');
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     // Initialize game logic
@@ -148,6 +172,7 @@
     }
 
     initialize()
+    addUser()
 </script>
 
 <style lang="scss" scoped> 

@@ -16,23 +16,22 @@
     </div>
 </template>
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watchEffect } from 'vue'
 import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
 const { players } = defineProps(['players'])
 
-const participants = ref(players.participants)
+const participants = players
 const isReady = ref(false)
 
-watch(
-  () => participants.value,
-  (newParticipants) => {
-    isReady.value = newParticipants !== undefined
-  },
-  { immediate: true }
-)
+watchEffect(() => {
+  if (participants !== undefined) {
+    isReady.value = true
+  }
+})
 
-console.log(participants.value)
+console.log(participants)
+console.log(participants)
 </script>
 <style lang="scss" scoped>
     
