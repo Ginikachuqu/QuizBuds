@@ -128,9 +128,12 @@
         const docRef = doc(db, 'challenges', gameCode)
 
         try {
+            // Get participants data
+            const previousList = await getPlayers(gameCode);
+            
             // Check if the new user is already in the list
             const isNewUser = previousList.some(user => user.id === store.state.user.uid);
-
+            console.log(isNewUser)
             // If the new user is not in the list, add them
             if (!isNewUser) {
               previousList.push({
