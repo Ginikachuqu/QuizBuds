@@ -1,21 +1,38 @@
 <template lang="">
     <div class="leaderboard__container-inner">
         <ul>
-            <li>
+            <SvgSpinners12DotsScaleRotate v-if="!isReady"/>
+            <li v-for="(participant, index) in participants" :key="index" v-else>
                 <span class="image__position">
-                    <span class="image"></span>
+                    <span class="image" :style="{ 'background-image': 'url(' + participant.avatar + ')' }"></span>
                     <span class="position">
-                        <span>1</span>
+                        <span>{{ index + 1 }}</span>
                     </span>
                 </span>
-                <span class="name">Charles</span>
-                <span class="prize">$400,000</span>
+                <span class="name">{{ participant.name }}</span>
+                <span class="prize">${{ participant.score }}</span>
             </li>
         </ul>
     </div>
 </template>
 <script setup>
+import { ref, watch } from 'vue'
+import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 
+const { players } = defineProps(['players'])
+
+const participants = ref(players.participants)
+const isReady = ref(false)
+
+watch(
+  () => participants.value,
+  (newParticipants) => {
+    isReady.value = newParticipants !== undefined
+  },
+  { immediate: true }
+)
+
+console.log(participants.value)
 </script>
 <style lang="scss" scoped>
     

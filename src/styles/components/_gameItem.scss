@@ -34,7 +34,7 @@
             text-align: initial;
 
             .detail__name {
-                @include flex(flex, center, space-between, initial);
+                @include flex(flex, initial, space-between, initial);
 
                 span {
                     color: $white;

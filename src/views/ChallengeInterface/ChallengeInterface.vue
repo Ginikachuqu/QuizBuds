@@ -32,7 +32,7 @@
                 <!-- Leaderboard -->
                 <div class="leaderboard__container">
                     <h2>Leaderboard</h2>
-                    <Leaderboard />
+                    <Leaderboard :players="players" />
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
 
     // Get participants from firebase
     const getPlayers = async (gameCode) => {
-        const docRef = doc(db, 'users', gameCode)
+        const docRef = doc(db, 'challenges', gameCode)
         const docSnap = await getDoc(docRef)
         let response = null
 
@@ -116,16 +116,28 @@
         // username.value = response.username
     }
 
-    // Update leaderboard
-    const fetchParticipants = async() => {
+    // Add new user to the list of participants
+    const addUser = async () => {
+        // Fetch game code from url
+        const url = new URL(window.location)
+        const path = url.pathname
+        const pathParts = path.split('/')
+        const gameCode = pathParts[pathParts.length - 1]
+
+        // const userRef = doc(db, 'users', store.state.user.uid)
+        const docRef = doc(db, 'challenges', gameCode)
+    }
+
+    // Initialize game logic
+    const initialize = async() => {
         // Fetch game code from URL
         const url = new URL(window.location)
         const path = url.pathname
         const pathParts = path.split('/')
         const gameCode = pathParts[pathParts.length - 1]
 
-        // Fetch participants
         try {
+            // Fetch participants
             players.value = await getPlayers(gameCode)
             console.log(players.value)
         } catch (err) {
@@ -135,7 +147,7 @@
         
     }
 
-    fetchParticipants()
+    initialize()
 </script>
 
 <style lang="scss" scoped> 

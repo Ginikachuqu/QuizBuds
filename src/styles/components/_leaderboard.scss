@@ -5,6 +5,11 @@
     ul {
         list-style: none;
 
+        svg {
+            font-size: 1.25rem;
+            margin: 0 auto;
+        }
+
         li {
             @include flex (flex, center, space-between, initial);
             
@@ -24,7 +29,6 @@
                     .image {
                         width: 100%;
                         height: 100%;
-                        background-image: url('../../../public/avatars/boy\ 4.jpg');
                         background-position: center;
                         background-size: cover;
                         background-repeat: no-repeat;
@@ -50,27 +54,6 @@
 
                 &.prize {
                     font-size: .85rem;
-                }
-            }
-
-            &:nth-of-type(2) {
-                span.image {
-                    background-image: url('../../../public/avatars/girl\ 6.jpg');
-                }
-            }
-            &:nth-of-type(3) {
-                span.image {
-                    background-image: url('../../../public/avatars/girl\ 1.jpg');
-                }
-            }
-            &:nth-of-type(4) {
-                span.image {
-                    background-image: url('../../../public/avatars/girl\ 7.jpg');
-                }
-            }
-            &:nth-of-type(5) {
-                span.image {
-                    background-image: url('../../../public/avatars/boy\ 6.jpg');
                 }
             }
         }

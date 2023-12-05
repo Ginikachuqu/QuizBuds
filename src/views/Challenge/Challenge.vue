@@ -281,8 +281,7 @@ const handleFetch = async () => {
 
 const createChallenge = async() => {
     isLoading.value = true
-    const docRef = doc(db, 'users', store.state.user.uid)
-    const gameStatus = 'pending'
+    const gameStatus = 'is_pending'
     // Route client to challenge game interface
     // Destructure URL string to get the appropriate path
     const urlString = inputCodeValue.value
