@@ -31,7 +31,7 @@ watchEffect(() => {
 })
 
 console.log(participants)
-console.log(participants)
+
 </script>
 <style lang="scss" scoped>
     

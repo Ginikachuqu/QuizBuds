@@ -24,7 +24,7 @@
     </div>            
 </template>
 <script setup>
-import { ref, toRef, computed, watch, onMounted, defineEmits } from 'vue'
+import { ref, toRaw, computed, watch, onMounted, defineEmits } from 'vue'
 import { db } from '../../../firebase.config'
 import { doc, updateDoc, setDoc } from 'firebase/firestore'
 import { useStore } from 'vuex'
@@ -34,7 +34,11 @@ import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsSc
 
 // props defination
 const { gameData } = defineProps(['gameData'])
-const questionsData = gameData.results
+const extract = {...gameData}
+console.log(extract)
+console.log(extract.results)
+const questionsData = extracts.results
+
 
 // Variable Definitions
 const emits = defineEmits(['incrementAmount', 'endGame'])
@@ -76,7 +80,7 @@ const shuffleOptions = () => {
 onMounted(() => {
     shuffleOptions();
 });
-
+console.log(questionsData[currentQuestionIndex.value])
 watch(() => questionsData[currentQuestionIndex.value], () => {
     shuffleOptions();
 });

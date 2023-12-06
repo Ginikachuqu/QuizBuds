@@ -87,11 +87,6 @@
                         </ul>
                     </div>
                 </div>
-                <!-- Leaderboard -->
-                <div class="leaderboard__container">
-                    <h2>Leaderboard</h2>
-                    <Leaderboard />
-                </div>
             </div>
         </div>
     </div>
@@ -104,7 +99,6 @@ import { useToast } from 'vue-toastification'
 import Modal from '@components/Modal/Modal.vue'
 import GameBoard from '@components/GameBoard/GameBoard.vue'
 import Placeholder from '@components/Placeholder/Placeholder.vue'
-import Leaderboard from '@components/Leaderboard/Leaderboard.vue'
 import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsScaleRotate.vue'
 import { useStore } from 'vuex'
 
@@ -197,7 +191,7 @@ import { useStore } from 'vuex'
         } catch (err) {
             loader.value = false
             isPlaying.value = false
-            toast.error(err)
+            toast.error('Unable to fetch questions. Try again')
         }
     }
 

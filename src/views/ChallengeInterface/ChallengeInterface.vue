@@ -97,6 +97,12 @@
     let currentAmountIndex = ref(cashReward.value.length - 1)
     console.log(store.state.user)
     const players = ref([])
+    
+    // Extract game code from url
+    const url = new URL(window.location)
+    const path = url.pathname
+    const pathParts = path.split('/')
+    const gameCode = pathParts[pathParts.length - 1]
 
     // Get participants from firebase
     const getPlayers = async (gameCode) => {
@@ -118,22 +124,16 @@
 
     // Add new user to the list of participants
     const addUser = async () => {
-        // Fetch game code from url
-        const url = new URL(window.location)
-        const path = url.pathname
-        const pathParts = path.split('/')
-        const gameCode = pathParts[pathParts.length - 1]
-
         // const userRef = doc(db, 'users', store.state.user.uid)
         const docRef = doc(db, 'challenges', gameCode)
 
         try {
             // Get participants data
             const previousList = await getPlayers(gameCode);
-            
+
             // Check if the new user is already in the list
             const isNewUser = previousList.some(user => user.id === store.state.user.uid);
-            console.log(isNewUser)
+
             // If the new user is not in the list, add them
             if (!isNewUser) {
               previousList.push({
@@ -155,14 +155,40 @@
         }
     }
 
+    // Fetch questions
+    const fetchQuestions = async () => {
+        const docRef = doc(db, 'challenges', gameCode)
+        let response = null
+        
+        if (isPlaying) {
+            try {
+                const docSnap = await getDoc(docRef)
+                if (docSnap.exists()) {
+                    response = docSnap.data()
+                } else {
+                    console.log('Document does not exist')
+                }
+            } catch (err) {
+                console.log(err.message)
+            }
+        } else {
+            return
+        }
+
+        gameData.value = {...response.questionData}
+        console.log(gameData.value)
+        setTimeout(() => {
+            isPlaying.value = true
+            console.log(gameData.value)
+            console.log('Active')
+        }, 5000)
+    }
+
+    fetchQuestions()
+    
+
     // Initialize game logic
     const initialize = async() => {
-        // Fetch game code from URL
-        const url = new URL(window.location)
-        const path = url.pathname
-        const pathParts = path.split('/')
-        const gameCode = pathParts[pathParts.length - 1]
-
         try {
             // Fetch participants
             players.value = await getPlayers(gameCode)
@@ -176,6 +202,22 @@
 
     initialize()
     addUser()
+
+    // Emit functions
+    const incrementAmount = () => {
+        console.log('emit: ' + currentAmountIndex.value--)
+        // return currentAmountIndex--
+    }
+
+    const endGame = async () => {
+        const finalPrizeIndex = currentAmountIndex.value
+        currentAmountIndex.value >= cashReward.value.length - 1 ? winningAmount.value = 0 : winningAmount.value = cashReward.value[finalPrizeIndex].amount
+
+        // Update user's funds in firestore
+        await updateFunds(winningAmount.value)
+        await updateTotal()
+        showModal.value = true
+    }
 </script>
 
 <style lang="scss" scoped> 
