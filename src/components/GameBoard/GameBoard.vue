@@ -26,7 +26,7 @@
 <script setup>
 import { ref, toRaw, computed, watch, onMounted, defineEmits } from 'vue'
 import { db } from '../../../firebase.config'
-import { doc, updateDoc, setDoc } from 'firebase/firestore'
+import { doc, updateDoc, getDoc } from 'firebase/firestore'
 import { useStore } from 'vuex'
 import { useToast } from 'vue-toastification'
 import PAFModal from '@components/PAFModal/PAFModal.vue'
@@ -34,10 +34,15 @@ import SvgSpinners12DotsScaleRotate from '../../assets/icons/SvgSpinners12DotsSc
 
 // props defination
 const { gameData } = defineProps(['gameData'])
-const extract = {...gameData}
-console.log(extract)
-console.log(extract.results)
-const questionsData = extracts.results
+console.log(gameData)
+const questionsData = gameData.results
+console.log(questionsData)
+
+// Extract game code from url
+const url = new URL(window.location)
+const path = url.pathname
+const pathParts = path.split('/')
+const gameCode = pathParts[pathParts.length - 1]
 
 
 // Variable Definitions
@@ -116,7 +121,6 @@ const updateQuiz = async (values) => {
     }
 }
 
-
 // Lifelines functions
 const usePhoneAFriend = () => {
     // Get a random friend
@@ -179,18 +183,18 @@ const selectOption = async (option) => {
             toast.success('Correct 🎉')
             if (currentQuestionIndex.value + 1 === questionsData.length) {
                 // End game
-                updateQuiz(null)
+                // updateQuiz(null)
                 gameEnded.value = true
             } else {
                 console.log(currentQuestionIndex.value)
-                updateQuiz(questionsData)
+                // updateQuiz(questionsData)
                 currentQuestionIndex.value++
             }
             isChecking.value = false
             answered.value = false
             } else {
                 // End Game
-                updateQuiz(null)
+                // updateQuiz(null)
                 gameEnded.value = true
 
                 toast.error(`Weird answer. You failed! 😈 Correct answer is ${questionsData[currentQuestionIndex.value].correct_answer}`)

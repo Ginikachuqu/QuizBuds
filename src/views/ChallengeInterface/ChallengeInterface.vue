@@ -141,7 +141,7 @@
                 avatar: store.state.user.photoURL,
                 name: store.state.user.displayName.split(' ')[0],
                 score: 0
-              });
+            });
 
               // Update firestore with new data
               await updateDoc(docRef, {'participants': previousList})
@@ -176,7 +176,7 @@
         }
 
         gameData.value = {...response.questionData}
-        console.log(gameData.value)
+
         setTimeout(() => {
             isPlaying.value = true
             console.log(gameData.value)
@@ -186,38 +186,62 @@
 
     fetchQuestions()
     
+    /******************
+ Challenge Logic
+******************/
 
-    // Initialize game logic
-    const initialize = async() => {
-        try {
-            // Fetch participants
-            players.value = await getPlayers(gameCode)
-            console.log(players.value)
-        } catch (err) {
-            console.log(err.message)
-            toast.error(err.message)
-        }
-        
+// If it is a challenge, update user details
+// in the challenge collection firebase
+const updateChallengeDetails = async (amount) => {
+    // Challenge Document Reference
+    const docRef = doc(db, 'challenges', gameCode)
+    let player = null
+    try {
+        // Get & update player details
+        const playersList = await getPlayers(gameCode);
+
+        player = playersList.filter(player => player.id == store.state.user.uid)
+        player[0].score = 100
+
+        // Inject Player back into List
+        await updateDoc(docRef, {'participants': playersList})
+        console.log(playersList)
+    } catch (error) {
+        console.log(error)
     }
+}
 
-    initialize()
-    addUser()
+// Initialize game logic
+const initialize = async() => {
+    try {
+        // Fetch participants
+        players.value = await getPlayers(gameCode)
+        console.log(players.value)
+    } catch (err) {
+        console.log(err.message)
+        toast.error(err.message)
+    }
+    
+}
+
+initialize()
+addUser()
 
     // Emit functions
-    const incrementAmount = () => {
-        console.log('emit: ' + currentAmountIndex.value--)
-        // return currentAmountIndex--
-    }
+const incrementAmount = () => {
+    console.log('emit: ' + currentAmountIndex.value--)
+    updateChallengeDetails(cashReward.value[currentAmountIndex.value--].amount)
+}
 
-    const endGame = async () => {
-        const finalPrizeIndex = currentAmountIndex.value
-        currentAmountIndex.value >= cashReward.value.length - 1 ? winningAmount.value = 0 : winningAmount.value = cashReward.value[finalPrizeIndex].amount
+const endGame = async () => {
+    const finalPrizeIndex = currentAmountIndex.value
+    currentAmountIndex.value >= cashReward.value.length - 1 ? winningAmount.value = 0 : winningAmount.value = cashReward.value[finalPrizeIndex].amount
 
-        // Update user's funds in firestore
-        await updateFunds(winningAmount.value)
-        await updateTotal()
-        showModal.value = true
-    }
+    // Update user's funds in firestore
+    await updateFunds(winningAmount.value)
+    await updateTotal()
+    showModal.value = true
+}
 </script>
 
 <style lang="scss" scoped> 

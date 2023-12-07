@@ -298,7 +298,7 @@ const createChallenge = async() => {
         // Create game room in user's database
         await setDoc(doc(db, 'challenges', gameCode), {
             challengeID: gameCode,
-            questionData: [questionData],
+            questionData: questionData,
             challengeCreator: store.state.user.displayName,
             maxParticipants: maxParticipants.value,
             participants: [{
