@@ -201,7 +201,7 @@ const updateChallengeDetails = async (amount) => {
         const playersList = await getPlayers(gameCode);
 
         player = playersList.filter(player => player.id == store.state.user.uid)
-        player[0].score = 100
+        player[0].score = amount
 
         // Inject Player back into List
         await updateDoc(docRef, {'participants': playersList})
@@ -230,7 +230,8 @@ addUser()
     // Emit functions
 const incrementAmount = () => {
     console.log('emit: ' + currentAmountIndex.value--)
-    updateChallengeDetails(cashReward.value[currentAmountIndex.value--].amount)
+    updateChallengeDetails(cashReward.value[currentAmountIndex.value].amount)
+    console.log(cashReward.value[currentAmountIndex.value].amount)
 }
 
 const endGame = async () => {
