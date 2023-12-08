@@ -32,7 +32,7 @@
                 <!-- Leaderboard -->
                 <div class="leaderboard__container">
                     <h2>Leaderboard</h2>
-                    <Leaderboard :players="players" />
+                    <Leaderboard />
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
 <script setup>
     import { ref, computed, watch, onMounted } from 'vue'
     import { db } from '../../../firebase.config'
-    import { doc, updateDoc, getDoc } from 'firebase/firestore'
+    import { doc, updateDoc, getDoc, onSnapshot } from 'firebase/firestore'
     import { useToast } from 'vue-toastification'
     import Modal from '@components/Modal/Modal.vue'
     import GameBoard from '@components/GameBoard/GameBoard.vue'
@@ -186,8 +186,8 @@
 
     fetchQuestions()
     
-    /******************
- Challenge Logic
+/******************
+Challenge Logic
 ******************/
 
 // If it is a challenge, update user details
@@ -205,7 +205,6 @@ const updateChallengeDetails = async (amount) => {
 
         // Inject Player back into List
         await updateDoc(docRef, {'participants': playersList})
-        console.log(playersList)
     } catch (error) {
         console.log(error)
     }
