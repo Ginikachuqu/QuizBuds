@@ -3,7 +3,7 @@
     <!-- <div v-if="loader" class="loading__screen">
         <div class="loading__screen-inner">
             <SvgSpinners12DotsScaleRotate />
-            <p>Fetching questions...</p>
+            <p>Fetching data...</p>
         </div>
     </div> -->
     <div class="challenge__wrapper">
@@ -40,7 +40,8 @@
 </template>
 
 <script setup>
-    import { ref, computed, watch, onMounted } from 'vue'
+    import { ref, computed, watch, onBeforeMount } from 'vue'
+    import { useRouter } from 'vue-router'
     import { db } from '../../../firebase.config'
     import { doc, updateDoc, getDoc, onSnapshot } from 'firebase/firestore'
     import { useToast } from 'vue-toastification'
@@ -87,6 +88,8 @@
 
     const toast = useToast()
 
+    const router = useRouter()
+
     const placeholderMessage = 'Kindly wait while the game is being setup...'
 
     const gameData = ref([])
@@ -104,87 +107,87 @@
     const pathParts = path.split('/')
     const gameCode = pathParts[pathParts.length - 1]
 
-    // Get participants from firebase
-    const getPlayers = async (gameCode) => {
-        const docRef = doc(db, 'challenges', gameCode)
-        const docSnap = await getDoc(docRef)
-        let response = null
+// Get participants from firebase
+const getPlayers = async (gameCode) => {
+    const docRef = doc(db, 'challenges', gameCode)
+    const docSnap = await getDoc(docRef)
+    let response = null
 
-        if (docSnap.exists()) {
-            response = docSnap.data()
-        } else {
-            console.log('Document does not exist')
-        }
+    if (docSnap.exists()) {
+        response = docSnap.data()
+    } else {
+        console.log('Document does not exist')
+    }
     
-        console.log(response.participants)
+    console.log(response.participants)
 
-        return response.participants
-        // username.value = response.username
-    }
+    return response.participants
+    // username.value = response.username
+}
 
-    // Add new user to the list of participants
-    const addUser = async () => {
-        // const userRef = doc(db, 'users', store.state.user.uid)
-        const docRef = doc(db, 'challenges', gameCode)
+// Add new user to the list of participants
+const addUser = async () => {
+    // const userRef = doc(db, 'users', store.state.user.uid)
+    const docRef = doc(db, 'challenges', gameCode)
 
-        try {
-            // Get participants data
-            const previousList = await getPlayers(gameCode);
+    try {
+        // Get participants data
+        const previousList = await getPlayers(gameCode);
 
-            // Check if the new user is already in the list
-            const isNewUser = previousList.some(user => user.id === store.state.user.uid);
+        // Check if the new user is already in the list
+        const isNewUser = previousList.some(user => user.id === store.state.user.uid);
 
-            // If the new user is not in the list, add them
-            if (!isNewUser) {
-              previousList.push({
-                id: store.state.user.uid,
-                avatar: store.state.user.photoURL,
-                name: store.state.user.displayName.split(' ')[0],
-                score: 0
-            });
+        // If the new user is not in the list, add them
+        if (!isNewUser) {
+          previousList.push({
+            id: store.state.user.uid,
+            avatar: store.state.user.photoURL,
+            name: store.state.user.displayName.split(' ')[0],
+            score: 0
+        });
 
-              // Update firestore with new data
-              await updateDoc(docRef, {'participants': previousList})
+          // Update firestore with new data
+          await updateDoc(docRef, {'participants': previousList})
   
-              console.log('previousList sent!')
-            } else {
-              console.log('User already exists in the list');
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    // Fetch questions
-    const fetchQuestions = async () => {
-        const docRef = doc(db, 'challenges', gameCode)
-        let response = null
-        
-        if (isPlaying) {
-            try {
-                const docSnap = await getDoc(docRef)
-                if (docSnap.exists()) {
-                    response = docSnap.data()
-                } else {
-                    console.log('Document does not exist')
-                }
-            } catch (err) {
-                console.log(err.message)
-            }
+          console.log('previousList sent!')
         } else {
-            return
+          console.log('User already exists in the list');
         }
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-        gameData.value = {...response.questionData}
-
-        setTimeout(() => {
-            isPlaying.value = true
-            console.log(gameData.value)
-            console.log('Active')
-        }, 5000)
+// Fetch questions
+const fetchQuestions = async () => {
+    const docRef = doc(db, 'challenges', gameCode)
+    let response = null
+        
+    if (isPlaying) {
+        try {
+            const docSnap = await getDoc(docRef)
+            if (docSnap.exists()) {
+                response = docSnap.data()
+            } else {
+                console.log('Document does not exist')
+            }
+        } catch (err) {
+            console.log(err.message)
+        }
+    } else {
+        return
     }
 
-    fetchQuestions()
+    gameData.value = {...response.questionData}
+
+    setTimeout(() => {
+        isPlaying.value = true
+        console.log(gameData.value)
+        console.log('Active')
+    }, 5000)
+}
+
+    
     
 /******************
 Challenge Logic
@@ -253,27 +256,26 @@ const updateFunds = async (amount) => {
     const docRef = doc(db, 'users', store.state.user.uid)
         
     try {
-        const currentFunds = await getWalletBalance()
-        
+        const currentFunds = await getWalletBalance()        
         updateDoc(docRef, {'walletBalance': currentFunds + amount})
     } catch (err) {
         toast.error('Fund update failed')
     }
 }
 
-    // Update total games played
-    const updateTotal = async () => {
-        const docRef = doc(db, 'users', store.state.user.uid)
+// Update total games played
+const updateTotal = async () => {
+    const docRef = doc(db, 'users', store.state.user.uid)
+    
+    try {
+        const currentAmount = await getTotalGames()
         
-        try {
-            const currentAmount = await getTotalGames()
-            
-            updateDoc(docRef, {'totalGamesPlayed': currentAmount + 1})
-            console.log('Done')
-        } catch (err) {
-            toast.error('Total Games update failed')
-        }
+        updateDoc(docRef, {'totalGamesPlayed': currentAmount + 1})
+        console.log('Done')
+    } catch (err) {
+        toast.error('Total Games update failed')
     }
+}
 
 // Initialize game logic
 const initialize = async() => {
@@ -287,9 +289,6 @@ const initialize = async() => {
     }
     
 }
-
-initialize()
-addUser()
 
     // Emit functions
 const incrementAmount = () => {
@@ -307,6 +306,29 @@ const endGame = async () => {
     await updateTotal()
     showModal.value = true
 }
+
+const checkGameCode = async () => {
+    // Check if the game code exists in Firestore
+    const docRef = doc(db, 'challenges', gameCode)
+
+    try {
+          const docSnap = await getDoc(docRef)
+          if (!docSnap.exists()) {
+            // Redirect to the dashboard if the game code is not found
+            toast.error('Page does not exist!')
+            router.push('/dashboard');
+          } else {
+            // Run all relevant functions
+            initialize()
+            addUser()
+            fetchQuestions()
+          }
+      } catch (err) {
+          toast.error('Page does not exist')
+    }
+}
+
+onBeforeMount(() => checkGameCode());
 </script>
 
 <style lang="scss" scoped> 
