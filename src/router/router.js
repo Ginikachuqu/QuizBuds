@@ -11,6 +11,7 @@ import Challenge from '@views/Challenge/Challenge.vue'
 import ChallengeInterface from '@views/ChallengeInterface/ChallengeInterface.vue'
 import Gamepage from '@views/Gamepage/Gamepage.vue'
 import EditProfile from '@views/EditProfile/EditProfile.vue'
+import Error from '@views/ErrorPage/Error.vue'
 
 
 // Routes
@@ -55,6 +56,11 @@ const routes = [{
     name: 'EditProfile',
     component: EditProfile,
     meta: { requiresAuth: true}
+}, {
+    path: '/error',
+    name: 'Error',
+    component: Error,
+    // meta: { requiresAuth: true}
 }]
 
 const router = createRouter({

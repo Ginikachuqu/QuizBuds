@@ -111,12 +111,15 @@
             }
 
             &-max {
+                margin-top: 2rem;
                 div {
                     text-align: center;
                     margin-bottom: .25rem;
 
                     span {
-                        font-size: 1.15rem;
+                        display: inline-block;
+                        font-family: $secondary-font;
+                        font-size: 1.45rem;
                     }
 
                     small {
@@ -141,7 +144,9 @@
             }
 
             &-wager {
-                margin-top: 2rem;
+                margin-top: 3rem;
+                margin-bottom: 3rem;
+                
                 .wager__header {
                     @include flex (flex, center, space-between, initial);
                     gap: 1rem;

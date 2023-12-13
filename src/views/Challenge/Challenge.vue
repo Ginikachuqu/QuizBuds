@@ -21,7 +21,7 @@
                 </div>
                 <div class="challenge__body-difficulty">
                     <div class="difficulty__header">
-                        <h2>Choose Difficulty</h2>
+                        <h2>Choose Difficulty Level</h2>
                         <div class="difficulty__body">
                             <div>
                                 <label for="easy">
@@ -225,6 +225,14 @@ const handleItemClicked = (selectedValue) => {
 
 // Generate game code
 const generateCode = () => {
+    if (quizCategory.value === '') {
+        toast.error('Please select a quiz category')
+        throw new Error('Please select a quiz category')
+    } else if (maxParticipants.value === '') {
+        toast.error('Please add number of participants!')
+        throw new Error('Please add a defined number of participants')
+    }
+    console.log(quizCategory.value)
     // Generate Game code
     const gameCode = uuidv4()
 
@@ -258,6 +266,7 @@ const handleFetch = async () => {
 
         try {
             response = await fetch(url)
+
 
             if (!response.ok) throw new Error('Response is defective')
 

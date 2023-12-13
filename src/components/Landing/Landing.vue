@@ -12,7 +12,7 @@
                         </span> -->
                     </h1>
                     <span class="caption">Explore the world's most specialized <br>quizzes.</span>
-                    <router-link to="/signup">
+                    <router-link to="/signup" v-if="!authIsReady && !user">
                         <span>Sign up</span>
                         <IonArrowForwardCircle />
                     </router-link>
@@ -147,15 +147,20 @@
     </div>
 </template>
 <script setup>
-    import { onMounted } from 'vue'
+    import { onMounted, computed, ref } from 'vue'
     import { RouterLink } from 'vue-router';
+    import { useStore } from 'vuex'
     import gsap from 'gsap'
     import { ScrollTrigger } from 'gsap/ScrollTrigger'
     import { TextPlugin } from 'gsap/TextPlugin'
     import IonArrowForwardCircle from '../../assets/icons/IonArrowForwardCircle.vue'
     import IonSearchSharp from '../../assets/icons/IonSearchSharp.vue'
     
-    
+    const store = useStore()
+
+    const user = computed(() => store.state.user)
+
+    const authIsReady = computed(() => store.state.authIsReady)
     
     gsap.registerPlugin(ScrollTrigger)
     

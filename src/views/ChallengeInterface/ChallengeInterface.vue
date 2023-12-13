@@ -210,6 +210,71 @@ const updateChallengeDetails = async (amount) => {
     }
 }
 
+// Get current funds from firestore
+const getWalletBalance = async () => {
+    const docRef = doc(db, 'users', store.state.user.uid)
+    let response = null;
+        
+    try {
+        const docSnap = await getDoc(docRef)
+        if (docSnap.exists()) {
+            response = docSnap.data()
+        } else {
+            console.log('Document does not exist')
+        }
+    } catch (err) {
+        toast.error('Unable to retrive wallet balance.')
+    }
+
+    return response.walletBalance
+}
+
+// Fetch total games value
+const getTotalGames = async () => {
+    const docRef = doc(db, 'users', store.state.user.uid)
+    let response = null;
+        
+    try {
+        const docSnap = await getDoc(docRef)
+        if (docSnap.exists()) {
+            response = docSnap.data()
+        } else {
+            toast.error('Document does not exist')
+        }
+    } catch (err) {
+        toast.error('Unable to retrive data')
+    }
+
+    return response.totalGamesPlayed
+}
+
+// Update firestore Doc (update user's game money)
+const updateFunds = async (amount) => {
+    const docRef = doc(db, 'users', store.state.user.uid)
+        
+    try {
+        const currentFunds = await getWalletBalance()
+        
+        updateDoc(docRef, {'walletBalance': currentFunds + amount})
+    } catch (err) {
+        toast.error('Fund update failed')
+    }
+}
+
+    // Update total games played
+    const updateTotal = async () => {
+        const docRef = doc(db, 'users', store.state.user.uid)
+        
+        try {
+            const currentAmount = await getTotalGames()
+            
+            updateDoc(docRef, {'totalGamesPlayed': currentAmount + 1})
+            console.log('Done')
+        } catch (err) {
+            toast.error('Total Games update failed')
+        }
+    }
+
 // Initialize game logic
 const initialize = async() => {
     try {
