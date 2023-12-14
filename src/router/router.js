@@ -68,40 +68,57 @@ const router = createRouter({
     routes,
 })
 
-// router.beforeEach((to, from, next) => {
-//     // Check for required auth guard
-//     if (to.matched.some(record => record.meta.requiresAuth)) {
-//         // Check if not logged in
-//         if (!store.state.user) {
-//             // Go to login
-//             next({
-//                 path: '/signin',
-//                 query: {
-//                     redirect: to.fullPath
-//                 }
-//             })
-//         } else {
-//             // Go to route
-//             next()
-//         }
-//     } else if (to.matched.some(record => record.meta.requiresGuest)) {
-//         // Check if logged in
-//         if (store.state.user) {
-//             // Go to dashboard
-//             next({
-//                 path: '/',
-//                 query: {
-//                     redirect: to.fullPath
-//                 }
-//             })
-//         } else {
-//             // Proceed to route
-//             next()
-//         }
-//     } else {
-//         // Proceed to route
-//         next()
-//     }
-// })
+router.beforeEach((to, from, next) => {
+    console.log({to})
+    // Check for required auth guard
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        // Check if not logged in
+        if (!store.state.user) {
+            // Go to login
+            next({
+                path: '/signin',
+                query: {
+                    redirect: to.fullPath
+                }
+            });
+        } else {
+            // Go to route
+            next();
+        }
+    } else if (to.matched.some(record => record.meta.requiresGuest)) {
+        // Check if logged in
+        if (store.state.user) {
+            // Go to dashboard
+            next({
+                // path: '/dashboard',
+                path: to.path == '/signin' || to.path == '/signup' ? '/' : '/dashboard',
+                query: {
+                    redirect: to.fullPath
+                }
+            });
+        } else {
+            // Proceed to route
+            next();
+        }
+    } else if (to.path === '/signin' || to.path === '/signup') {
+        console.log('I got here!')
+        // If user is signed in, redirect to dashboard
+        if (store.state.user) {
+            next({
+                path: '/',
+                query: {
+                    redirect: to.fullPath
+                }
+            });
+        } else {
+            // Proceed to SignIn or SignUp
+            next();
+        }
+    } else {
+        // Proceed to route
+        next();
+    }
+});
+
 
 export default router
